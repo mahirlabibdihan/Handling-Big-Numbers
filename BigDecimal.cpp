@@ -4,6 +4,42 @@ Author : Mahir Labib Dihan
 
 */
 
+
+/*
+###########################
+(
+
+)
+
++	-> Add
+
+-	-> Substract
+
+*	-> Multiply
+
+/	-> Divide
+	
+%	-> Modulas
+
+^	-> Power
+
+!	-> Factorial
+
+p   -> nPr
+
+c   -> nCr
+
+l   -> LCM
+
+g   -> GCD
+
+&	-> And
+	
+|	-> Or
+###########################
+
+*/
+
 #include <iostream>
 #include <string>
 #include <algorithm>
@@ -74,6 +110,8 @@ int main()
 		cout << "-> "<<Bodmash(In) << endl<<endl;
 	}
 }
+
+
 string Trim(string a)
 {
 	if (a == "∞") return a;
@@ -1664,30 +1702,3 @@ string Or(string a,string b)
 }
 
 
-/*
-+
--
-*
-/
-%
-^
-!
-Fraction
-root
-abs
-sin
-cos
-tan
-csc
-sec
-cot
-
-P
-C
-L
-G
-
-&
-|
-
-*/
