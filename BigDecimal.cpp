@@ -25,13 +25,13 @@ Author : Mahir Labib Dihan
 
 !	-> Factorial
 
-p   -> nPr
+p	-> nPr
 
-c   -> nCr
+c 	-> nCr
 
-l   -> LCM
+l 	-> LCM
 
-g   -> GCD
+g 	-> GCD
 
 &	-> And
 	
