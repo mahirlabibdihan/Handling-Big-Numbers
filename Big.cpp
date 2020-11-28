@@ -1,3 +1,9 @@
+/*
+
+Author : Mahir Labib Dihan
+
+*/
+
 #include <iostream>
 #include <string>
 #include <algorithm>
@@ -16,9 +22,9 @@ string Cot(string);
 string ASin(string);
 string ACos(string);
 string ATan(string);
-string Csc(string);
-string Sec(string);
-string Cot(string);
+string ACsc(string);
+string ASec(string);
+string ACot(string);
 string Sine(string);
 string Trim(string);
 string Ceil(string);
@@ -67,29 +73,26 @@ int Compare(string, string);
 void Fraction(string);
 
 
-
-
 int main()
 {
-
 	string In;
 	while (1)
 	{
 		getline(cin, In);
 		cout << Bodmash(In) << endl;
 	}
-
 }
 
 string Bodmash(string expression)
 {
-	if (expression.length() == 0) return "0";
+	if (expression.length() == 0) return "";
 
 	stack<string> values;
 	stack<char> ops;
 
 	for (int i = 0; i < expression.length(); i++)
 	{
+		if(expression[i]==' ') continue;
 		if ((expression[i] >= '0' && expression[i] <= '9') || expression[i] == '.') {
 			string num = "";
 			while (i < expression.length() && (expression[i] >= '0' && expression[i] <= '9' || expression[i] == '.'))
