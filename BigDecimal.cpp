@@ -12,7 +12,6 @@ using namespace std;
 string Pi = "3.141592654";
 int AddCarry;
 int SubCarry;
-string Num, Div;
 string Sin(string);
 string Cos(string);
 string Tan(string);
@@ -25,8 +24,6 @@ string ATan(string);
 string ACsc(string);
 string ASec(string);
 string ACot(string);
-string Sine(string);
-string Trim(string);
 string Ceil(string);
 string Round(string);
 string Floor(string);
@@ -42,17 +39,13 @@ string Power(string, string);
 string Remainder(string);
 string Root(string, string);
 string Exponent(string);
-string Add_Int(string, string);
-string Divide(string, string);
-string Multiply(string, string);
-string Sub_Int(string, string);
-string Sub_Frac(string, string);
-string Substract(string, string);
-string Add_Frac(string, string);
+string Div(string, string);
+string Mul(string, string);
+string Sub(string, string);
 string ToDecimal(string, string);
 string FromDecimal(string, string);
-string Modulus(string, string);
-string DivideDigit(string, string);
+string Mod(string, string);
+string DivDigit(string, string);
 string Abs(string, string);
 string Trigonometry(string, string);
 string And(string, string);
@@ -63,29 +56,139 @@ string Not(string);
 string Xor(string, string);
 string XNor(string, string);
 string Log(string, string);
-string Scale(string, int = 15, int = 0);
 string DecimalTostring(unsigned long long);
 string Bodmash(string);
-bool hasPrecedence(char, char);
-string applyOp(char, string, string);
-unsigned long long stringToDecimal(string);
 int Compare(string, string);
-void Fraction(string);
+pair<string,string> Fraction(string);
+
 
 
 int main()
-{
+{	
 	string In;
 	while (1)
 	{
+		cout<<": ";
 		getline(cin, In);
-		cout << Bodmash(In) << endl;
+		if(In=="exit") exit(0);
+		cout << "-> "<<Bodmash(In) << endl<<endl;
 	}
+}
+string Trim(string a)
+{
+	if (a == "∞") return a;
+	string Int, Frac;
+	int i, n = a.length();
+
+	for (i = 0; i < n; i++)
+	{
+		if (a[i] == '.') break;
+		Int += a[i];
+	}
+	for (; i < n; i++)
+	{
+		Frac += a[i];
+	}
+
+	if (Int[0] == '-')
+		while (Int.length() > 0 && Int[0] == '0')
+		{
+			Int.erase(Int.begin() + 1);
+		}
+
+	else
+		while (Int.length() > 0 && Int[0] == '0')
+		{
+			Int.erase(Int.begin());
+		}
+
+	while (Frac.length() > 0 && Frac.back() == '0')
+	{
+		Frac.pop_back();
+	}
+	if (Frac.length() > 0 && Frac.back() == '.')
+	{
+		Frac.pop_back();
+	}
+
+	string Number = Int + Frac;
+	if (Number.length() > 0) return Number;
+	return "0";
+}
+
+unsigned long long stringToDecimal(string Number)
+{
+	Number = Trim(Number);
+	unsigned long long Decimal = 0;
+	int n = Number.length(), i;
+
+	for (i = 0; i < n; i++)
+	{
+		Decimal *= 10;
+		Decimal += Number[i] - 48;
+	}
+
+	return Decimal;
+}
+
+bool hasPrecedence(char op1, char op2) 
+{
+	if (op2 == '(' || op2 == ')')
+		return false;
+	if ((op1 == '^' || op1 == '*' || op1 == '/' || op1 == '%' || op1 == '!'||op1=='p'|| op1=='c'|| op1=='g'|| op1=='l'|| op1=='&'|| op1=='|') && (op2 == '+' || op2 == '-'))
+		return false;
+	if ((op1 == '^' || op1 == '!'|| op1=='p'|| op1=='c'|| op1=='g'|| op1=='l'|| op1=='&'|| op1=='|') && (op2 == '*' || op2 == '/' || op2 == '%'))
+		return false;
+	if((op1 == '!' || op1 == '^' )&&( op2=='p'|| op2=='c'|| op2=='g'|| op2=='l'|| op2=='&'|| op2=='|'))
+		return false;
+	if (op1 == '!' && op2 == '^')
+		return false;
+	else
+		return true;
+}
+
+string applyOp(char op, string b, string a) 
+{
+	// cout<<op<<endl;
+	switch (op) {
+	case '+':
+		return Add(a, b);
+		break;
+	case '-':
+		return Sub(a, b);
+		break;
+	case '*':
+		return Mul(a, b);
+		break;
+	case '^':
+		return Power(a, b);
+		break;
+	case '%': return Mod(a, b);
+		break;
+	case '/': return Div(a, b);
+		break;
+	case '!': return Factorial(b);
+		break;
+	case 'p': return NPR(a,b);
+		break;
+	case 'c': return NCR(a,b);
+		break;
+	case 'g': return GCD(a,b);
+		break;
+	case 'l': return LCM(a,b);
+		break;
+	case '&': return And(a,b);
+		break;
+	case '|': return Or(a,b);
+		break;
+	}
+	return "0";
 }
 
 string Bodmash(string expression)
 {
 	if (expression.length() == 0) return "";
+
 
 	stack<string> values;
 	stack<char> ops;
@@ -120,8 +223,8 @@ string Bodmash(string expression)
 			ops.pop();
 		}
 
-		else if (expression[i] == '+' || expression[i] == '-' || expression[i] == '*' || expression[i] == '/' || expression[i] == '%' || expression[i] == '^') {
-
+		else if (expression[i] == '+' || expression[i] == '-' || expression[i] == '*' || expression[i] == '/' || expression[i] == '%' || expression[i] == '^' ||expression[i] == 'p' ||expression[i] == 'c' ||expression[i] == 'g' ||expression[i] == 'l' ||expression[i] == '&' ||expression[i] == '|'  )
+		 {
 			while (!ops.empty() && hasPrecedence(expression[i], ops.top())) {
 				string value1, value2;
 				if (!values.empty()) {
@@ -172,142 +275,8 @@ string Bodmash(string expression)
 	// System.out.println(FromDecimal(Decimal,To));
 	return Decimal;
 }
-bool hasPrecedence(char op1, char op2) {
-	if (op2 == '(' || op2 == ')')
-		return false;
-	if ((op1 == '^' || op1 == '*' || op1 == '/' || op1 == '%' || op1 == '!') && (op2 == '+' || op2 == '-'))
-		return false;
-	if ((op1 == '^' || op1 == '!') && (op2 == '*' || op2 == '/' || op2 == '%'))
-		return false;
-	if (op1 == '!' && op2 == '^')
-		return false;
-	else
-		return true;
-}
 
-string applyOp(char op, string b, string a) {
-	// cout<<op<<endl;
-	switch (op) {
-	case '+':
-		return Add(a, b);
-		break;
-	case '-':
-		return Substract(a, b);
-		break;
-	case '*':
-		return Multiply(a, b);
-		break;
-	case '^':
-		return Power(a, b);
-		break;
-	case '%': return Modulus(a, b);
-		break;
-	case '/': return Divide(a, b);
-		break;
-	case '!': return Factorial(b);
-	}
-	return "0";
-}
-
-
-string Ceil(string a)
-{
-	return Scale(a, 0, 1);
-}
-string Floor(string a)
-{
-	return Scale(a, 0, -1);
-}
-string Round(string a)
-{
-	return Scale(a, 0);
-}
-string ToDecimal(string Number, string Base)
-{
-	// cout << Number << " " << Base << endl;
-	Number = Trim(Number);
-	bool Negative = (Number[0] == '-');
-	string Decimal, P = "", Digit;
-	Number = Number.substr(Negative, Number.length());
-	int i, n = Number.length(), j = -1;
-
-	while (++j < n)if (Number[j] == '.') break;
-
-	// cout << j << endl;
-	P += j + '0' - 1;
-	// cout << P << endl;
-	string Two = Pow(Base, P), Temp;
-	// cout << Two << endl;
-
-	for (i = 0; i < n; i++, Digit = "")
-	{
-		if (Number[i] == '.') continue;
-		Digit += Number[i] > '9' ? "1" : "";
-		Digit += ((Number[i] - '0') % 17) + '0';
-		Temp = Multiply(Digit, Two);
-		Decimal = Add(Decimal, Temp);
-		Two = Divide(Two, Base);
-	}
-	return (Negative ? "-" : "") + Decimal;
-}
-
-string FromDecimal(string Decimal, string Base)
-{
-	string NumberInt, NumberFrac, DecimalInt, DecimalFrac;
-	int i, n = Decimal.length();
-	for (i = 0; i < n && Decimal[i] != '.'; i++)
-	{
-		DecimalInt += Decimal[i];
-	}
-
-	for (; i < n; i++)
-	{
-		DecimalFrac += Decimal[i];
-	}
-
-	if (DecimalInt.length())
-	{
-		while (DecimalInt > "0")
-		{
-			//cout<<"######1"<<endl;
-			string Mod = Modulus(DecimalInt, Base);
-
-			if (Compare(Mod, "9") > 0)
-			{
-				char temp = Mod[1];
-				Mod = "";
-				Mod += temp + 'A' - '0';
-			}
-			NumberInt += Mod;
-			DecimalInt = Floor(Divide(DecimalInt, Base));
-		}
-	}
-	reverse(NumberInt.begin(), NumberInt.end());
-
-
-	//cout<<DecimalFrac<<endl;
-	if (DecimalFrac.length())
-	{
-
-		NumberFrac += '.';
-		for (i = 0; i < 10 && DecimalFrac != "0"; i++)
-		{
-			string temp1 = Multiply(DecimalFrac, Base);
-			string temp2 = Floor(temp1);
-			//cout<<temp1<<" "<<temp2<<endl;
-			DecimalFrac = Substract(temp1, temp2);
-			if (Compare(temp2, "9") > 0)
-			{
-				char temp = temp2[1];
-				temp2 = "";
-				temp2 += temp + 'A' - '0';
-			}
-			NumberFrac += temp2;
-		}
-	}
-	return NumberInt + NumberFrac;
-}
-string Scale(string a, int n, int round)
+string Scale(string a, int n=15, int round=0)
 {
 	int i, j, s = a.length();
 	for (i = 0; i < s; i++)
@@ -370,47 +339,105 @@ string Scale(string a, int n, int round)
 	a = Trim(a);
 	return a;
 }
-string Trim(string a)
-{
-	if (a == "∞") return a;
-	string Int, Frac;
-	int i, n = a.length();
 
-	for (i = 0; i < n; i++)
+string Ceil(string a)
+{
+	return Scale(a, 0, 1);
+}
+string Floor(string a)
+{
+	return Scale(a, 0, -1);
+}
+string Round(string a)
+{
+	return Scale(a, 0);
+}
+string ToDecimal(string Number, string Base)
+{
+	// cout << Number << " " << Base << endl;
+	Number = Trim(Number);
+	bool Negative = (Number[0] == '-');
+	string Decimal, P = "", Digit;
+	Number = Number.substr(Negative, Number.length());
+	int i, n = Number.length(), j = -1;
+
+	while (++j < n)if (Number[j] == '.') break;
+
+	// cout << j << endl;
+	P += j + '0' - 1;
+	// cout << P << endl;
+	string Two = Pow(Base, P), Temp;
+	// cout << Two << endl;
+
+	for (i = 0; i < n; i++, Digit = "")
 	{
-		if (a[i] == '.') break;
-		Int += a[i];
+		if (Number[i] == '.') continue;
+		Digit += Number[i] > '9' ? "1" : "";
+		Digit += ((Number[i] - '0') % 17) + '0';
+		Temp = Mul(Digit, Two);
+		Decimal = Add(Decimal, Temp);
+		Two = Div(Two, Base);
 	}
+	return (Negative ? "-" : "") + Decimal;
+}
+
+string FromDecimal(string Decimal, string Base)
+{
+	string NumberInt, NumberFrac, DecimalInt, DecimalFrac;
+	int i, n = Decimal.length();
+	for (i = 0; i < n && Decimal[i] != '.'; i++)
+	{
+		DecimalInt += Decimal[i];
+	}
+
 	for (; i < n; i++)
 	{
-		Frac += a[i];
+		DecimalFrac += Decimal[i];
 	}
 
-	if (Int[0] == '-')
-		while (Int.length() > 0 && Int[0] == '0')
-		{
-			Int.erase(Int.begin() + 1);
-		}
-
-	else
-		while (Int.length() > 0 && Int[0] == '0')
-		{
-			Int.erase(Int.begin());
-		}
-
-	while (Frac.length() > 0 && Frac.back() == '0')
+	if (DecimalInt.length())
 	{
-		Frac.pop_back();
-	}
-	if (Frac.length() > 0 && Frac.back() == '.')
-	{
-		Frac.pop_back();
-	}
+		while (DecimalInt > "0")
+		{
+			//cout<<"######1"<<endl;
+			string mod = Mod(DecimalInt, Base);
 
-	string Number = Int + Frac;
-	if (Number.length() > 0) return Number;
-	return "0";
+			if (Compare(mod, "9") > 0)
+			{
+				char temp = mod[1];
+				mod = "";
+				mod += temp + 'A' - '0';
+			}
+			NumberInt += mod;
+			DecimalInt = Floor(Div(DecimalInt, Base));
+		}
+	}
+	reverse(NumberInt.begin(), NumberInt.end());
+
+
+	//cout<<DecimalFrac<<endl;
+	if (DecimalFrac.length())
+	{
+
+		NumberFrac += '.';
+		for (i = 0; i < 10 && DecimalFrac != "0"; i++)
+		{
+			string temp1 = Mul(DecimalFrac, Base);
+			string temp2 = Floor(temp1);
+			//cout<<temp1<<" "<<temp2<<endl;
+			DecimalFrac = Sub(temp1, temp2);
+			if (Compare(temp2, "9") > 0)
+			{
+				char temp = temp2[1];
+				temp2 = "";
+				temp2 += temp + 'A' - '0';
+			}
+			NumberFrac += temp2;
+		}
+	}
+	return NumberInt + NumberFrac;
 }
+
 string Exponent(string a)
 {
 	a = Trim(a);
@@ -420,15 +447,15 @@ string Exponent(string a)
 	{
 		if (Compare(i, "0") > 0)
 		{
-			P = Multiply(P, a);
-			F = Multiply(F, i);
+			P = Mul(P, a);
+			F = Mul(F, i);
 		}
-		Result = Add(Result, Divide(P, F));
+		Result = Add(Result, Div(P, F));
 		i = Add(i, "1");
 	}
 	return Result;
 }
-string DivideDigit(string a, string b)
+string DivDigit(string a, string b)
 {
 	a = Trim(a);
 	b = Trim(b);
@@ -439,7 +466,7 @@ string DivideDigit(string a, string b)
 		j = Add(j, b);
 		i = Add(i, "1");
 	}
-	return Substract(i, "1");
+	return Sub(i, "1");
 }
 string Root(string n, string x)
 {
@@ -449,9 +476,9 @@ string Root(string n, string x)
 	if (x.length() == 0) return n;
 	string l = "0", r = n, m = "0";
 	if (Compare(n, "1") < 1) r = "1";
-	while (Compare(Substract(r, l), ".000000000001") == 1)
+	while (Compare(Sub(r, l), ".000000000001") == 1)
 	{
-		string temp = Divide(Add(l, r), "2");
+		string temp = Div(Add(l, r), "2");
 		if (Compare(m, temp) == 0)
 		{
 			break;
@@ -494,22 +521,39 @@ string Pow(string a, string b)
 
 	while (Compare(b, "0") == 1)
 	{
-		b = Substract(b, "1");
-		c = Multiply(c, a);
+		b = Sub(b, "1");
+		c = Mul(c, a);
 	}
 
 	// cout<<c<<endl;
 	if (Negative)
 	{
-		c = Divide("1", c);
+		c = Div("1", c);
 	}
 	return c;
 }
-void Fraction(string s)
-{
 
-	Num = "";
-	Div = "1";
+string GCD(string a,string b)
+{
+    while(Compare(a,"0")>0)
+     {
+        string c=a;
+        a=Mod(b,a);
+        b=c;
+     }
+
+     return b;
+}
+
+string LCM(string a,string b)
+{
+	 return Div(Mul(a,b),GCD(a,b));
+}
+
+
+pair<string,string> Fraction(string s)
+{
+	string WholeNum = "",DecNum = "1";
 	s = Trim(s);
 	// cout<<s<<endl;
 	string i, n = DecimalTostring(s.length());
@@ -518,41 +562,42 @@ void Fraction(string s)
 	{
 		if (s[stringToDecimal(i)] == '.')
 		{
-			for (string i = "1"; Compare(i, Substract(n, i)) < 0;)
+			for (string i = "1"; Compare(i, Sub(n, i)) < 0;)
 			{
-				Div += '0';
+				DecNum += '0';
 				i = Add(i, "1");
 			}
 			// cout<<"#####"<<Div<<endl;
 		}
 		else
 		{
-			Num += s[stringToDecimal(i)];
+			WholeNum += s[stringToDecimal(i)];
 		}
 
 		i = Add(i, "1");
 	}
 
 	// cout<<Num<<" "<<Div<<endl;
-	while (Num[0] == '0') Num.erase(Num.begin());
-	if (Num.length() == 0) Num = "0";
-	string temp = Num;
+	while (WholeNum[0] == '0') WholeNum.erase(WholeNum.begin());
+	if (WholeNum.length() == 0) WholeNum = "0";
+	string temp = WholeNum;
 
-	// cout<<endl<<Num<<" "<<Compare(Multiply("2","2"), temp)<<endl;
-	for (i = "2"; Compare(i, Num) < 1;)
+	// cout<<endl<<Num<<" "<<Compare(Mul("2","2"), temp)<<endl;
+	for (i = "2"; Compare(i, WholeNum) < 1;)
 	{
 		// cout<<i<<endl;
-		if (Modulus(Num, i) == "0" && Modulus(Div, i) == "0")
+		if (Mod(WholeNum, i) == "0" && Mod(DecNum, i) == "0")
 		{
-			Num = Divide(Num, i);
-			Div = Divide(Div, i);
-			// cout<<Modulus(Div, i)<<endl;
+			WholeNum = Div(WholeNum, i);
+			DecNum = Div(DecNum, i);
+			// cout<<Mod(Div, i)<<endl;
 		}
 		i = Add(i, "1");
 		// cout<<" -"<<Div<<endl;
 	}
+	return pair<string,string>(WholeNum,DecNum); 
 }
-string Modulus(string Number, string Mod)
+string Mod(string Number, string Mod)
 {
 	if (Number.length() == 0) return Number;
 	bool Negative = false;
@@ -566,10 +611,10 @@ string Modulus(string Number, string Mod)
 		Number.erase(Number.begin());
 		Negative = true;
 	}
-	string temp1 = DivideDigit(Number, Mod);
+	string temp1 = DivDigit(Number, Mod);
 	//cout<<temp1<<endl;
-	string temp2 = Multiply(Mod, temp1);
-	string temp4 = Substract(Number, temp2);
+	string temp2 = Mul(Mod, temp1);
+	string temp4 = Sub(Number, temp2);
 	//cout<<Number<<" "<<Mod<<" "<<temp1<<" "<<temp2<<" "<<temp4<<endl;
 	return (Negative ? "-" : "") + temp4;
 }
@@ -657,20 +702,7 @@ int Compare(string a, string b)
 	}
 	else return -1;
 }
-unsigned long long stringToDecimal(string Number)
-{
-	Number = Trim(Number);
-	unsigned long long Decimal = 0;
-	int n = Number.length(), i;
 
-	for (i = 0; i < n; i++)
-	{
-		Decimal *= 10;
-		Decimal += Number[i] - 48;
-	}
-
-	return Decimal;
-}
 string DecimalTostring(unsigned long long Decimal)
 {
 	string Number;
@@ -683,7 +715,8 @@ string DecimalTostring(unsigned long long Decimal)
 
 	return Trim(Number);
 }
-string Divide(string a, string b)
+
+string Div(string a, string b)
 {
 	// cout<<a<<" "<<b<<endl;
 	a = Trim(a);
@@ -772,8 +805,8 @@ string Divide(string a, string b)
 
 		for (i = 0; i < 15 && Compare(temp, "0") == 1; i++)
 		{
-			Div += DivideDigit(temp, Num2);
-			temp = Modulus(temp, Num2);
+			Div += DivDigit(temp, Num2);
+			temp = Mod(temp, Num2);
 			temp += '0';
 			// cout<<"-"<<Div<<endl;
 		}
@@ -791,9 +824,9 @@ string Divide(string a, string b)
 
 	for (; (i < Num1.length());)
 	{
-		Div += DivideDigit(temp, Num2);
+		Div += DivDigit(temp, Num2);
 		//cout<<" -"<<Div<<endl;
-		temp = Modulus(temp, Num2);
+		temp = Mod(temp, Num2);
 
 		if (++i < Num1.length())
 			temp += Num1[i];
@@ -807,8 +840,8 @@ string Divide(string a, string b)
 	for (; (i - Num1.length() < 11 && Compare(temp, "0") == 1); i++)
 	{
 		temp += '0';
-		Div += DivideDigit(temp, Num2);
-		temp = Modulus(temp, Num2);
+		Div += DivDigit(temp, Num2);
+		temp = Mod(temp, Num2);
 	}
 
 	if (i - Num1.length() == 11)
@@ -819,22 +852,10 @@ string Divide(string a, string b)
 
 	return (Negative ? "-" : "") + Div;
 }
-string FloatToInt(string Float)
-{
-	string Int;
-	int i, n = Float.length();
-	for (i = 0; i < n; i++)
-	{
-		if (Float[i] == '.') break;
-		Int += Float[i];
-	}
-	//cout<<Int<<endl;
-	if (Int > "") return Int;
-	return "0";
-}
+
 string Sub_Int(string a, string b)
 {
-	string Substraction;
+	string Subion;
 	int i, n = a.length(), m = b.length();
 
 	reverse(a.begin(), a.end());
@@ -868,15 +889,16 @@ string Sub_Int(string a, string b)
 		temp = temp1 - temp2 + 10 * (SubCarry + temp2 > temp1) - SubCarry;
 		SubCarry = (SubCarry + temp2 > temp1);
 
-		Substraction += temp + 48;
+		Subion += temp + 48;
 	}
 
-	reverse(Substraction.begin(), Substraction.end());
-	return Substraction;
+	reverse(Subion.begin(), Subion.end());
+	return Subion;
 }
+
 string Sub_Frac(string a, string b)
 {
-	string Substraction;
+	string Subion;
 	int i, n = a.length(), m = b.length();
 
 	int p = max(m, n);
@@ -905,14 +927,15 @@ string Sub_Frac(string a, string b)
 		temp = temp1 - temp2 + 10 * (SubCarry + temp2 > temp1) - SubCarry;
 		SubCarry = (SubCarry + temp2 > temp1);
 
-		Substraction += temp + 48;
+		Subion += temp + 48;
 	}
 
-	reverse(Substraction.begin(), Substraction.end());
+	reverse(Subion.begin(), Subion.end());
 
-	return (Substraction.length() > 0 ? "." : "") + Substraction;
+	return (Subion.length() > 0 ? "." : "") + Subion;
 }
-string Substract(string Num1, string Num2)
+
+string Sub(string Num1, string Num2)
 {
 	Num1 = Trim(Num1);
 	Num2 = Trim(Num2);
@@ -985,11 +1008,12 @@ string Substract(string Num1, string Num2)
 		}
 	}
 	SubCarry = 0;
-	string Substraction = (Negative ? "-" : "") + SubInt + SubFrac;
-	if (Substraction.length()) return Substraction;
+	string Subion = (Negative ? "-" : "") + SubInt + SubFrac;
+	if (Subion.length()) return Subion;
 	return "0";
 }
-string Multiply(string a, string b)
+
+string Mul(string a, string b)
 {
 	// cout<<a<<" "<<b<<endl;
 	a = Trim(a);
@@ -1108,6 +1132,7 @@ string Multiply(string a, string b)
 	if (Mul.length() > 0) return (Negative ? "-" : "") + Mul;
 	return "0";
 }
+
 string Add_Int(string a, string b)
 {
 	string Addition;
@@ -1153,6 +1178,7 @@ string Add_Int(string a, string b)
 
 	return Addition;
 }
+
 string Add_Frac(string a, string b)
 {
 	string Addition;
@@ -1194,6 +1220,7 @@ string Add_Frac(string a, string b)
 	reverse(Addition.begin(), Addition.end());
 	return (Addition.length() > 0 ? "." : "") + Addition;
 }
+
 string Add(string Num1, string Num2)
 {
 	Num1 = Trim(Num1);
@@ -1205,8 +1232,8 @@ string Add(string Num1, string Num2)
 		Num1.erase(Num1.begin());
 		Num2.erase(Num2.begin());
 	}
-	else if (Num1[0] == '-') return Substract(Num2, Num1.substr(1, Num1.length() - 1));
-	else if (Num2[0] == '-') return Substract(Num1, Num2.substr(1, Num2.length() - 1));
+	else if (Num1[0] == '-') return Sub(Num2, Num1.substr(1, Num1.length() - 1));
+	else if (Num2[0] == '-') return Sub(Num1, Num2.substr(1, Num2.length() - 1));
 	string Num1Int, Num1Frac, Num2Int, Num2Frac;
 
 	int i, n = Num1.length(), m = Num2.length();
@@ -1241,29 +1268,58 @@ string Add(string Num1, string Num2)
 	AddCarry = 0;
 	return (Negative ? "-" : "") + (SumInt > "" ? SumInt : "0") + (SumFrac > "" ? SumFrac : "");
 }
+
 string Power(string Number, string Power)
 {
 	// cout<<Number<<" "<<Power<<endl;
 	Number = Trim(Number);
 	Power = Trim(Power);
-	Fraction(Power);
+	pair<string,string> Num(Fraction(Power));
 	// cout<<"->"<<Power<<" "<<Num<<" "<<Div<<endl;
-	Number = Pow(Number, Num);
+	Number = Pow(Number, Num.first);
 	// cout<<endl<<Num<<" "<<Div<<" "<<Number<<endl;
-	if (Compare(Div, "1") > 0) return Root(Number, Div);
+	if (Compare(Num.second, "1") > 0) return Root(Number,Num.second);
 	return Number;
 }
+
+
 string Factorial(string n)
 {
 	n = Trim(n);
 	string i, Fact = "1";
 	for (i = "2"; Compare(i, n) < 1;)
 	{
-		Fact = Multiply(Fact, i);
+		Fact = Mul(Fact, i);
 		i = Add(i, "1");
 		// cout << "#######" << i << endl;
 	}
 	return Fact;
+}
+
+string NPR(string n,string r)
+{
+	string s="1",i=Add(Sub(n,r),"1");
+	while(Compare(i,n)<1)
+	{
+		s=Mul(s,i);
+		i=Add(i,"1");
+	}
+	return s;
+}
+
+string NCR(string n,string r)
+{
+	string s="1",i="1"; 
+	if(Compare(r,Sub(n,r))>0) r=Sub(n,r);
+
+	while(Compare(i,r)<1)
+	{	
+		s=Mul(s,Add(Sub(n,r),i));
+		s=Div(s,i); 
+		i=Add(i,"1");
+	}
+
+	return s;
 }
 string Remainder(string Rad)
 {
@@ -1271,21 +1327,21 @@ string Remainder(string Rad)
 	string P = "1", F = "1";
 	for (i = "1"; Compare(j, "0.000000000005") > 0;)
 	{
-		P = Multiply(P, Rad);
-		P = Multiply(P, Rad);
-		F = Multiply(F, i);
-		F = Multiply(F, Add(i, "1"));
-		j = Divide(P, F);
+		P = Mul(P, Rad);
+		P = Mul(P, Rad);
+		F = Mul(F, i);
+		F = Mul(F, Add(i, "1"));
+		j = Div(P, F);
 		i = Add(i, "2");
 		// cout<<i<<" "<<j<<endl;
 	}
 
-	return Substract(i, "2");
+	return Sub(i, "2");
 }
 string Sine(string Deg)
 {
 	//cout<<Deg<<endl;
-	string Rad = Multiply(Divide(Deg, "180"), Pi);
+	string Rad = Mul(Div(Deg, "180"), Pi);
 	string i, Result = "0";
 
 	string Term = Rad;
@@ -1302,19 +1358,19 @@ string Sine(string Deg)
 		if (Compare(i, "1") == 1)
 		{
 			// cout<<"1. "<<Term<<endl;
-			Term = Multiply(Term, Rad);
+			Term = Mul(Term, Rad);
 			// cout<<"2. "<<Term<<endl;
-			Term = Multiply(Term, Rad);
+			Term = Mul(Term, Rad);
 			// cout<<"3. "<<Term<<endl;
-			Term = Divide(Term, Substract(i, "1"));
+			Term = Div(Term, Sub(i, "1"));
 			// cout<<"4. "<<Term<<endl;
-			Term = Divide(Term, i);
+			Term = Div(Term, i);
 			// cout<<"5. "<<Term<<endl;    //prob
 		}
 		// cout<<"\""<<Term<<endl;
 		if (j % 2)
 		{
-			Result = Substract(Result, Term);
+			Result = Sub(Result, Term);
 		}
 		else
 		{
@@ -1344,14 +1400,14 @@ string Sine(string Deg)
 }
 string Abs(string a, string b)
 {
-	if (Compare(a, b) > -1) return Substract(a, b);
-	return Substract(b, a);
+	if (Compare(a, b) > -1) return Sub(a, b);
+	return Sub(b, a);
 }
 string Sin(string Deg)
 {
 
 	Deg = Trim(Deg);
-	Deg = Modulus(Deg, "360");
+	Deg = Mod(Deg, "360");
 	// cout<<Deg<<endl;
 	if (Deg[0] == '-')
 	{
@@ -1362,15 +1418,15 @@ string Sin(string Deg)
 		}
 		else if (Compare(Deg, "90") > 0 && Compare(Deg, "180") < 1)
 		{
-			return "-" + Sine(Substract("180", Deg));
+			return "-" + Sine(Sub("180", Deg));
 		}
 		else if (Compare(Deg, "180") > 0 && Compare(Deg, "270") < 1)
 		{
-			return Sine(Substract(Deg, "180"));
+			return Sine(Sub(Deg, "180"));
 		}
 		else
 		{
-			return Sine(Substract("360", Deg));
+			return Sine(Sub("360", Deg));
 		}
 	}
 
@@ -1382,15 +1438,15 @@ string Sin(string Deg)
 		}
 		else if (Compare(Deg, "90") > 0 && Compare(Deg, "180") < 1)
 		{
-			return Sine(Substract("180", Deg));
+			return Sine(Sub("180", Deg));
 		}
 		else if (Compare(Deg, "180") > 0 && Compare(Deg, "270") < 1)
 		{
-			return "-" + Sine(Substract(Deg, "180"));
+			return "-" + Sine(Sub(Deg, "180"));
 		}
 		else
 		{
-			return "-" + Sine(Substract("360", Deg));
+			return "-" + Sine(Sub("360", Deg));
 		}
 	}
 }
@@ -1402,7 +1458,7 @@ string Cos(string Deg)
 }
 string Tan(string Deg)
 {
-	string Result = Divide(Sin(Deg), Cos(Deg));
+	string Result = Div(Sin(Deg), Cos(Deg));
 	int k, j, s = Result.length();
 	for (k = 0; k < s; k++)
 	{
@@ -1419,7 +1475,7 @@ string Tan(string Deg)
 }
 string Csc(string Deg)
 {
-	string Result = Divide("1", Sin(Deg));
+	string Result = Div("1", Sin(Deg));
 	int k, j, s = Result.length();
 	for (k = 0; k < s; k++)
 	{
@@ -1436,7 +1492,7 @@ string Csc(string Deg)
 }
 string Sec(string Deg)
 {
-	string Result = Divide("1", Cos(Deg));
+	string Result = Div("1", Cos(Deg));
 	int k, j, s = Result.length();
 	for (k = 0; k < s; k++)
 	{
@@ -1453,7 +1509,7 @@ string Sec(string Deg)
 }
 string Cot(string Deg)
 {
-	string Result = Divide("1", Tan(Deg));
+	string Result = Div("1", Tan(Deg));
 
 	int k, j, s = Result.length();
 	for (k = 0; k < s; k++)
@@ -1473,7 +1529,7 @@ string Trigonometry(string Deg, string Op)
 {
 
 	Deg = Trim(Deg);
-	Deg = Modulus(Deg, "360");
+	Deg = Mod(Deg, "360");
 
 	if (Op == "sin")
 	{
@@ -1506,6 +1562,107 @@ string Trigonometry(string Deg, string Op)
 	else return "0";
 }
 
+string And(string a,string b)
+{
+	string aBin=FromDecimal(a,"2"),bBin=FromDecimal(b,"2");
+
+	string aBinInt="",aBinFrac="",bBinInt="",bBinFrac="",Int="",Frac="";
+
+	int i,n=aBin.length(),m=bBin.length(),j;
+	for (i = 0; i < n && aBin[i] != '.'; i++)
+	{
+		aBinInt += aBin[i];
+	}
+
+	for (i++; i < n; i++)
+	{
+		aBinFrac += aBin[i];
+	}
+	
+	for (i = 0; i < m && aBin[i] != '.'; i++)
+	{
+		bBinInt += bBin[i];
+	}
+
+	for (i++; i < m ; i++)
+	{
+		bBinFrac += bBin[i];
+	}
+
+	n=aBinInt.length();
+	m=bBinInt.length();
+
+	for(i=n-1,j=m-1;i>-1||j>-1;i--,j--)
+	{
+		Int+=(((i>-1?aBinInt[i]:'0')-'0')&((j>-1?bBinInt[j]:'0')-'0'))+'0';
+	}
+
+	reverse(Int.begin(),Int.end());
+
+	n=aBinFrac.length();
+	m=bBinFrac.length();
+
+	for(i=0,j=0;i<n||j<m;i++,j++)
+	{
+		Int+=(((i<n?aBinFrac[i]:'0')-'0')&((j<m?bBinFrac[j]:'0')-'0'))+'0';
+	}
+
+	return ToDecimal(Int+"."+Frac,"2");
+
+}
+
+string Or(string a,string b)
+{
+	string aBin=FromDecimal(a,"2"),bBin=FromDecimal(b,"2");
+
+	string aBinInt="",aBinFrac="",bBinInt="",bBinFrac="",Int="",Frac="";
+
+	int i,n=aBin.length(),m=bBin.length(),j;
+	for (i = 0; i < n && aBin[i] != '.'; i++)
+	{
+		aBinInt += aBin[i];
+	}
+
+	for (i++; i < n; i++)
+	{
+		aBinFrac += aBin[i];
+	}
+	
+	for (i = 0; i < m && aBin[i] != '.'; i++)
+	{
+		bBinInt += bBin[i];
+	}
+
+	for (i++; i < m ; i++)
+	{
+		bBinFrac += bBin[i];
+	}
+
+	// cout<<aBinInt<<" "<<aBinFrac<<" "<<bBinInt<<" "<<bBinFrac<<endl; 
+
+	n=aBinInt.length();
+	m=bBinInt.length();
+
+
+	for(i=n-1,j=m-1;i>-1||j>-1;i--,j--)
+	{
+		Int+=(((i>-1?aBinInt[i]:'0')-'0')|((j>-1?bBinInt[j]:'0')-'0'))+'0';
+	}
+
+	reverse(Int.begin(),Int.end());
+
+	n=aBinFrac.length();
+	m=bBinFrac.length();
+
+	for(i=0,j=0;i<n||j<m;i++,j++)
+	{
+		Int+=(((i<n?aBinFrac[i]:'0')-'0')|((j<m?bBinFrac[j]:'0')-'0'))+'0';
+	}
+
+	return ToDecimal(Int+"."+Frac,"2");
+
+}
+
 
 /*
 +
@@ -1524,4 +1681,13 @@ tan
 csc
 sec
 cot
+
+P
+C
+L
+G
+
+&
+|
+
 */
