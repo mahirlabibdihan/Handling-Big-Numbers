@@ -1,7 +1,7 @@
 all: big
 
-big: BigDecimal.o Add.o Mul.o Sub.o Div.o Tri.o Calc.o Bit.o Util.o Math.o
-	g++  BigDecimal.o Add.o Mul.o Sub.o Div.o Tri.o Calc.o Bit.o Util.o Math.o -o big
+big: BigDecimal.o Add.o Sub.o main.o Util.o CString.o Mul.o Div.o Math.o String.o
+	g++  BigDecimal.o Add.o Sub.o main.o Util.o CString.o Mul.o Div.o Math.o String.o -o big
 
 BigDecimal.o: BigDecimal.cpp
 	g++ -c BigDecimal.cpp
@@ -33,6 +33,15 @@ Util.o: Util.cpp
 Math.o: Math.cpp
 	g++ -c Math.cpp
 
+String.o: String.cpp
+	g++ -c String.cpp
+
+CString.o: CString.cpp
+	g++ -c CString.cpp
+
+main.o: main.cpp
+	g++ -c main.cpp
+	
 run: big
 	./big
 

@@ -1,143 +1,165 @@
-#include "Div.h"
-pair<string,string> Fraction(string s)
+#include "BigDecimal.h"
+/*pair<BigDecimal,BigDecimal> Fraction(BigDecimal s)
 {
-	string WholeNum = "",DecNum = "1";
-	s = Trim(s);
+	BigDecimal WholeNum = "",DecNum = "1";
+	s.trim();
 	// cout<<s<<endl;
-	string i, n = DecimalTostring(s.length());
+	BigDecimal i, n = DecimalToBigDecimal(s.length());
 	// cout<<" "<<s<<endl;
-	for (i = "0"; Compare(n, i) == 1;)
+	for (i = "0"; n > i;)
 	{
-		if (s[stringToDecimal(i)] == '.')
+		if (s[BigDecimalToDecimal(i)] == '.')
 		{
-			for (string i = "1"; Compare(i, Sub(n, i)) < 0;)
+			for (BigDecimal i = "1"; i<sub(n, i);)
 			{
 				DecNum += '0';
-				i = Add(i, "1");
+				i = add(i, "1");
 			}
-			// cout<<"#####"<<Div<<endl;
+			// cout<<"#####"<<division<<endl;
 		}
 		else
 		{
-			WholeNum += s[stringToDecimal(i)];
+			WholeNum += s[BigDecimalToDecimal(i)];
 		}
 
-		i = Add(i, "1");
+		i = add(i, "1");
 	}
 
-	// cout<<Num<<" "<<Div<<endl;
-	while (WholeNum[0] == '0') WholeNum.erase(WholeNum.begin());
+	// cout<<Num<<" "<<division<<endl;
+	while (WholeNum[0] == '0') WholeNum.pop_front();
 	if (WholeNum.length() == 0) WholeNum = "0";
-	string temp = WholeNum;
+	BigDecimal temp = WholeNum;
 
 	// cout<<endl<<Num<<" "<<Compare(Mul("2","2"), temp)<<endl;
-	for (i = "2"; Compare(i, WholeNum) < 1;)
+	for (i = "2"; i<=WholeNum;)
 	{
 		// cout<<i<<endl;
 		if (Mod(WholeNum, i) == "0" && Mod(DecNum, i) == "0")
 		{
-			WholeNum = Div(WholeNum, i);
-			DecNum = Div(DecNum, i);
-			// cout<<Mod(Div, i)<<endl;
+			WholeNum = WholeNum.div(i);
+			DecNum = DecNum.division(i);
+			// cout<<Mod(division, i)<<endl;
 		}
-		i = Add(i, "1");
-		// cout<<" -"<<Div<<endl;
+		i = add(i, "1");
+		// cout<<" -"<<division<<endl;
 	}
-	return pair<string,string>(WholeNum,DecNum); 
-}
-string DivDigit(string a, string b)
+	return pair<BigDecimal,BigDecimal>(WholeNum,DecNum); 
+}*/
+BigDecimal divDigit(BigDecimal a, BigDecimal b)
 {
-	a = Trim(a);
-	b = Trim(b);
-	if (Compare(b, "0") == 0) return "∞";
-	string i, j = "0";
-	for (i = "0"; Compare(j, a) < 1;)
+	a.trim();
+	b.trim();
+	if (b=="0") return "∞";
+	BigDecimal i, j = "0";
+	for (i = "0"; j.compareTo(a)<1;)
 	{
-		j = Add(j, b);
-		i = Add(i, "1");
+		j = j.add(b);
+		i = i.add("1");
 	}
-	return Sub(i, "1");
+	return i.sub("1");
 }
-string Remainder(string Rad)
+/*BigDecimal Remainder(BigDecimal Rad)
 {
-	string i, j = "1";
-	string P = "1", F = "1";
-	for (i = "1"; Compare(j, "0.000000000005") > 0;)
+	BigDecimal i, j = "1";
+	BigDecimal P = "1", F = "1";
+	for (i = "1"; j>"0.000000000005";)
 	{
-		P = Mul(P, Rad);
-		P = Mul(P, Rad);
-		F = Mul(F, i);
-		F = Mul(F, Add(i, "1"));
-		j = Div(P, F);
-		i = Add(i, "2");
-		// cout<<i<<" "<<j<<endl;
+		P = mul(P, Rad);
+		P = mul(P, Rad);
+		F = mul(F, i);
+		F = mul(F, add(i, "1"));
+		j = div(P, F);
+		i = add(i, "2");
 	}
 
-	return Sub(i, "2");
+	return sub(i, "2");
+}*/
+
+BigDecimal BigDecimal::mod(BigDecimal m)
+{
+	if (this->length() == 0) return (*this);
+	bool negative = false;
+	this->trim();
+	m.trim();
+	if (m.compareTo("0") < 1) return "∞";
+
+
+	if (this->charAt(0) == '-')
+	{
+		this->pop_front();
+		negative = true;
+	}
+	BigDecimal temp1 = divDigit(*this, m);
+	//cout<<temp1<<endl;
+	BigDecimal temp2 = m.mul(temp1);
+	BigDecimal temp4 = this->sub(temp2);
+	//cout<<Number<<" "<<Mod<<" "<<temp1<<" "<<temp2<<" "<<temp4<<endl;
+	return (negative ? "-" : "") + temp4;
 }
-string Div(string a, string b)
+
+BigDecimal BigDecimal::div(BigDecimal a)
 {
 	// cout<<a<<" "<<b<<endl;
-	a = Trim(a);
-	b = Trim(b);
+	a.trim();
+	this->trim();
 
-	if (Compare(b, "0") == 0) return "∞";
+	if (a=="0") return "∞";
 	//cout<<a<<" "<<b<<endl;
-	bool Negative = false;
+	bool negative = false;
 
 
-	if (a[0] == '-' && b[0] == '-')
+	if (a.charAt(0) == '-' && this->charAt(0) == '-')
 	{
-		a.erase(a.begin());
-		b.erase(b.begin());
+		a.pop_front();
+		this->pop_front();
 	}
-	else if (a[0] == '-')
+	else if (a.charAt(0) == '-')
 	{
-		a = a.substr(1, a.length());
-		Negative = true;
+		a.pop_front();
+		negative = true;
 	}
-	else if (b[0] == '-')
+	else if (this->charAt(0) == '-')
 	{
-		b = b.substr(1, b.length());
-		Negative = true;
+		this->pop_front();
+		negative = true;
 	}
 
-	string Div;
-	string Num1, Num2;
+	BigDecimal division;
+	BigDecimal num1, num2;
 
 	int i, p = 0, q = 0;
+
+	for (i = 0; i < this->length(); i++)
+	{
+		if (this->charAt(i) == '.')
+		{
+			p = this->length() - 1 - i;
+		}
+		else
+		{
+			num1 += this->charAt(i);
+		}
+	}
 
 	for (i = 0; i < a.length(); i++)
 	{
 		if (a[i] == '.')
 		{
-			p = a.length() - 1 - i;
+			q = a.length() - 1 - i;
 		}
 		else
 		{
-			Num1 += a[i];
+			num2 += a[i];
 		}
 	}
 
-	for (i = 0; i < b.length(); i++)
-	{
-		if (b[i] == '.')
-		{
-			q = b.length() - 1 - i;
-		}
-		else
-		{
-			Num2 += b[i];
-		}
-	}
-
-	// cout<<Num1<<" "<<Num2<<endl;
+	// cout<<num1<<" "<<num2<<endl;
 
 	if (p > q)
 	{
 		for (i = 0; i < p - q; i++)
 		{
-			Num2 += '0';
+			num2 += '0';
 		}
 	}
 
@@ -145,69 +167,69 @@ string Div(string a, string b)
 	{
 		for (i = 0; i < q - p; i++)
 		{
-			Num1 += '0';
+			num1 += '0';
 		}
 	}
 
-	// cout<<Num1<<" "<<Num2<<" "<<endl;
+	// cout<<num1<<" "<<num2<<" "<<endl;
 
-	string temp;
+	BigDecimal temp;
 
-	if (Compare(Num2, Num1) == 1)
+	if (num2>num1)
 	{
 		// cout<<"######"<<endl;
-		temp = Num1 + "0";
-		Div = ".";
+		temp = num1 + "0";
+		division = ".";
 
 
-		// cout<<Div<<" "<<temp<<endl;
+		// cout<<division<<" "<<temp<<endl;
 
-		for (i = 0; i < 15 && Compare(temp, "0") == 1; i++)
+		for (i = 0; i < 15 && temp>"0"; i++)
 		{
-			Div += DivDigit(temp, Num2);
-			temp = Mod(temp, Num2);
+			division += divDigit(temp, num2);
+			temp = temp.mod(num2);
 			temp += '0';
-			// cout<<"-"<<Div<<endl;
+			// cout<<"-"<<division<<endl;
 		}
 
-		return (Negative ? "-" : "") + Div;
+		return (negative ? "-" : "") + division;
 	}
 
 
-	for (i = -1; Compare(Num2, temp) == 1;)
+	for (i = -1; num2>temp;)
 	{
-		temp += Num1[++i];
+		temp += num1[++i];
 	}
 
 
 
-	for (; (i < Num1.length());)
+	for (; (i < num1.length());)
 	{
-		Div += DivDigit(temp, Num2);
-		//cout<<" -"<<Div<<endl;
-		temp = Mod(temp, Num2);
+		division += divDigit(temp, num2);
+		//cout<<" -"<<division<<endl;
+		temp = temp.mod(num2);
 
-		if (++i < Num1.length())
-			temp += Num1[i];
+		if (++i < num1.length())
+			temp += num1[i];
 	}
 
-	//cout<<Div<<" "<<temp<<endl;
+	//cout<<division<<" "<<temp<<endl;
 
 
-	Div += (Compare(temp, "0") == 1) ? "." : "";
+	division += (temp> "0") ? "." : "";
 
-	for (; (i - Num1.length() < 11 && Compare(temp, "0") == 1); i++)
+	for (; (i - num1.length() < 11 && temp>"0"); i++)
 	{
 		temp += '0';
-		Div += DivDigit(temp, Num2);
-		temp = Mod(temp, Num2);
+		division += divDigit(temp, num2);
+		temp = temp.mod(num2);
 	}
 
-	if (i - Num1.length() == 11)
+	if (i - num1.length() == 11)
 	{
-		if (Div.back() == Div[Div.length() - 2] && Div.back() > '4')
-			Div.back()++;
+		if (division.back() == division[division.length() - 2] && division.back() > '4')
+			division.back()++;
 	}
 
-	return (Negative ? "-" : "") + Div;
+	return (negative ? "-" : "") + division;
 }

@@ -1168,17 +1168,17 @@ string Trigonometry(string Deg, string Op)
 
 int main()
 {
-	// string Num1, Num2, Deg;
-	// cin >> Num1 >> Num2;
-	// Num1= Trim(Num1);
-	// Num2= Trim(Num2);
+	string Num1, Num2, Deg;
+	cin >> Num1 >> Num2;
+	Num1= Trim(Num1);
+	Num2= Trim(Num2);
 	// cout << Num1<<" + "<<Num2<<" = "<<Add(Num1, Num2)<<endl;
 	// cout << Num1<<" - "<<Num2<<" = "<<Substract(Num1, Num2)<<endl;
 	// cout << Num1<<" × "<<Num2<<" = "<<Multiply(Num1, Num2)<<endl;
 	// cout << Num1<<" ÷ "<<Num2<<" = "<<Divide(Num1, Num2)<<endl;
 	// // cout << Num1<<" ^ "<<Num2<<" = "<<Power(Num1, Num2)<<endl;
 	// cout << Num1<<" % "<<Num2<<" = "<<Modulus(Num1, Num2)<<endl;
-	// // cout << Num1<<"! = "<<fact(Num1)<<endl;
+	cout << Num1<<"! = "<<Factorial(Num1)<<endl;
 	// // cout << Num1<<" + "<<Num2<<" = "<<Compare(Num1,Num2)<<endl;
 
 	// string Deg;

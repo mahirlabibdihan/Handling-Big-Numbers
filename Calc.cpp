@@ -1,5 +1,5 @@
-#include "Calc.h"
-bool hasPrecedence(char op1, char op2) 
+#include "BigDecimal.h"
+bool BigDecimal::hasPrecedence(char op1, char op2)
 {
 	if (op2 == '(' || op2 == ')')
 		return false;
@@ -15,7 +15,7 @@ bool hasPrecedence(char op1, char op2)
 		return true;
 }
 
-string applyOp(char op, string b, string a) 
+String BigDecimal::applyOp(char op, String b, String a)
 {
 	// cout<<op<<endl;
 	switch (op) {
@@ -53,19 +53,19 @@ string applyOp(char op, string b, string a)
 	return "0";
 }
 
-string Calculate(string expression)
+String BigDecimal::Calculate(String expression)
 {
 	if (expression.length() == 0) return "";
 
 
-	stack<string> values;
+	stack<String> values;
 	stack<char> ops;
 
 	for (int i = 0; i < expression.length(); i++)
 	{
 		if(expression[i]==' ') continue;
 		if ((expression[i] >= '0' && expression[i] <= '9') || expression[i] == '.') {
-			string num = "";
+			String num = "";
 			while (i < expression.length() && (expression[i] >= '0' && expression[i] <= '9' || expression[i] == '.'))
 				num += expression[i++];
 			i--;
@@ -75,7 +75,7 @@ string Calculate(string expression)
 
 		else if (expression[i] == ')') {
 			while (ops.top() != '(') {
-				string value1, value2;
+				String value1, value2;
 				if (!values.empty()) {
 					value1 = values.top();
 					values.pop();
@@ -94,7 +94,7 @@ string Calculate(string expression)
 		else if (expression[i] == '+' || expression[i] == '-' || expression[i] == '*' || expression[i] == '/' || expression[i] == '%' || expression[i] == '^' ||expression[i] == 'p' ||expression[i] == 'c' ||expression[i] == 'g' ||expression[i] == 'l' ||expression[i] == '&' ||expression[i] == '|'  )
 		 {
 			while (!ops.empty() && hasPrecedence(expression[i], ops.top())) {
-				string value1, value2;
+				String value1, value2;
 				if (!values.empty()) {
 					value1 = values.top();
 					values.pop();
@@ -114,7 +114,7 @@ string Calculate(string expression)
 		{
 			while (!ops.empty() && hasPrecedence(expression[i], ops.top()))
 			{
-				string value = values.top();
+				String value = values.top();
 				values.pop();
 				values.push(applyOp(ops.top(), value, value));
 				ops.pop();
@@ -124,7 +124,7 @@ string Calculate(string expression)
 	}
 
 	while (!ops.empty()) {
-		string value1, value2;
+		String value1, value2;
 		if (!values.empty()) {
 			value1 = values.top();
 			values.pop();
@@ -138,7 +138,7 @@ string Calculate(string expression)
 		values.push(applyOp(ops.top(), value1, value2));
 		ops.pop();
 	}
-	string Decimal = values.top();
+	String Decimal = values.top();
 	values.pop();
 	// System.out.println(FromDecimal(Decimal,To));
 	return Decimal;

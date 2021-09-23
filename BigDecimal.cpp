@@ -1,64 +1,38 @@
-/*
- ______   _________ _      _       _
-|  ____ \|___   ___| |    | |     | |
-| |    \ \   | |   | |____| |     | |
-| |    | |   | |   |  ____  |     | |
-| |____/ /___| |___| |    | |_____| |
-|_______/|_________|_|    |_________|
-M A H I R     L A B I B     D I H A N
-
-*/
-
-
-
-/*
-###########################
-(
-
-)
-
-+	-> Add
-
--	-> Substract
-
-*	-> Multiply
-
-/	-> Divide
-	
-%	-> Modulas
-
-^	-> Power
-
-!	-> Factorial
-
-p	-> nPr
-
-c 	-> nCr
-
-l 	-> LCM
-
-g 	-> GCD
-
-&	-> And
-	
-|	-> Or
-
-exit ->  Exit
-###########################
-
-*/
-
 #include "BigDecimal.h"
+bool BigDecimal::operator> (BigDecimal a)
+{
+	return this->compareTo(a)==1;
+}
+bool BigDecimal::operator<(BigDecimal a)
+{
+	return this->compareTo(a) == -1;
+}
+bool BigDecimal::operator==(BigDecimal a)
+{
+	return this->compareTo(a) == 0;
+}
+BigDecimal::BigDecimal(const char *str)
+{
+	s =  str;
+}
+BigDecimal::BigDecimal(const BigDecimal &bd)
+{
+	s =  bd.s;
+}
+BigDecimal::BigDecimal(String bd)
+{
+	s = bd.get();
+}
 
-int main()
-{	
-	string In;
-
-	while (1)
+unsigned long long BigDecimal::toInt()
+{
+	this->trim();
+	unsigned long long Decimal = 0;
+	int n = this->length(), i;
+	for (i = 0; i < n; i++)
 	{
-		cout<<": ";
-		getline(cin, In);
-		if(In=="exit") exit(0);
-		cout << "-> "<<Calculate(In) << endl<<endl;
+		Decimal *= 10;
+		Decimal += s[i] - '0';
 	}
+	return Decimal;
 }

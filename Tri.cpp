@@ -1,13 +1,13 @@
 #include "Tri.h"
-string Pi = "3.141592654";
-string ATan(string n)
+String Pi = "3.141592654";
+String ATan(String n)
 {
-	 string l = "-90", r = "90", m = l;
+	 String l = "-90", r = "90", m = l;
 	 n = Trim(n);
 
 	while (Compare(Sub(r, l), ".000000001") == 1)
 	{
-		string temp = Div(Add(l, r), "2");
+		String temp = Div(Add(l, r), "2");
 		if (Compare(m, temp) == 0)
 		{
 			break;
@@ -19,14 +19,14 @@ string ATan(string n)
 	m = Trim(m);
 	return m;
 }
-string ASin(string n)
+String ASin(String n)
 {
-	 string l = "-90", r = "90", m = l;
+	 String l = "-90", r = "90", m = l;
 	 n = Trim(n);
 
 	 while (Compare(Sub(r, l), ".000000001") == 1)
 	{
-		string temp = Div(Add(l, r), "2");
+		String temp = Div(Add(l, r), "2");
 		if (Compare(m, temp) == 0)
 		{
 			break;
@@ -38,14 +38,14 @@ string ASin(string n)
 	m = Trim(m);
 	return m;
 }
-string ACos(string n)
+String ACos(String n)
 {
-	 string l = "-90", r = "90", m = l;
+	 String l = "-90", r = "90", m = l;
 	 n = Trim(n);
 
 	 while (Compare(Sub(r, l), ".000000001") == 1)
 	{
-		string temp = Div(Add(l, r), "2");
+		String temp = Div(Add(l, r), "2");
 		if (Compare(m, temp) == 0)
 		{
 			break;
@@ -57,14 +57,14 @@ string ACos(string n)
 	m = Trim(m);
 	return m;
 }
-string ACot(string n)
+String ACot(String n)
 {
-	 string l = "-90", r = "90", m = l;
+	 String l = "-90", r = "90", m = l;
 	 n = Trim(n);
 
 	 while (Compare(Sub(r, l), ".000000001") == 1)
 	{
-		string temp = Div(Add(l, r), "2");
+		String temp = Div(Add(l, r), "2");
 		if (Compare(m, temp) == 0)
 		{
 			break;
@@ -76,14 +76,14 @@ string ACot(string n)
 	m = Trim(m);
 	return m;
 }
-string ASec(string n)
+String ASec(String n)
 {
-	 string l = "-90", r = "90", m = l;
+	 String l = "-90", r = "90", m = l;
 	 n = Trim(n);
 
 	 while (Compare(Sub(r, l), ".000000001") == 1)
 	{
-		string temp = Div(Add(l, r), "2");
+		String temp = Div(Add(l, r), "2");
 		if (Compare(m, temp) == 0)
 		{
 			break;
@@ -95,14 +95,14 @@ string ASec(string n)
 	m = Trim(m);
 	return m;
 }
-string ACsc(string n)
+String ACsc(String n)
 {
-	 string l = "-90", r = "90", m = l;
+	 String l = "-90", r = "90", m = l;
 	 n = Trim(n);
 
 	 while (Compare(Sub(r, l), ".00000001") == 1)
 	{
-		string temp = Div(Add(l, r), "2");
+		String temp = Div(Add(l, r), "2");
 		if (Compare(m, temp) == 0)
 		{
 			break;
@@ -114,18 +114,18 @@ string ACsc(string n)
 	m = Trim(m);
 	return m;
 }
-string Sine(string Deg)
+String Sine(String Deg)
 {
 	//cout<<Deg<<endl;
-	string Rad = Mul(Div(Deg, "180"), Pi);
-	string i, Result = "0";
+	String Rad = Mul(Div(Deg, "180"), Pi);
+	String i, Result = "0";
 
-	string Term = Rad;
+	String Term = Rad;
 
 	// cout<<Term<<endl;
 	int j;
-	// string n=Remainder(Rad);
-	string n = "17";
+	// String n=Remainder(Rad);
+	String n = "17";
 	// cout<<n<<" ";
 
 
@@ -174,7 +174,7 @@ string Sine(string Deg)
 
 	return Result;
 }
-string Sin(string Deg)
+String Sin(String Deg)
 {
 
 	Deg = Trim(Deg);
@@ -221,15 +221,15 @@ string Sin(string Deg)
 		}
 	}
 }
-string Cos(string Deg)
+String Cos(String Deg)
 {
 	Deg = Trim(Deg);
 	if (Deg[0] == '-') Deg.erase(Deg.begin());
 	return Sin(Add("90", Deg));
 }
-string Tan(string Deg)
+String Tan(String Deg)
 {
-	string Result = Div(Sin(Deg), Cos(Deg));
+	String Result = Div(Sin(Deg), Cos(Deg));
 	int k, j, s = Result.length();
 	for (k = 0; k < s; k++)
 	{
@@ -244,9 +244,9 @@ string Tan(string Deg)
 
 	return Trim(Result);
 }
-string Csc(string Deg)
+String Csc(String Deg)
 {
-	string Result = Div("1", Sin(Deg));
+	String Result = Div("1", Sin(Deg));
 	int k, j, s = Result.length();
 	for (k = 0; k < s; k++)
 	{
@@ -261,9 +261,9 @@ string Csc(string Deg)
 
 	return Trim(Result);
 }
-string Sec(string Deg)
+String Sec(String Deg)
 {
-	string Result = Div("1", Cos(Deg));
+	String Result = Div("1", Cos(Deg));
 	int k, j, s = Result.length();
 	for (k = 0; k < s; k++)
 	{
@@ -278,9 +278,9 @@ string Sec(string Deg)
 
 	return Trim(Result);
 }
-string Cot(string Deg)
+String Cot(String Deg)
 {
-	string Result = Div("1", Tan(Deg));
+	String Result = Div("1", Tan(Deg));
 
 	int k, j, s = Result.length();
 	for (k = 0; k < s; k++)
@@ -296,7 +296,7 @@ string Cot(string Deg)
 
 	return Trim(Result);
 }
-string Trigonometry(string Deg, string Op)
+String Trigonometry(String Deg, String Op)
 {
 
 	Deg = Trim(Deg);

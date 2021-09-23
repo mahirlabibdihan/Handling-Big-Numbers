@@ -1,9 +1,9 @@
 #include "Bit.h"
-string And(string a,string b)
+String And(String a,String b)
 {
-	string aBin=FromDecimal(a,"2"),bBin=FromDecimal(b,"2");
+	String aBin=FromDecimal(a,"2"),bBin=FromDecimal(b,"2");
 
-	string aBinInt="",aBinFrac="",bBinInt="",bBinFrac="",Int="",Frac="";
+	String aBinInt="",aBinFrac="",bBinInt="",bBinFrac="",Int="",Frac="";
 
 	int i,n=aBin.length(),m=bBin.length(),j;
 	for (i = 0; i < n && aBin[i] != '.'; i++)
@@ -48,12 +48,12 @@ string And(string a,string b)
 
 }
 
-string Or(string a,string b)
+String Or(String a,String b)
 { 
 
-	string aBin=FromDecimal(a,"2"),bBin=FromDecimal(b,"2");
+	String aBin=FromDecimal(a,"2"),bBin=FromDecimal(b,"2");
 
-	string aBinInt="",aBinFrac="",bBinInt="",bBinFrac="",Int="",Frac="";
+	String aBinInt="",aBinFrac="",bBinInt="",bBinFrac="",Int="",Frac="";
 
 	int i,n=aBin.length(),m=bBin.length(),j;
 	for (i = 0; i < n && aBin[i] != '.'; i++)
@@ -101,12 +101,12 @@ string Or(string a,string b)
 }
 
 
-string ToDecimal(string Number, string Base)
+String ToDecimal(String Number, String Base)
 {
 	// cout << Number << " " << Base << endl;
 	Number = Trim(Number);
 	bool Negative = (Number[0] == '-');
-	string Decimal, P = "", Digit;
+	String Decimal, P = "", Digit;
 	Number = Number.substr(Negative, Number.length());
 	int i, n = Number.length(), j = -1;
 
@@ -115,7 +115,7 @@ string ToDecimal(string Number, string Base)
 	// cout << j << endl;
 	P += j + '0' - 1;
 	// cout << P << endl;
-	string Two = Pow(Base, P), Temp;
+	String Two = Pow(Base, P), Temp;
 	// cout << Two << endl;
 
 	for (i = 0; i < n; i++, Digit = "")
@@ -130,9 +130,9 @@ string ToDecimal(string Number, string Base)
 	return (Negative ? "-" : "") + Decimal;
 }
 
-string FromDecimal(string Decimal, string Base)
+String FromDecimal(String Decimal, String Base)
 {
-	string NumberInt, NumberFrac, DecimalInt, DecimalFrac;
+	String NumberInt, NumberFrac, DecimalInt, DecimalFrac;
 	int i, n = Decimal.length();
 	for (i = 0; i < n && Decimal[i] != '.'; i++)
 	{
@@ -149,7 +149,7 @@ string FromDecimal(string Decimal, string Base)
 		while (DecimalInt > "0")
 		{
 			//cout<<"######1"<<endl;
-			string mod = Mod(DecimalInt, Base);
+			String mod = Mod(DecimalInt, Base);
 
 			if (Compare(mod, "9") > 0)
 			{
@@ -171,8 +171,8 @@ string FromDecimal(string Decimal, string Base)
 		NumberFrac += '.';
 		for (i = 0; i < 10 && DecimalFrac != "0"; i++)
 		{
-			string temp1 = Mul(DecimalFrac, Base);
-			string temp2 = Floor(temp1);
+			String temp1 = Mul(DecimalFrac, Base);
+			String temp2 = Floor(temp1);
 			//cout<<temp1<<" "<<temp2<<endl;
 			DecimalFrac = Sub(temp1, temp2);
 			if (Compare(temp2, "9") > 0)

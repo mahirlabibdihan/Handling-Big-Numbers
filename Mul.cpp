@@ -1,38 +1,38 @@
-#include "Mul.h"
-string Mul(string a, string b)
+#include "BigDecimal.h"
+BigDecimal BigDecimal::mul(BigDecimal a)
 {
-	a = Trim(a);
-	b = Trim(b);
-	if (Compare(a, "0") == 0 || Compare(b, "0") == 0) return "0";
-	bool Negative = false;
-	if (a[0] == '-' && b[0] == '-')
+	this->trim();
+	a.trim();
+	if (a == "0" || (*this)=="0") return "0";
+	bool negative = false;
+	if ( this->charAt(0) == '-'  && a.charAt(0) == '-')
 	{
-		a.erase(a.begin());
-		b.erase(b.begin());
+		this->pop_front();
+		a.pop_front();	
 	}
 
 	else if (a[0] == '-')
 	{
-		Negative = true;
-		a.erase(a.begin());
+		negative = true;
+		a.pop_front();
 	}
 
-	else if (b[0] == '-')
+	else if (this->charAt(0) == '-')
 	{
-		Negative = true;
-		b.erase(b.begin());
+		negative = true;
+		this->pop_front();
 	}
 
-	string Num1, Num2, Mul;
-	if (a.length() == 0) a = "0";
-	if (b.length() == 0) b = "0";
-	int i, j, n = a.length(), m = b.length(), p = 0, q = 0;
+	BigDecimal num1, num2, multiplication;
+	if (a.length() == 0) a.set("0");
+	if (this->length() == 0) this->set("0");
+	int i, j, n = a.length(), m = this->length(), p = 0, q = 0;
 
 	for (i = 0; i < n; i++)
 	{
 		if (a[i] != '.')
 		{
-			Num1 += a[i];
+			num1 += a[i];
 		}
 		else
 		{
@@ -42,9 +42,9 @@ string Mul(string a, string b)
 
 	for (i = 0; i < m; i++)
 	{
-		if (b[i] != '.')
+		if (this->charAt(i) != '.')
 		{
-			Num2 += b[i];
+			num2 += this->charAt(i);
 		}
 		else
 		{
@@ -52,45 +52,54 @@ string Mul(string a, string b)
 		}
 	}
 
-	reverse(Num1.begin(), Num1.end());
-	reverse(Num2.begin(), Num2.end());
+	num1.reverse();
+	num2.reverse();
 
-	n = Num1.length();
-	m = Num2.length();
+	n = num1.length();
+	m = num2.length();
 
-	for (i = 0; i < n + m; i++)
+	for (i = 0; i < m+n ; i++)
 	{
-		Mul += '0';
+		multiplication += '0';
+		// cout<<multiplication<<endl;
 	}
+	// cout<<m+n<<" "<<a<<endl;
+	//cout<<num1<<" "<<num2<<endl;
 
-	//cout<<Num1<<" "<<Num2<<endl;
-
+	int Carry;
 	for (i = 0; i < n; i++)
 	{
-		int Carry = 0;
-		int temp1 = Num1[i] - '0';
+		Carry = 0;
+		int temp1 = num1[i] - 48;
 
 		for (j = 0; j < m; j++)
 		{
 			// cout<<".";
-			int temp2 = Num2[j] - '0';
+			int temp2 = num2[j] - 48;
 
-			int temp = temp1 * temp2 + Mul[i + j] + Carry - 48;
+			int temp = temp1 * temp2 + multiplication[i + j] + Carry - 48;
 
-			Mul[i + j] = (temp % 10) + 48;
+			multiplication[i + j] = (temp % 10) + 48;
 
 			Carry = temp / 10;
-
-			// cout<<Num1[i]<<" "<<Num2[j]<<" "<<temp<<" "<<Carry<<" "<<Mul[i+j]<<endl;
 		}
 
-		if (Carry) Mul[i + j] += Carry;
+		if (Carry) {
+			multiplication[i + j] += Carry;
+		}
+
+	}
+	// if (Carry) multiplication[ m + n-1] += Carry;
+
+	
+	while (multiplication.length() > 0 && multiplication.back() == '0') {
+
+		multiplication.pop_back();
 	}
 
 
-	while (Mul.length() > 0 && Mul.back() == '0') Mul.pop_back();
 
-	n = Mul.length();
+	n = multiplication.length();
 
 	if (p + q > 0)
 	{
@@ -98,22 +107,25 @@ string Mul(string a, string b)
 		{
 			for (i = n; i < p + q; i++)
 			{
-				Mul += '0';
+				multiplication += '0';
 			}
 		}
 
-		Mul.insert(Mul.begin() + p + q, '.');
-		reverse(Mul.begin(), Mul.end());
-		while (Mul.back() == '0') Mul.pop_back();
-		if (Mul.back() == '.') Mul.pop_back();
+
+		multiplication.insert(p + q, '.');
+		multiplication.reverse();
+		multiplication.trim();
 	}
 
 	else
 	{
-		reverse(Mul.begin(), Mul.end());
+		multiplication.reverse();
 	}
 
-	// cout<<Mul<<endl;
-	if (Mul.length() > 0) return (Negative ? "-" : "") + Mul;
-	return "0";
+	if (multiplication.length() > 0) {
+		return (negative ? "-" : "") + multiplication;
+	}
+	else{
+		return "0";
+	}
 }

@@ -1,7 +1,6 @@
-#include "Math.h"
+#include "BigDecimal.h"
 
-
-string Scale(string a, int n=15, int round=0)
+/*BigDecimal Scale(BigDecimal a, int n=15, int round=0)
 {
 	int i, j, s = a.length();
 	for (i = 0; i < s; i++)
@@ -64,24 +63,24 @@ string Scale(string a, int n=15, int round=0)
 	a = Trim(a);
 	return a;
 }
-string Ceil(string a)
+BigDecimal Ceil(BigDecimal a)
 {
 	return Scale(a, 0, 1);
 }
-string Floor(string a)
+BigDecimal Floor(BigDecimal a)
 {
 	return Scale(a, 0, -1);
 }
-string Round(string a)
+BigDecimal Round(BigDecimal a)
 {
 	return Scale(a, 0);
 }
 
-string Exponent(string a)
+BigDecimal Exponent(BigDecimal a)
 {
 	a = Trim(a);
 
-	string i, Result = "0", n = "40", P = "1", F = "1";
+	BigDecimal i, Result = "0", n = "40", P = "1", F = "1";
 	for (i = "0"; Compare(i, n) < 1;)
 	{
 		if (Compare(i, "0") > 0)
@@ -95,17 +94,17 @@ string Exponent(string a)
 	return Result;
 }
 
-string Root(string n, string x)
+BigDecimal Root(BigDecimal n, BigDecimal x)
 {
 	// cout<<n<<" "<<x<<endl;
 	n = Trim(n);
 	x = Trim(x);
 	if (x.length() == 0) return n;
-	string l = "0", r = n, m = "0";
+	BigDecimal l = "0", r = n, m = "0";
 	if (Compare(n, "1") < 1) r = "1";
 	while (Compare(Sub(r, l), ".000000000001") == 1)
 	{
-		string temp = Div(Add(l, r), "2");
+		BigDecimal temp = Div(Add(l, r), "2");
 		if (Compare(m, temp) == 0)
 		{
 			break;
@@ -117,14 +116,14 @@ string Root(string n, string x)
 	m = Trim(m);
 	return m;
 }
-string Pow(string a, string b)
+BigDecimal Pow(BigDecimal a, BigDecimal b)
 {
 	// cout<<a<<" "<<b<<endl;
 	a = Trim(a);
 	b = Trim(b);
 	if (Compare(b, "0") == 0) return "1";
 
-	string c = "1";
+	BigDecimal c = "1";
 	bool Negative = false;
 
 	if (b[0] == '-')
@@ -147,11 +146,11 @@ string Pow(string a, string b)
 	return c;
 }
 
-string GCD(string a,string b)
+BigDecimal GCD(BigDecimal a,BigDecimal b)
 {
     while(Compare(a,"0")>0)
      {
-        string c=a;
+        BigDecimal c=a;
         a=Mod(b,a);
         b=c;
      }
@@ -159,14 +158,14 @@ string GCD(string a,string b)
      return b;
 }
 
-string LCM(string a,string b)
+BigDecimal LCM(BigDecimal a,BigDecimal b)
 {
 	 return Div(Mul(a,b),GCD(a,b));
 }
 
 
 
-string Mod(string Number, string Mod)
+BigDecimal Mod(BigDecimal Number, BigDecimal Mod)
 {
 	if (Number.length() == 0) return Number;
 	bool Negative = false;
@@ -180,43 +179,43 @@ string Mod(string Number, string Mod)
 		Number.erase(Number.begin());
 		Negative = true;
 	}
-	string temp1 = DivDigit(Number, Mod);
+	BigDecimal temp1 = DivDigit(Number, Mod);
 	//cout<<temp1<<endl;
-	string temp2 = Mul(Mod, temp1);
-	string temp4 = Sub(Number, temp2);
+	BigDecimal temp2 = Mul(Mod, temp1);
+	BigDecimal temp4 = Sub(Number, temp2);
 	//cout<<Number<<" "<<Mod<<" "<<temp1<<" "<<temp2<<" "<<temp4<<endl;
 	return (Negative ? "-" : "") + temp4;
 }
 
-string Power(string Number, string Power)
+BigDecimal Power(BigDecimal Number, BigDecimal Power)
 {
 	// cout<<Number<<" "<<Power<<endl;
 	Number = Trim(Number);
 	Power = Trim(Power);
-	pair<string,string> Num(Fraction(Power));
+	pair<BigDecimal,BigDecimal> Num(Fraction(Power));
 	// cout<<"->"<<Power<<" "<<Num<<" "<<Div<<endl;
 	Number = Pow(Number, Num.first);
 	// cout<<endl<<Num<<" "<<Div<<" "<<Number<<endl;
 	if (Compare(Num.second, "1") > 0) return Root(Number,Num.second);
 	return Number;
-}
+}*/
 
-string Factorial(string n)
+BigDecimal BigDecimal::factorial()
 {
-	n = Trim(n);
-	string i, Fact = "1";
-	for (i = "2"; Compare(i, n) < 1;)
+	this->trim();
+	BigDecimal i, fact = "1";
+	for (i = "2"; i.compareTo(*this) < 1;)
 	{
-		Fact = Mul(Fact, i);
-		i = Add(i, "1");
-		// cout << "#######" << i << endl;
+		fact = fact.mul(i);
+		i = i.add("1");
+		// cout<<".";
 	}
-	return Fact;
+	return fact;
 }
 
-string NPR(string n,string r)
+/*BigDecimal NPR(BigDecimal n,BigDecimal r)
 {
-	string s="1",i=Add(Sub(n,r),"1");
+	BigDecimal s="1",i=Add(Sub(n,r),"1");
 	while(Compare(i,n)<1)
 	{
 		s=Mul(s,i);
@@ -225,9 +224,9 @@ string NPR(string n,string r)
 	return s;
 }
 
-string NCR(string n,string r)
+BigDecimal NCR(BigDecimal n,BigDecimal r)
 {
-	string s="1",i="1"; 
+	BigDecimal s="1",i="1"; 
 	if(Compare(r,Sub(n,r))>0) r=Sub(n,r);
 
 	while(Compare(i,r)<1)
@@ -240,8 +239,8 @@ string NCR(string n,string r)
 	return s;
 }
 
-string Abs(string a, string b)
+BigDecimal Abs(BigDecimal a, BigDecimal b)
 {
 	if (Compare(a, b) > -1) return Sub(a, b);
 	return Sub(b, a);
-}
+}*/
