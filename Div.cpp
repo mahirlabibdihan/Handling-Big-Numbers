@@ -105,6 +105,7 @@ BigDecimal BigDecimal::div(BigDecimal a)
 	// Base cases
 	if (a=="0") return "∞";
 	else if(a=="1") return *this;
+	else if(*this=="0") return "0";
 
 	// Negative sign finding
 	bool negative = false;

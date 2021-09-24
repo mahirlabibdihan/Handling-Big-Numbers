@@ -1,30 +1,31 @@
 #include "BigDecimal.h"
-int BigDecimal::compareTo(BigDecimal num)
-{
-	
-	this->trim();
-	num.trim();
-	int i, n = this->getString().length(), m = num.getString().length();
+int BigDecimal::compareTo(BigDecimal b)
+{	
+	BigDecimal a(*this);
+	a.trim();
+	b.trim();
+	// cout<<a<<" "<<b<<endl;
+	int i, n = a.getString().length(), m = b.getString().length();
 	BigDecimal Num1Int, Num1Frac, Num2Int, Num2Frac;
 
 	for (i = 0; i < n; i++)
 	{
-		if (getString().charAt(i) == '.') break;
-		Num1Int.getString().push_back(getString().charAt(i));
+		if (a.getString().charAt(i) == '.') break;
+		Num1Int.getString().push_back(a.getString().charAt(i));
 	}
 	for (i++; i < n; i++)
 	{
-		Num1Frac.getString().push_back(getString().charAt(i));
+		Num1Frac.getString().push_back(a.getString().charAt(i));
 	}
 
 	for (i = 0; i < m; i++)
 	{
-		if (num.getString().charAt(i) == '.') break;
-		Num2Int.getString().push_back(num.getString().charAt(i));
+		if (b.getString().charAt(i) == '.') break;
+		Num2Int.getString().push_back(b.getString().charAt(i));
 	}
 	for (i++; i < m; i++)
 	{
-		Num2Frac.getString().push_back(num.getString().charAt(i));
+		Num2Frac.getString().push_back(b.getString().charAt(i));
 	}
 
 
@@ -42,21 +43,27 @@ int BigDecimal::compareTo(BigDecimal num)
 		return 1;
 	}
 
-	if (Num1Int.getString().length() > Num2Int.getString().length()) {
 
+	if (Num1Int.getString().length() > Num2Int.getString().length()) {
 		return 1;
 	}
 	else if (Num1Int.getString().length() == Num2Int.getString().length())
 	{
+		// cout<<"PASS"<<endl;
 		if (Num1Int.getString().compare(Num2Int.getString()) > 0) {
 			// cout<<"BUG"<<endl;
 			return 1;
 		}
 		else if (Num1Int.getString().compare(Num2Int.getString()) == 0)
 		{
-			return Num1Frac.getString().compare(Num2Frac.getString());
+			if (Num1Frac.getString().compare(Num2Frac.getString())>0) return 1;
+			else if (Num1Frac.getString().compare(Num2Frac.getString())<0) return -1;
+			else return 0;
 		}
-		else return -1;
+		else 
+		{
+			return -1;
+		}
 	}
 	else return -1;
 }

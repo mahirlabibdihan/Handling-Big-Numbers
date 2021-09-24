@@ -1,302 +1,289 @@
-#include "Tri.h"
-String Pi = "3.141592654";
-String ATan(String n)
+#include "BigDecimal.h"
+BigDecimal PI = "3.141592654";
+BigDecimal aTan(BigDecimal n)
 {
-	 String l = "-90", r = "90", m = l;
-	 n = Trim(n);
+	 BigDecimal l = "-90", r = "90", m = l;
+	 n.trim();
 
-	while (Compare(Sub(r, l), ".000000001") == 1)
+	while (r-l > ".000000001")
 	{
-		String temp = Div(Add(l, r), "2");
-		if (Compare(m, temp) == 0)
+		BigDecimal temp = (l + r) / "2";
+		if (m == temp )
 		{
 			break;
 		}
 		m = temp;
-		(Compare(Tan(m), n) == 1) ? r = m : l = m;
-		// cout<<l<<" "<<r<<" "<<m<<endl;
+		(tan(m) > n ) ? r = m : l = m;
 	}
-	m = Trim(m);
-	return m;
+	return m.trim();
 }
-String ASin(String n)
+BigDecimal aSin(BigDecimal n)
 {
-	 String l = "-90", r = "90", m = l;
-	 n = Trim(n);
+	 BigDecimal l = "-90", r = "90", m = l;
+	 n.trim();
 
-	 while (Compare(Sub(r, l), ".000000001") == 1)
+	 while (r - l > ".000000001")
 	{
-		String temp = Div(Add(l, r), "2");
-		if (Compare(m, temp) == 0)
+		BigDecimal temp = (l + r) / "2";
+		if (m == temp)
 		{
 			break;
 		}
 		m = temp;
-		(Compare(Sin(m), n) == 1) ? r = m : l = m;
-		// cout<<l<<" "<<r<<" "<<m<<endl;
+		(sin(m) > n ) ? r = m : l = m;
 	}
-	m = Trim(m);
-	return m;
+	return m.trim();
 }
-String ACos(String n)
+BigDecimal aCos(BigDecimal n)
 {
-	 String l = "-90", r = "90", m = l;
-	 n = Trim(n);
+	 BigDecimal l = "-90", r = "90", m = l;
+	 n.trim();
 
-	 while (Compare(Sub(r, l), ".000000001") == 1)
+	 while (r-l > ".000000001")
 	{
-		String temp = Div(Add(l, r), "2");
-		if (Compare(m, temp) == 0)
+		BigDecimal temp = (l + r) / "2";
+		if (m == temp )
 		{
 			break;
 		}
 		m = temp;
-		(Compare(Cos(m), n) == 1) ? r = m : l = m;
+		(cos(m) > n) ? r = m : l = m;
 		// cout<<l<<" "<<r<<" "<<m<<endl;
 	}
-	m = Trim(m);
-	return m;
+	return m.trim();
 }
-String ACot(String n)
+BigDecimal aCot(BigDecimal n)
 {
-	 String l = "-90", r = "90", m = l;
-	 n = Trim(n);
+	 BigDecimal l = "-90", r = "90", m = l;
+	  n.trim();
 
-	 while (Compare(Sub(r, l), ".000000001") == 1)
+	 while (r - l > ".000000001")
 	{
-		String temp = Div(Add(l, r), "2");
-		if (Compare(m, temp) == 0)
+		BigDecimal temp = (l + r) / "2";
+		if (m == temp)
 		{
 			break;
 		}
 		m = temp;
-		(Compare(Cot(m), n) == 1) ? r = m : l = m;
-		// cout<<l<<" "<<r<<" "<<m<<endl;
+		(cot(m) > n ) ? r = m : l = m;
 	}
-	m = Trim(m);
-	return m;
+	return m.trim();
 }
-String ASec(String n)
+BigDecimal aSec(BigDecimal n)
 {
-	 String l = "-90", r = "90", m = l;
-	 n = Trim(n);
+	 BigDecimal l = "-90", r = "90", m = l;
+	  n.trim();
 
-	 while (Compare(Sub(r, l), ".000000001") == 1)
+	 while (r - l > ".000000001")
 	{
-		String temp = Div(Add(l, r), "2");
-		if (Compare(m, temp) == 0)
+		BigDecimal temp = (l + r) / "2";
+		if (m == temp)
 		{
 			break;
 		}
 		m = temp;
-		(Compare(Sec(m), n) == 1) ? r = m : l = m;
-		// cout<<l<<" "<<r<<" "<<m<<endl;
+		(sec(m) > n ) ? r = m : l = m;
 	}
-	m = Trim(m);
-	return m;
+	return m.trim();
 }
-String ACsc(String n)
+BigDecimal aCsc(BigDecimal n)
 {
-	 String l = "-90", r = "90", m = l;
-	 n = Trim(n);
+	 BigDecimal l = "-90", r = "90", m = l;
+	 n.trim();
 
-	 while (Compare(Sub(r, l), ".00000001") == 1)
+	 while (r - l > ".000000001")
 	{
-		String temp = Div(Add(l, r), "2");
-		if (Compare(m, temp) == 0)
+		BigDecimal temp = (l + r) / "2";
+		if (m == temp)
 		{
 			break;
 		}
 		m = temp;
-		(Compare(Csc(m), n) == 1) ? r = m : l = m;
-		// cout<<l<<" "<<r<<" "<<m<<endl;
+		(csc(m) > n ) ? r = m : l = m;
 	}
-	m = Trim(m);
-	return m;
+	return m.trim();
 }
-String Sine(String Deg)
+BigDecimal sine(BigDecimal Deg)
 {
 	//cout<<Deg<<endl;
-	String Rad = Mul(Div(Deg, "180"), Pi);
-	String i, Result = "0";
+	BigDecimal Rad = (Deg * PI ) / "180";
+	BigDecimal i, Result = "0";
 
-	String Term = Rad;
+	BigDecimal Term = Rad;
 
 	// cout<<Term<<endl;
 	int j;
-	// String n=Remainder(Rad);
-	String n = "17";
+	// BigDecimal n=Remainder(Rad);
+	BigDecimal n = "17";
 	// cout<<n<<" ";
 
 
-	for (j = 0, i = "1"; Compare(i, n) < 1; j++)
+	for (j = 0, i = "1"; i <= n ; j++)
 	{
-		if (Compare(i, "1") == 1)
+		if (i > "1")
 		{
 			// cout<<"1. "<<Term<<endl;
-			Term = Mul(Term, Rad);
+			Term = Term * Rad ;
 			// cout<<"2. "<<Term<<endl;
-			Term = Mul(Term, Rad);
+			Term = Term * Rad ;
 			// cout<<"3. "<<Term<<endl;
-			Term = Div(Term, Sub(i, "1"));
+			Term = Term / (i - "1");
 			// cout<<"4. "<<Term<<endl;
-			Term = Div(Term, i);
+			Term = Term / i;
 			// cout<<"5. "<<Term<<endl;    //prob
 		}
 		// cout<<"\""<<Term<<endl;
+		cout<<"####->"<<Result<<" "<<Term<<endl;
 		if (j % 2)
 		{
-			Result = Sub(Result, Term);
+			Result = Result - Term;
 		}
 		else
 		{
 			// cout<<"####->"<<Result<<" "<<Term<<endl;
-			Result = Add(Result, Term);
+			Result = Result + Term;
 			// cout<<"####"<<Result<<endl;
 		}
-		i = Add(i, "2");
-		//cout<<Result<<endl;
+		i = i + "2";
+		cout<<Result<<endl;
 	}
 
-	int k, s = Result.length();
+	int k, s = Result.getString().length();
 	for (k = 0; k < s; k++)
 	{
-		if (Result[k] == '.') break;
+		if (Result.getString().charAt(k) == '.') break;
 	}
 	//cout<<m.length()-i-4<<endl;
 	for (j = 0; j < s - k - 11; j++)
 	{
 		//	cout<<m<<endl;
-		Result.pop_back();
+		Result.getString().pop_back();
 	}
 
-	Result = Trim(Result);
-
-	return Result;
+	return Result.trim();
 }
-String Sin(String Deg)
+BigDecimal sin(BigDecimal Deg)
 {
 
-	Deg = Trim(Deg);
-	Deg = Mod(Deg, "360");
+	Deg.trim();
+	Deg = Deg % "360";
 	// cout<<Deg<<endl;
-	if (Deg[0] == '-')
+	if (Deg.getString().front() == '-')
 	{
-		Deg.erase(Deg.begin());
-		if (Compare(Deg, "90") < 1)
+		Deg.getString().pop_front();
+		if (Deg <= "90")
 		{
-			return "-" + Sine(Deg);
+			return "-" + sine(Deg).toString();
 		}
-		else if (Compare(Deg, "90") > 0 && Compare(Deg, "180") < 1)
+		else if ( Deg > "90" && Deg <= "180")
 		{
-			return "-" + Sine(Sub("180", Deg));
+			return "-" + sine("180" - Deg).toString();
 		}
-		else if (Compare(Deg, "180") > 0 && Compare(Deg, "270") < 1)
+		else if (Deg > "180" && Deg <= "270")
 		{
-			return Sine(Sub(Deg, "180"));
+			return sine(Deg - "180");
 		}
 		else
 		{
-			return Sine(Sub("360", Deg));
+			return sine("360" - Deg);
 		}
 	}
 
 	else
 	{
-		if (Compare(Deg, "90") < 1)
+		if (Deg <= "90")
 		{
-			return Sine(Deg);
+			return sine(Deg);
 		}
-		else if (Compare(Deg, "90") > 0 && Compare(Deg, "180") < 1)
+		else if (Deg > "90" && Deg <= "180")
 		{
-			return Sine(Sub("180", Deg));
+			return sine("180" - Deg);
 		}
-		else if (Compare(Deg, "180") > 0 && Compare(Deg, "270") < 1)
+		else if (Deg > "180" && Deg <= "270")
 		{
-			return "-" + Sine(Sub(Deg, "180"));
+			return "-" + sine(Deg - "180").toString();
 		}
 		else
 		{
-			return "-" + Sine(Sub("360", Deg));
+			return "-" + sine("360" - Deg).toString();
 		}
 	}
 }
-String Cos(String Deg)
+BigDecimal cos(BigDecimal Deg)
 {
-	Deg = Trim(Deg);
-	if (Deg[0] == '-') Deg.erase(Deg.begin());
-	return Sin(Add("90", Deg));
+	Deg.trim();
+	if (Deg.getString().front() == '-') Deg.getString().pop_front();
+	return sin(Deg + "90");
 }
-String Tan(String Deg)
+BigDecimal tan(BigDecimal Deg)
 {
-	String Result = Div(Sin(Deg), Cos(Deg));
-	int k, j, s = Result.length();
+	BigDecimal Result = sin(Deg) / cos(Deg);
+	int k, j, s = Result.getString().length();
 	for (k = 0; k < s; k++)
 	{
-		if (Result[k] == '.') break;
+		if (Result.getString().charAt(k) == '.') break;
 	}
 	//cout<<m.length()-i-4<<endl;
 	for (j = 0; j < s - k - 11; j++)
 	{
 		//	cout<<m<<endl;
-		Result.pop_back();
+		Result.getString().pop_back();
 	}
 
-	return Trim(Result);
+	return Result.trim();
 }
-String Csc(String Deg)
+BigDecimal csc(BigDecimal Deg)
 {
-	String Result = Div("1", Sin(Deg));
-	int k, j, s = Result.length();
+	BigDecimal Result = "1" / sin(Deg);
+	int k, j, s = Result.getString().length();
 	for (k = 0; k < s; k++)
 	{
-		if (Result[k] == '.') break;
+		if (Result.getString().charAt(k) == '.') break;
 	}
 	//cout<<m.length()-i-4<<endl;
 	for (j = 0; j < s - k - 11; j++)
 	{
 		//	cout<<m<<endl;
-		Result.pop_back();
+		Result.getString().pop_back();
 	}
 
-	return Trim(Result);
+	return Result.trim();
 }
-String Sec(String Deg)
+BigDecimal sec(BigDecimal Deg)
 {
-	String Result = Div("1", Cos(Deg));
-	int k, j, s = Result.length();
+	BigDecimal Result = "1" / cos(Deg);
+	int k, j, s = Result.getString().length();
 	for (k = 0; k < s; k++)
 	{
-		if (Result[k] == '.') break;
+		if (Result.getString().charAt(k) == '.') break;
 	}
 	//cout<<m.length()-i-4<<endl;
 	for (j = 0; j < s - k - 11; j++)
 	{
 		//	cout<<m<<endl;
-		Result.pop_back();
+		Result.getString().pop_back();
 	}
 
-	return Trim(Result);
+	return Result.trim();
 }
-String Cot(String Deg)
+BigDecimal cot(BigDecimal Deg)
 {
-	String Result = Div("1", Tan(Deg));
-
-	int k, j, s = Result.length();
+	BigDecimal Result = "1" / tan(Deg);
+	int k, j, s = Result.getString().length();
 	for (k = 0; k < s; k++)
 	{
-		if (Result[k] == '.') break;
+		if (Result.getString().charAt(k) == '.') break;
 	}
 	//cout<<m.length()-i-4<<endl;
 	for (j = 0; j < s - k - 11; j++)
 	{
 		//	cout<<m<<endl;
-		Result.pop_back();
+		Result.getString().pop_back();
 	}
 
-	return Trim(Result);
+	return Result.trim();
 }
-String Trigonometry(String Deg, String Op)
+/*BigDecimal Trigonometry(BigDecimal Deg, BigDecimal Op)
 {
 
 	Deg = Trim(Deg);
@@ -331,4 +318,4 @@ String Trigonometry(String Deg, String Op)
 		return Cot(Deg);
 	}
 	else return "0";
-}
+}*/

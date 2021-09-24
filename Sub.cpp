@@ -151,7 +151,7 @@ BigDecimal BigDecimal::sub(BigDecimal num)
 
 	// cout<<SubInt<<" "<<SubInt[0]<<endl;
 
-	while (!SubInt.getString().empty()&& SubInt.front() == '0')
+	while (!SubInt.getString().empty()&& SubInt.front() == 0)
 	{
 		// cout<<SubInt<<" "<<SubInt[0]<<endl;
 		SubInt.getString().pop_front();

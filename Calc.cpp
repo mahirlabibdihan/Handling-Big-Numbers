@@ -1,5 +1,5 @@
 #include "BigDecimal.h"
-bool BigDecimal::hasPrecedence(char op1, char op2)
+/*bool BigDecimal::hasPrecedence(char op1, char op2)
 {
 	if (op2 == '(' || op2 == ')')
 		return false;
@@ -142,4 +142,4 @@ String BigDecimal::Calculate(String expression)
 	values.pop();
 	// System.out.println(FromDecimal(Decimal,To));
 	return Decimal;
-}
+}*/

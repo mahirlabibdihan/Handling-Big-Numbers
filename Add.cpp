@@ -84,6 +84,7 @@ BigDecimal addFrac(BigDecimal a, BigDecimal b)
 {
 	BigDecimal addition;
 
+	// cout<<a<<"+"<<b<<endl;
 	int i, n = a.getString().length(), m = b.getString().length();
 	// Taking larger number first
 	if (m > n) {
@@ -94,6 +95,7 @@ BigDecimal addFrac(BigDecimal a, BigDecimal b)
 	int p = max(m, n);
 
 
+	
 	for (i = p-1; i > -1; i--)
 	{
 		int temp, temp1, temp2;
@@ -120,6 +122,7 @@ BigDecimal addFrac(BigDecimal a, BigDecimal b)
 		temp = temp1 + temp2 + addCarry;
 		addCarry = temp / 10;
 		addition.getString().push_back((temp % 10) + '0');
+		// cout<<addition<<endl;
 	}
 
 	addition.getString().reverse();
@@ -174,20 +177,23 @@ BigDecimal BigDecimal::add(BigDecimal num)
 		num2Frac.getString().push_back(num.getString().charAt(i));
 	}
 
+		// cout<<"->"<<num2Frac<<endl;
+		// cout<<(num2Frac > "")<<endl;
+		// cout<<"->"<<num2Frac<<endl;
 
 	// Adding frac part of two numbers
 	BigDecimal SumFrac = addFrac((num1Frac > "" ? num1Frac : "0"), (num2Frac > "" ? num2Frac : "0"));
 
 	
+		
 	// Addinf Int part of two numbers
 	BigDecimal SumInt = addInt((num1Int > "" ? num1Int : "0"), (num2Int > "" ? num2Int : "0"));
 
 	
-
+	//cout<<(SumFrac>"")<<endl;
 	// Removing leading zeros
 	SumInt.trim();
 	SumFrac.trim();
 
-	// cout<<"ANS:"<<SumFrac<<" "<<(SumFrac>"")<<endl;
 	return (negative ? "-" : "") + (SumInt>""? SumInt.getString():"0") + (SumFrac>""? SumFrac.getString():"");
 }

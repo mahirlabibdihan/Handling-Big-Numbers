@@ -1,6 +1,6 @@
 #include "BigDecimal.h"
 
-/*
+
 BigDecimal scale(BigDecimal a, int n=15,int round=0)
 {
 	int i, j, s = a.getString().length();
@@ -75,15 +75,15 @@ BigDecimal round(BigDecimal a)
 {
 	return scale(a, 0);
 }
-*/
-/*BigDecimal exponent(BigDecimal a)
+
+BigDecimal exponent(BigDecimal a)
 {
 	a.trim();
 
 	BigDecimal i, Result = "0", n = "40", P = "1", F = "1";
-	for (i = "0"; Compare(i, n) < 1;)
+	for (i = "0"; i<=n;)
 	{
-		if (Compare(i, "0") > 0)
+		if (i > "0")
 		{
 			P = P.mul(a);
 			F = F.mul(i);
@@ -92,7 +92,7 @@ BigDecimal round(BigDecimal a)
 		i = i.add("1");
 	}
 	return Result;
-}*/
+}
 
 BigDecimal BigDecimal::root(BigDecimal x)
 {
@@ -146,7 +146,7 @@ BigDecimal BigDecimal::power(BigDecimal a)
 	return c;
 }
 
-/*BigDecimal GCD(BigDecimal a,BigDecimal b)
+BigDecimal GCD(BigDecimal a,BigDecimal b)
 {
     while(a>"0")
      {
@@ -160,7 +160,7 @@ BigDecimal BigDecimal::power(BigDecimal a)
 BigDecimal LCM(BigDecimal a,BigDecimal b)
 {
 	 return (a.mul(b)).div(GCD(a,b));
-}*/
+}
 
 
 BigDecimal BigDecimal::pow(BigDecimal p)
@@ -183,7 +183,7 @@ BigDecimal BigDecimal::factorial()
 {
 	this->trim();
 	BigDecimal i, fact = "1";
-	for (i = "2"; i.compareTo(*this) < 1;)
+	for (i = "2"; i<=*this;)
 	{
 		fact = fact.mul(i);
 		i = i.add("1");
@@ -191,27 +191,27 @@ BigDecimal BigDecimal::factorial()
 	return fact;
 }
 
-/*BigDecimal NPR(BigDecimal n,BigDecimal r)
+BigDecimal BigDecimal::NPR(BigDecimal r)
 {
-	BigDecimal s="1",i=Add(Sub(n,r),"1");
-	while(Compare(i,n)<1)
+	BigDecimal s="1",i=((*this-r)+"1");
+	while(i<=*this)
 	{
-		s=Mul(s,i);
-		i=Add(i,"1");
+		s=(s*i);
+		i=(i+"1");
 	}
 	return s;
 }
 
-BigDecimal NCR(BigDecimal n,BigDecimal r)
+BigDecimal BigDecimal::NCR(BigDecimal r)
 {
 	BigDecimal s="1",i="1"; 
-	if(Compare(r,Sub(n,r))>0) r=Sub(n,r);
+	if((r>*this-r)) r=(*this-r);
 
-	while(Compare(i,r)<1)
+	while((i<=r))
 	{	
-		s=Mul(s,Add(Sub(n,r),i));
-		s=Div(s,i); 
-		i=Add(i,"1");
+		s=(s*((*this-r)+i));
+		s=(s/i); 
+		i=(i+"1");
 	}
 
 	return s;
@@ -219,6 +219,6 @@ BigDecimal NCR(BigDecimal n,BigDecimal r)
 
 BigDecimal Abs(BigDecimal a, BigDecimal b)
 {
-	if (Compare(a, b) > -1) return Sub(a, b);
-	return Sub(b, a);
-}*/
+	if (a>=b) return (a - b);
+	return (b - a);
+}

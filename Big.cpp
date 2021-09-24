@@ -884,6 +884,7 @@ string Add(string Num1, string Num2)
 		Num2Frac += Num2[i];
 	}
 
+
 	string SumFrac = Add_Frac((Num1Frac > "" ? Num1Frac : "0"), (Num2Frac > "" ? Num2Frac : "0"));
 	string SumInt = Add_Int((Num1Int > "" ? Num1Int : "0"), (Num2Int > "" ? Num2Int : "0"));
 
@@ -967,6 +968,7 @@ string Sine(string Deg)
 			// cout<<"5. "<<Term<<endl;    //prob
 		}
 		// cout<<"\""<<Term<<endl;
+		cout<<"####->"<<Result<<" "<<Term<<endl;
 		if (j % 2)
 		{
 			Result = Substract(Result, Term);
@@ -978,7 +980,7 @@ string Sine(string Deg)
 			// cout<<"####"<<Result<<endl;
 		}
 		i = Add(i, "2");
-		//cout<<Result<<endl;
+		cout<<Result<<endl;
 	}
 
 	int k, s = Result.length();
@@ -1166,22 +1168,22 @@ string Trigonometry(string Deg, string Op)
 
 int main()
 {
-	string Num1, Num2, Deg;
-	cin >> Num1 >> Num2;
-	Num1= Trim(Num1);
-	Num2= Trim(Num2);
+	// string Num1, Num2, Deg;
+	// cin >> Num1 >> Num2;
+	// Num1= Trim(Num1);
+	// Num2= Trim(Num2);
 	// cout << Num1<<" + "<<Num2<<" = "<<Add(Num1, Num2)<<endl;
 	// cout << Num1<<" - "<<Num2<<" = "<<Substract(Num1, Num2)<<endl;
 	// cout << Num1<<" × "<<Num2<<" = "<<Multiply(Num1, Num2)<<endl;
-	cout << Num1<<" ÷ "<<Num2<<" = "<<Divide(Num1, Num2)<<endl;
+	// cout << Num1<<" ÷ "<<Num2<<" = "<<Divide(Num1, Num2)<<endl;
 	// // cout << Num1<<" ^ "<<Num2<<" = "<<Power(Num1, Num2)<<endl;
 	// cout << Num1<<" % "<<Num2<<" = "<<Modulus(Num1, Num2)<<endl;
 	// cout << Num1<<"! = "<<Factorial(Num1)<<endl;
 	// // cout << Num1<<" + "<<Num2<<" = "<<Compare(Num1,Num2)<<endl;
 
-	// string Deg;
-	// cin >> Deg;
-	// cout << "sin(" << Deg << ") = " << Sin(Trim(Deg)) << endl;
+	string Deg;
+	cin >> Deg;
+	// cout << "sin(" << Deg << ") = " << Sin((Deg)) << endl;
 	// cout << "cos(" << Deg << ") = " << Cos(Trim(Deg)) << endl;
 	// cout << "tan(" << Deg << ") = " << Tan(Trim(Deg)) << endl;
 	// cout << "csc(" << Deg << ") = " << Csc(Trim(Deg)) << endl;

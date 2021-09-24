@@ -11,9 +11,6 @@ public:
 	void setString(String s){
 		this->s = s;
 	}
-	// void setString(string s){
-	// 	this->s = s;
-	// }
 	unsigned long long toInt();
 	BigDecimal trim();
 	int compareTo(BigDecimal);
@@ -24,8 +21,30 @@ public:
 	bool operator>(BigDecimal);
 	bool operator<(BigDecimal);
 	bool operator==(BigDecimal);
+	bool operator!=(BigDecimal);
 	bool operator>=(BigDecimal);
 	bool operator<=(BigDecimal);
+	String toString(){return s;}
+	BigDecimal operator+(BigDecimal b){
+		return this->add(b);
+	}
+	BigDecimal operator-(BigDecimal b){
+		return this->sub(b);
+	}
+	friend BigDecimal operator-(const char* str,BigDecimal b);
+	BigDecimal operator*(BigDecimal b){
+		return this->mul(b);
+	}
+	BigDecimal operator/(BigDecimal b){
+		return this->div(b);
+	}
+	friend BigDecimal operator/(const char* str,BigDecimal b);
+	BigDecimal operator^(BigDecimal b){
+		return this->pow(b);
+	}
+	BigDecimal operator%(BigDecimal b){
+		return this->mod(b);
+	}
 	void setDigit(int idx,int n){
 		s[idx] = n+'0';
 	}
@@ -38,46 +57,32 @@ public:
 	int back(){
 		return s.back() - '0';
 	}
-	// String Sin(String);
-	// String Cos(String);
-	// String Tan(String);
-	// String Csc(String);
-	// String Sec(String);
-	// String Cot(String);
-	// String ASin(String);
-	// String ACos(String);
-	// String ATan(String);
-	// String ACsc(String);
-	// String ASec(String);
-	// String ACot(String);
-	// String Ceil(String);
-	// String Round(String);
-	// String Floor(String);
+	
+
 	// String Prime(String);
 	BigDecimal factorial();
-	//BigDecimal operator+(BigDecimal);
 	BigDecimal add(BigDecimal);
 	BigDecimal pow(BigDecimal);
-	// String NPR(String, String);
-	// String NCR(String , String);
-	// String GCD(String, String);
-	// String LCM(String, String);
+	BigDecimal NPR(BigDecimal);
+	BigDecimal NCR(BigDecimal);
+	friend BigDecimal GCD(BigDecimal, BigDecimal);
+	friend BigDecimal LCM(BigDecimal, BigDecimal);
 	BigDecimal power(BigDecimal);
 	// String Remainder(String);
 	BigDecimal root(BigDecimal);
-	// String Exponent(String);
+	BigDecimal Exponent();
 	BigDecimal div(BigDecimal);
 	BigDecimal mul(BigDecimal);
 	BigDecimal sub(BigDecimal);
-	// String ToDecimal(String, String);
-	// String FromDecimal(String, String);
+	friend BigDecimal toDecimal(BigDecimal, BigDecimal);
+	friend BigDecimal fromDecimal(BigDecimal, BigDecimal);
 	BigDecimal mod(BigDecimal);
 	// String DivDigit(String, String);
 	// String Abs(String, String);
 	// String Trigonometry(String, String);
-	// String And(String, String);
+	BigDecimal operator&(BigDecimal);
 	// String Nand(String, String);
-	// String Or(String, String);
+	BigDecimal operator|(BigDecimal);
 	// String Nor(String, String);
 	// String Not(String);
 	// String Xor(String, String);
@@ -89,4 +94,19 @@ public:
 	pair<BigDecimal, BigDecimal> fraction();
 	friend istream& operator>>(istream& in, BigDecimal &str);
 	friend ostream& operator<<(ostream& out, BigDecimal str);
+	friend BigDecimal sin(BigDecimal);
+	friend BigDecimal cos(BigDecimal);
+	friend BigDecimal tan(BigDecimal);
+	friend BigDecimal csc(BigDecimal);
+	friend BigDecimal sec(BigDecimal);
+	friend BigDecimal cot(BigDecimal);
+	friend BigDecimal aSin(BigDecimal);
+	friend BigDecimal aCos(BigDecimal);
+	friend BigDecimal aTan(BigDecimal);
+	friend BigDecimal aCsc(BigDecimal);
+	friend BigDecimal aSec(BigDecimal);
+	friend BigDecimal aCot(BigDecimal);
+	friend BigDecimal ceil(BigDecimal);
+	friend BigDecimal round(BigDecimal);
+	friend BigDecimal floor(BigDecimal);
 };

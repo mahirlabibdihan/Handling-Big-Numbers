@@ -1,0 +1,23 @@
+﻿  Add.cpp
+D:\Github\Handling-Big-Numbers\Add.cpp(167,54): warning C4554: '&': check operator precedence for possible error; use parentheses to clarify precedence
+  BigDecimal.cpp
+  Div.cpp
+D:\Github\Handling-Big-Numbers\Div.cpp(11,28): warning C4244: 'argument': conversion from 'unsigned __int64' to 'int', possible loss of data
+D:\Github\Handling-Big-Numbers\Div.cpp(21,57): warning C4244: 'argument': conversion from 'unsigned __int64' to 'int', possible loss of data
+  Main.cpp
+D:\Github\Handling-Big-Numbers\ExpressionTree.h(58,27): warning C4018: '<': signed/unsigned mismatch
+D:\Github\Handling-Big-Numbers\ExpressionTree.h(71,26): warning C4018: '<': signed/unsigned mismatch
+D:\Github\Handling-Big-Numbers\Main.cpp(60,23): warning C4101: 'e': unreferenced local variable
+D:\Github\Handling-Big-Numbers\Main.cpp(88,18): warning C4018: '<': signed/unsigned mismatch
+  Math.cpp
+  Mul.cpp
+  String.cpp
+  Sub.cpp
+D:\Github\Handling-Big-Numbers\Sub.cpp(115,56): warning C4554: '&': check operator precedence for possible error; use parentheses to clarify precedence
+D:\Github\Handling-Big-Numbers\Sub.cpp(125,54): warning C4554: '&': check operator precedence for possible error; use parentheses to clarify precedence
+  Tri.cpp
+  Util.cpp
+  Generating Code...
+D:\Github\Handling-Big-Numbers\String.cpp(19): warning C4717: 'operator+': recursive on all control paths, function will cause runtime stack overflow
+MSVCRTD.lib(exe_winmain.obj) : error LNK2019: unresolved external symbol _WinMain@16 referenced in function "int __cdecl invoke_main(void)" (?invoke_main@@YAHXZ)
+D:\Github\Handling-Big-Numbers\Debug\Handling-Big-Numbers.exe : fatal error LNK1120: 1 unresolved externals
