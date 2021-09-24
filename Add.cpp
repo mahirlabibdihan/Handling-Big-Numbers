@@ -1,4 +1,5 @@
 /*
+/*
 12345678.433
 	2334.23432421
 
@@ -30,10 +31,10 @@ BigDecimal addInt(BigDecimal a, BigDecimal b)
 	BigDecimal addition;
 
 	// For the Int part addition will be done between reversed numbers
-	a.reverse();
-	b.reverse();
+	a.getString().reverse();
+	b.getString().reverse();
 
-	int i, n = a.length(), m = b.length();
+	int i, n = a.getString().length(), m = b.getString().length();
 	// Taking larger number first
 	if (m > n) {
 		swap(a, b);
@@ -52,7 +53,7 @@ BigDecimal addInt(BigDecimal a, BigDecimal b)
 		}
 		else
 		{
-			temp1 = a[i] - '0';
+			temp1 = a.digitAt(i);
 		}
 
 		if (i > m - 1)
@@ -61,21 +62,21 @@ BigDecimal addInt(BigDecimal a, BigDecimal b)
 		}
 		else
 		{
-			temp2 = b[i] - '0';
+			temp2 = b.digitAt(i);
 		}
 
 		// Main calculation with carry
 		temp = temp1 + temp2 + addCarry;
 		addCarry = temp / 10;
-		addition += (temp % 10) + '0';
+		addition.getString().push_back((temp % 10) + '0');
 	}
 
 
 	while (addCarry>0) {
-		addition += addCarry%10 + '0';
+		addition.getString().push_back(addCarry%10 + '0');
 		addCarry/=10;
 	}
-	addition.reverse();
+	addition.getString().reverse();
 	return addition;
 }
 
@@ -83,7 +84,7 @@ BigDecimal addFrac(BigDecimal a, BigDecimal b)
 {
 	BigDecimal addition;
 
-	int i, n = a.length(), m = b.length();
+	int i, n = a.getString().length(), m = b.getString().length();
 	// Taking larger number first
 	if (m > n) {
 		swap(a, b);
@@ -103,7 +104,7 @@ BigDecimal addFrac(BigDecimal a, BigDecimal b)
 		}
 		else
 		{
-			temp1 = a[i] - '0';
+			temp1 = a.digitAt(i);
 		}
 
 		if (i > m - 1)
@@ -112,79 +113,81 @@ BigDecimal addFrac(BigDecimal a, BigDecimal b)
 		}
 		else
 		{
-			temp2 = b[i] - '0';
+			temp2 = b.digitAt(i);
 		}
 
 		// Main calculation with carry
 		temp = temp1 + temp2 + addCarry;
 		addCarry = temp / 10;
-		addition += (temp % 10) + '0';
+		addition.getString().push_back((temp % 10) + '0');
 	}
 
-	addition.reverse();
-	return (addition.length() > 0 ? "." : "") + addition;
+	addition.getString().reverse();
+	// cout<<"->"<<addition<<endl;
+	return (addition.getString().length() > 0 ? "." : "") + addition.getString();
 }
 
 
 BigDecimal BigDecimal::add(BigDecimal num)
 {
 
+	// cout << *this <<" "<<num<<endl;
 	addCarry = 0;
 	this->trim();
 	num.trim();
 
-	
 	bool negative = false;
-	if (this->front() == '-' && num.front() == '-')
+	if (this->getString().front() == '-' && num.getString().front() == '-')
 	{
 		negative = true;
-		this->pop_front();
-		num.pop_front();
+		this->getString().pop_front();
+		num.getString().pop_front();
 	}
-	else if (this->front() == '-') return num.sub(this->pop_front());
-	else if (num.front() == '-') return this->sub(num.pop_front());
-
+	else if (this->getString().front() == '-') return num.sub(this->getString().pop_front());
+	else if (num.getString().front() == '-') return this->sub(num.getString().pop_front());
 
 
 	BigDecimal num1Int, num1Frac, num2Int, num2Frac;
 
-	int i, n = this->length(), m = num.length();
+	int i, n = this->getString().length(), m = num.getString().length();
+
 
 	// Dividing num1 to Int and Frac part
-	for (i = 0; i < n && this->charAt(i) != '.'; i++)
+	for (i = 0; i < n && this->getString().charAt(i) != '.'; i++)
 	{
-		num1Int += this->s[i];
+		num1Int.getString().push_back(this->s[i]);
 	}
 
 	for (i++; i < n; i++)
 	{
-		num1Frac += this->s[i];
+		num1Frac.getString().push_back(this->s[i]);
 	}
 
 	// Dividing num2 to Int and Frac part
-	for (i = 0; i < m & num[i] != '.'; i++)
+	for (i = 0; i < m & num.getString().charAt(i) != '.'; i++)
 	{
-		num2Int += num[i];
+		num2Int.getString().push_back(num.getString().charAt(i));
 	}
 
 	for (i++; i < m; i++)
 	{
-		num2Frac += num[i];
+		num2Frac.getString().push_back(num.getString().charAt(i));
 	}
 
 
 	// Adding frac part of two numbers
 	BigDecimal SumFrac = addFrac((num1Frac > "" ? num1Frac : "0"), (num2Frac > "" ? num2Frac : "0"));
 
-
 	
 	// Addinf Int part of two numbers
 	BigDecimal SumInt = addInt((num1Int > "" ? num1Int : "0"), (num2Int > "" ? num2Int : "0"));
 
+	
 
 	// Removing leading zeros
 	SumInt.trim();
 	SumFrac.trim();
 
-	return (negative ? "-" : "") + (SumInt>""? SumInt:"0") + (SumFrac>""? SumFrac:"");
+	// cout<<"ANS:"<<SumFrac<<" "<<(SumFrac>"")<<endl;
+	return (negative ? "-" : "") + (SumInt>""? SumInt.getString():"0") + (SumFrac>""? SumFrac.getString():"");
 }

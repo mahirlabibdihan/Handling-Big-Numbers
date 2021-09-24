@@ -1,36 +1,37 @@
 #include "BigDecimal.h"
 
+/*
 BigDecimal scale(BigDecimal a, int n=15,int round=0)
 {
-	int i, j, s = a.length();
+	int i, j, s = a.getString().length();
 	for (i = 0; i < s; i++)
 	{
-		if (a[i] == '.') break;
+		if (a.getString().charAt(i) == '.') break;
 	}
 
 	for (j = 0; j < s - i - n - 2; j++)
 	{
-		a.pop_back();
+		a.getString().pop_back();
 	}
 
 	if (j == s - i - n - 2)
 	{
 		if (round == 1)
 		{
-			a.pop_back();
-			if (a.back() == '.')
+			a.getString().pop_back();
+			if (a.getString().back() == '.')
 			{
-				a.pop_back();
+				a.getString().pop_back();
 			}
-			a.back()++;
+			a.getString().back()++;
 
 		}
 		else if (round == -1)
 		{
-			a.pop_back();
-			if (a.back() == '.')
+			a.getString().pop_back();
+			if (a.getString().back() == '.')
 			{
-				a.pop_back();
+				a.getString().pop_back();
 			}
 
 		}
@@ -39,22 +40,22 @@ BigDecimal scale(BigDecimal a, int n=15,int round=0)
 		{
 			if (a.back() > '4')
 			{
-				if (a[a.length() - 2] == '.')
+				if (a.getString().charAt(a.getString().length() - 2) == '.')
 				{
-					a.pop_back();
-					a.pop_back();
-					a.back()++;
+					a.getString().pop_back();
+					a.getString().pop_back();
+					a.getString().back()++;
 				}
-				else if (a[a.length() - 2] < '9')
+				else if (a.digitAt(a.getString().length() - 2) < 9)
 				{
-					a.pop_back();
-					a.back()++;
+					a.getString().pop_back();
+					a.getString().back()++;
 				}
 
 			}
 			else
 			{
-				a.pop_back();
+				a.getString().pop_back();
 			}
 		}
 
@@ -74,7 +75,7 @@ BigDecimal round(BigDecimal a)
 {
 	return scale(a, 0);
 }
-
+*/
 /*BigDecimal exponent(BigDecimal a)
 {
 	a.trim();
@@ -98,7 +99,7 @@ BigDecimal BigDecimal::root(BigDecimal x)
 
 	this->trim();
 	x.trim();
-	if (x.empty()) return *this;
+	if (x.getString().empty()) return *this;
 	BigDecimal l = "0", r = *this, m = "0";
 	if (*this<="1") r = "1";
 
@@ -126,10 +127,10 @@ BigDecimal BigDecimal::power(BigDecimal a)
 	BigDecimal c = "1";
 	bool negative = false;
 
-	if (a[0] == '-')
+	if (a.getString().front() == '-')
 	{
 		negative = true;
-		a.pop_front();
+		a.getString().pop_front();
 	}
 
 	while (a > "0")
@@ -166,10 +167,15 @@ BigDecimal BigDecimal::pow(BigDecimal p)
 {
 	this->trim();
 	p.trim();
+
 	pair<BigDecimal,BigDecimal> Num(p.fraction());
+
 	BigDecimal temp = this->power(Num.first);
 
-	if (Num.second > "1") return temp.root(Num.second);
+	if (Num.second > "1") {
+		// cout<<"FRAC"<<endl;
+		return temp.root(Num.second);
+	}
 	return temp;
 }
 

@@ -15,13 +15,9 @@ ostream& operator<<(ostream& out,String str)
 
 String operator+(char c, String str)
 {
-	String temp;
-	temp.s = str.s + c;
-	return temp;
+	return c+str;
 }
 String operator+(const char* str1, String str2)
 {
-	String temp;
-	temp.s = str1 + str2.s;
-	return temp;
+	return str2.push_front(str1);
 }

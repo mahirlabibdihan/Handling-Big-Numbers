@@ -11,38 +11,38 @@ BigDecimal BigDecimal::mul(BigDecimal a)
 
 	// Negative sign finding
 	bool negative = false;
-	if ( this->charAt(0) == '-'  && a.charAt(0) == '-')
+	if ( this->getString().front() == '-'  && a.getString().front() == '-')
 	{
-		this->pop_front();
-		a.pop_front();
+		this->getString().pop_front();
+		a.getString().pop_front();
 	}
 
-	else if (a[0] == '-')
+	else if (a.getString().front() == '-')
 	{
 		negative = true;
-		a.pop_front();
+		a.getString().pop_front();
 	}
 
-	else if (this->charAt(0) == '-')
+	else if (this->getString().front() == '-')
 	{
 		negative = true;
-		this->pop_front();
+		this->getString().pop_front();
 	}
 
 
 
 	BigDecimal num1, num2, multiplication;
-	if (a.length() == 0) a.set("0");
-	if (this->length() == 0) this->set("0");
-	int i, j, n = a.length(), m = this->length(), p = 0, q = 0;
+	if (a.getString().length() == 0) a.getString().set("0");
+	if (this->getString().length() == 0) this->getString().set("0");
+	int i, j, n = a.getString().length(), m = this->getString().length(), p = 0, q = 0;
 
 
 	// Removing the floating point
 	for (i = 0; i < n; i++)
 	{
-		if (a[i] != '.')
+		if (a.getString().charAt(i) != '.')
 		{
-			num1 += a[i];
+			num1.getString().push_back(a.getString().charAt(i));
 		}
 		else
 		{
@@ -52,9 +52,9 @@ BigDecimal BigDecimal::mul(BigDecimal a)
 
 	for (i = 0; i < m; i++)
 	{
-		if (this->charAt(i) != '.')
+		if (this->getString().charAt(i) != '.')
 		{
-			num2 += this->charAt(i);
+			num2.getString().push_back(this->getString().charAt(i));
 		}
 		else
 		{
@@ -62,16 +62,16 @@ BigDecimal BigDecimal::mul(BigDecimal a)
 		}
 	}
 
-	num1.reverse();
-	num2.reverse();
+	num1.getString().reverse();
+	num2.getString().reverse();
 
-	n = num1.length();
-	m = num2.length();
+	n = num1.getString().length();
+	m = num2.getString().length();
 
 	// Filling the result with '0'
 	for (i = 0; i < m + n ; i++)
 	{
-		multiplication += '0';
+		multiplication.getString().push_back('0');
 	}
 
 
@@ -80,56 +80,56 @@ BigDecimal BigDecimal::mul(BigDecimal a)
 	for (i = 0; i < n; i++)
 	{
 		Carry = 0;
-		int temp1 = num1[i] - '0';
+		int temp1 = num1.digitAt(i);
 
 		for (j = 0; j < m; j++)
 		{
 			// cout<<".";
-			int temp2 = num2[j] - '0';
+			int temp2 = num2.digitAt(j);
 
-			int temp = temp1 * temp2 + multiplication[i + j] + Carry - '0';
+			int temp = temp1 * temp2 + multiplication.digitAt(i + j) + Carry;
 
-			multiplication[i + j] = (temp % 10) + '0';
+			multiplication.setDigit(i + j , temp % 10);
 
 			Carry = temp / 10;
 		}
 
 		if (Carry) {
-			multiplication[i + j] += Carry;
+			multiplication.setDigit(i + j , multiplication.digitAt(i+j)+Carry);
 		}
 
 	}
 
 	// Removing leading zero's
-	while (multiplication.length() > 0 && multiplication.back() == '0') {
-		multiplication.pop_back();
+	while (multiplication.getString().length() > 0 && multiplication.back() == 0) {
+		multiplication.getString().pop_back();
 	}
 
 
 	// Inserting back the floating point into the result
-	n = multiplication.length();
+	n = multiplication.getString().length();
 	if (p + q > 0)
 	{
 		if (p + q > n)
 		{
 			for (i = n; i < p + q; i++)
 			{
-				multiplication += '0';
+				multiplication.getString().push_back('0');
 			}
 		}
 
-		multiplication.insert(p + q, '.');
-		multiplication.reverse();
+		multiplication.getString().insert(p + q, '.');
+		multiplication.getString().reverse();
 		multiplication.trim();
 	}
 
 	else
 	{
-		multiplication.reverse();
+		multiplication.getString().reverse();
 	}
 
-	if (multiplication.length() > 0) {
-		return (negative ? "-" : "") + multiplication;
+	if (multiplication.getString().length() > 0) {
+		return (negative ? "-" : "") + multiplication.getString();
 	}
 	else {
 		return "0";

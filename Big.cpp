@@ -433,7 +433,7 @@ string Divide(string a, string b)
 	}
 
 
-	cout<<"Temp:"<<temp<<endl;
+	// cout<<"Temp:"<<temp<<endl;
 	for (; (i < Num1.length());)
 	{
 
@@ -447,7 +447,7 @@ string Divide(string a, string b)
 
 	}
 
-	cout<<"Temp:"<<temp<<endl;
+	// cout<<"Temp:"<<temp<<endl;
 	Div += (Compare(temp, "0") == 1) ? "." : "";
 
 	for (; (i - Num1.length() < 11 && Compare(temp, "0") == 1); i++)

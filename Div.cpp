@@ -4,7 +4,7 @@ pair<BigDecimal,BigDecimal> BigDecimal::fraction()
 	BigDecimal numerator = "",denominator = "1";
 	this->trim();
 
-	BigDecimal i, n = DecimalToBigDecimal(this->length());
+	BigDecimal i, n = DecimalToBigDecimal(this->getString().length());
 
 	for (i = "0"; n > i;)
 	{
@@ -12,20 +12,20 @@ pair<BigDecimal,BigDecimal> BigDecimal::fraction()
 		{
 			for (BigDecimal i = "1"; i<n.sub(i);)
 			{
-				denominator += '0';
+				denominator.getString().push_back('0');
 				i = i.add("1");
 			}
 		}
 		else
 		{
-			numerator += s[BigDecimalToDecimal(i)];
+			numerator.getString().push_back(s[BigDecimalToDecimal(i)]);
 		}
 
 		i = i.add("1");
 	}
 
-	while (numerator[0] == '0') numerator.pop_front();
-	if (numerator.empty()) numerator = "0";
+	while (numerator.front() == 0) numerator.getString().pop_front();
+	if (numerator.getString().empty()) numerator = "0";
 	BigDecimal temp = numerator;
 
 	for (i = "2"; i<=numerator;)
@@ -73,16 +73,16 @@ BigDecimal divDigit(BigDecimal a, BigDecimal b)
 BigDecimal BigDecimal::mod(BigDecimal m)
 {
 
-	if (this->empty()) return (*this);
+	if (this->getString().empty()) return (*this);
 	bool negative = false;
 	this->trim();
 	m.trim();
 	if (m<="0") return "∞";
 
 
-	if (this->charAt(0) == '-')
+	if (this->getString().front() == '-')
 	{
-		this->pop_front();
+		this->getString().pop_front();
 		negative = true;
 	}
 
@@ -92,7 +92,7 @@ BigDecimal BigDecimal::mod(BigDecimal m)
 
 	BigDecimal temp4 = this->sub(temp2);
 
-	return (negative ? "-" : "") + temp4;
+	return (negative ? "-" : "") + temp4.getString();
 }
 
 BigDecimal BigDecimal::div(BigDecimal a)
@@ -108,21 +108,22 @@ BigDecimal BigDecimal::div(BigDecimal a)
 
 	// Negative sign finding
 	bool negative = false;
-	if (a.charAt(0) == '-' && this->charAt(0) == '-')
+	if (a.getString().front() == '-' && this->getString().front() == '-')
 	{
-		a.pop_front();
-		this->pop_front();
+		a.getString().pop_front();
+		this->getString().pop_front();
 	}
-	else if (a.charAt(0) == '-')
+	else if (a.getString().front() == '-')
 	{
-		a.pop_front();
+		a.getString().pop_front();
 		negative = true;
 	}
-	else if (this->charAt(0) == '-')
+	else if (this->getString().front() == '-')
 	{
-		this->pop_front();
+		this->getString().pop_front();
 		negative = true;
 	}
+
 
 	BigDecimal division;
 	BigDecimal num1, num2;
@@ -130,27 +131,27 @@ BigDecimal BigDecimal::div(BigDecimal a)
 	int i, p = 0, q = 0;
 
 	// Removing floating point
-	for (i = 0; i < this->length(); i++)
+	for (i = 0; i < this->getString().length(); i++)
 	{
-		if (this->charAt(i) == '.')
+		if (this->getString().charAt(i) == '.')
 		{
-			p = this->length() - 1 - i;
+			p = this->getString().length() - 1 - i;
 		}
 		else
 		{
-			num1 += this->charAt(i);
+			num1.getString().push_back(this->getString().charAt(i));
 		}
 	}
 
-	for (i = 0; i < a.length(); i++)
+	for (i = 0; i < a.getString().length(); i++)
 	{
-		if (a[i] == '.')
+		if (a.getString().charAt(i) == '.')
 		{
-			q = a.length() - 1 - i;
+			q = a.getString().length() - 1 - i;
 		}
 		else
 		{
-			num2 += a[i];
+			num2.getString().push_back(a.getString().charAt(i));
 		}
 	}
 
@@ -161,7 +162,7 @@ BigDecimal BigDecimal::div(BigDecimal a)
 	{
 		for (i = 0; i < p - q; i++)
 		{
-			num2 += '0';
+			num2.getString().push_back('0');
 		}
 	}
 
@@ -169,62 +170,66 @@ BigDecimal BigDecimal::div(BigDecimal a)
 	{
 		for (i = 0; i < q - p; i++)
 		{
-			num1 += '0';
+			num1.getString().push_back('0');
 		}
 	}
 
-	// cout<<num1<<" "<<num2<<" "<<endl;
+	// cout<<num1<<" "<<(num2>num1)<<" "<<endl;
 
 	BigDecimal temp;
 
+	
+
 	if (num2>num1)
 	{
-		temp = num1 + "0";
+		temp = num1.getString() + "0";
 		division = ".";
 
 		for (i = 0; i < 15 && temp>"0"; i++)
 		{
-			division += divDigit(temp, num2);
+			division.getString().push_back(divDigit(temp, num2).getString());
 			temp = temp.mod(num2);
-			temp += '0';
+			temp.getString().push_back('0');
 			// cout<<"-"<<division<<endl;
 		}
 
-		return (negative ? "-" : "") + division;
+		return (negative ? "-" : "") + division.getString();
 	}
+
 
 	for (i = -1; num2>temp;)
 	{
-		temp += num1[++i];
+		temp.getString().push_back(num1.getString().charAt(++i));
 	}
 
 
-	for (; (i < num1.length());)
+	for (; (i < num1.getString().length());)
 	{
-		division += divDigit(temp, num2);
+		division.getString().push_back(divDigit(temp, num2).getString());
 
 
 		temp = temp.mod(num2);
 
-		if (++i < num1.length())
-			temp += num1[i];
+		if (++i < num1.getString().length())
+			temp.getString().push_back(num1.getString().charAt(i));
 	}
 
 
-	division += (temp> "0") ? "." : "";
 
-	for (;i - num1.length() < 11 && temp > "0"; i++)
+	division.getString().push_back((temp> "0") ? "." : "");
+
+	for (;i - num1.getString().length() < 11 && temp > "0"; i++)
 	{
-		temp += '0';
-		division += divDigit(temp, num2);
+		temp.getString().push_back('0');
+		division.getString().push_back(divDigit(temp, num2).getString());
 		temp = temp.mod(num2);
 	}
 
-	if (i - num1.length() == 11)
+	if (i - num1.getString().length() == 11)
 	{
-		if (division.back() == division[division.length() - 2] && division.back() > '4')
-			division.back()++;
+		if (division.back() == division.digitAt(division.getString().length() - 2) && division.back() > 4)
+			division.getString().back()++;
 	}
 
-	return (negative ? "-" : "") + division;
+	return (negative ? "-" : "") + division.getString();
 }

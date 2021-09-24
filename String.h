@@ -53,9 +53,19 @@ public:
 	{
 		s+=c;
 	}
+	void push_back(String c)
+	{
+		s += c.s;
+	}
 	void push_front(char c)
 	{
 		s = c + s;
+	}
+
+	String push_front(const char* c)
+	{	
+		s = c + s;
+		return *this;
 	}
 
 	void erase(int idx)
@@ -113,6 +123,13 @@ public:
 		return *this;
 	}
 
+	String operator=(string str)
+	{
+		this->s = str;
+		// cout<<*this<<endl;
+		return *this;
+	}
+
 	void operator+=(char c)
 	{
 		s += c;
@@ -150,6 +167,10 @@ public:
 		String temp;
 		temp.s = s + str.s;
 		return temp;
+	}
+	bool operator==(String str)
+	{
+		return s == str.s;
 	}
 	
 	friend String operator+(char c, String str);

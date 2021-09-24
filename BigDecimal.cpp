@@ -1,6 +1,7 @@
 #include "BigDecimal.h"
 bool BigDecimal::operator> (BigDecimal a)
 {
+	// cout<<*this<<">"<<a<<"="<<(this->compareTo(a))<<endl;
 	return this->compareTo(a)==1;
 }
 bool BigDecimal::operator<(BigDecimal a)
@@ -21,26 +22,26 @@ bool BigDecimal::operator>=(BigDecimal a)
 }
 BigDecimal::BigDecimal(string str)
 {
-	s =  str;
+	this->s = str;
 }
 BigDecimal::BigDecimal(const char *str)
 {
-	s =  str;
+	this->s =  str;
 }
 BigDecimal::BigDecimal(const BigDecimal &bd)
 {
-	s =  bd.s;
+	this->s =  bd.s;
 }
 BigDecimal::BigDecimal(String bd)
 {
-	s = bd.get();
+	this->s = bd.get();
 }
 
 unsigned long long BigDecimal::toInt()
 {
 	this->trim();
 	unsigned long long Decimal = 0;
-	int n = this->length(), i;
+	int n = this->getString().length(), i;
 	for (i = 0; i < n; i++)
 	{
 		Decimal *= 10;
@@ -48,3 +49,13 @@ unsigned long long BigDecimal::toInt()
 	}
 	return Decimal;
 }
+
+istream& operator>>(istream& in, BigDecimal &str){
+	in >> str.s;
+	return in;
+}
+ostream& operator<<(ostream& out, BigDecimal str){
+	out<<str.s;
+	return out;
+}
+

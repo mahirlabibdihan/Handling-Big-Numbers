@@ -172,18 +172,20 @@ public:
 };
 BigDecimal evaluate(Node* root) {
     BigDecimal x, y, z;
-    try {
+    try{
     	stod(root->data);
-    	cout<<root->data<<endl;
         return BigDecimal(root->data);
     }
     catch (exception &e) {
         x = evaluate(root->left);
         y = evaluate(root->right);
         if (root->data == "+") {
+            // cout<<x<<" "<<y<<endl;
             z = x.add(y);
+            // cout<<"Done"<<endl;
         }
         else if (root->data == "-") {
+
             z = x.sub(y);
         }
         else if (root->data == "*") {
@@ -204,11 +206,17 @@ BigDecimal evaluate(Node* root) {
 }
 int main()
 {
-	cout<<"Equation: ";
-    string s;
-    cin >> s;
-    Node* root = new Node(s);
-    root-> build(s);
-    cout << "Result: "<<evaluate(root) << endl;
+    while(true){
+        cout<<"Equation: ";
+        string s;
+        cin >> s;
+        s = "(" + s + ")";
+        Node* root = new Node(s);
+        root-> build(s);
+        // cout<<"BUILD"<<endl;
+        cout << "Result: "<<evaluate(root) << endl;
+        
+    }
     return 0;
+	
 }

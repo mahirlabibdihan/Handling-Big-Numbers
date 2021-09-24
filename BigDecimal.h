@@ -1,9 +1,19 @@
 #include "String.h"
-class BigDecimal: public String {
+class BigDecimal{
+	String s;
 public:
-	BigDecimal(): String() {
-
+	BigDecimal(){
+		s = "";
 	}
+	String& getString(){
+		return s;
+	}
+	void setString(String s){
+		this->s = s;
+	}
+	// void setString(string s){
+	// 	this->s = s;
+	// }
 	unsigned long long toInt();
 	BigDecimal trim();
 	int compareTo(BigDecimal);
@@ -16,6 +26,18 @@ public:
 	bool operator==(BigDecimal);
 	bool operator>=(BigDecimal);
 	bool operator<=(BigDecimal);
+	void setDigit(int idx,int n){
+		s[idx] = n+'0';
+	}
+	int digitAt(int idx){
+		return s[idx]-'0';
+	}
+	int front(){
+		return s.front() - '0';
+	}
+	int back(){
+		return s.back() - '0';
+	}
 	// String Sin(String);
 	// String Cos(String);
 	// String Tan(String);
@@ -65,5 +87,6 @@ public:
 	BigDecimal DecimalToBigDecimal(unsigned long long);
 	// String Calculate(String);
 	pair<BigDecimal, BigDecimal> fraction();
-
+	friend istream& operator>>(istream& in, BigDecimal &str);
+	friend ostream& operator<<(ostream& out, BigDecimal str);
 };
