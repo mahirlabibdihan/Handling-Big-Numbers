@@ -3,12 +3,18 @@ BigDecimal BigDecimal::mul(BigDecimal a)
 {
 	this->trim();
 	a.trim();
-	if (a == "0" || (*this)=="0") return "0";
+
+	// Base cases
+	if (a == "0" || (*this) == "0") return "0";
+	else if (a == "1") return *this;
+	else if (*this == "1") return a;
+
+	// Negative sign finding
 	bool negative = false;
 	if ( this->charAt(0) == '-'  && a.charAt(0) == '-')
 	{
 		this->pop_front();
-		a.pop_front();	
+		a.pop_front();
 	}
 
 	else if (a[0] == '-')
@@ -23,11 +29,15 @@ BigDecimal BigDecimal::mul(BigDecimal a)
 		this->pop_front();
 	}
 
+
+
 	BigDecimal num1, num2, multiplication;
 	if (a.length() == 0) a.set("0");
 	if (this->length() == 0) this->set("0");
 	int i, j, n = a.length(), m = this->length(), p = 0, q = 0;
 
+
+	// Removing the floating point
 	for (i = 0; i < n; i++)
 	{
 		if (a[i] != '.')
@@ -58,28 +68,28 @@ BigDecimal BigDecimal::mul(BigDecimal a)
 	n = num1.length();
 	m = num2.length();
 
-	for (i = 0; i < m+n ; i++)
+	// Filling the result with '0'
+	for (i = 0; i < m + n ; i++)
 	{
 		multiplication += '0';
-		// cout<<multiplication<<endl;
 	}
-	// cout<<m+n<<" "<<a<<endl;
-	//cout<<num1<<" "<<num2<<endl;
 
+
+	// Main calculation
 	int Carry;
 	for (i = 0; i < n; i++)
 	{
 		Carry = 0;
-		int temp1 = num1[i] - 48;
+		int temp1 = num1[i] - '0';
 
 		for (j = 0; j < m; j++)
 		{
 			// cout<<".";
-			int temp2 = num2[j] - 48;
+			int temp2 = num2[j] - '0';
 
-			int temp = temp1 * temp2 + multiplication[i + j] + Carry - 48;
+			int temp = temp1 * temp2 + multiplication[i + j] + Carry - '0';
 
-			multiplication[i + j] = (temp % 10) + 48;
+			multiplication[i + j] = (temp % 10) + '0';
 
 			Carry = temp / 10;
 		}
@@ -89,18 +99,15 @@ BigDecimal BigDecimal::mul(BigDecimal a)
 		}
 
 	}
-	// if (Carry) multiplication[ m + n-1] += Carry;
 
-	
+	// Removing leading zero's
 	while (multiplication.length() > 0 && multiplication.back() == '0') {
-
 		multiplication.pop_back();
 	}
 
 
-
+	// Inserting back the floating point into the result
 	n = multiplication.length();
-
 	if (p + q > 0)
 	{
 		if (p + q > n)
@@ -110,7 +117,6 @@ BigDecimal BigDecimal::mul(BigDecimal a)
 				multiplication += '0';
 			}
 		}
-
 
 		multiplication.insert(p + q, '.');
 		multiplication.reverse();
@@ -125,7 +131,7 @@ BigDecimal BigDecimal::mul(BigDecimal a)
 	if (multiplication.length() > 0) {
 		return (negative ? "-" : "") + multiplication;
 	}
-	else{
+	else {
 		return "0";
 	}
 }

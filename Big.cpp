@@ -415,9 +415,6 @@ string Divide(string a, string b)
 		temp = Num1 + "0";
 		Div = ".";
 
-
-		// cout<<Div<<" "<<temp<<endl;
-
 		for (i = 0; i < 30 && Compare(temp, "0") == 1; i++)
 		{
 			Div += DivideDigit(temp, Num2);
@@ -436,20 +433,21 @@ string Divide(string a, string b)
 	}
 
 
-
+	cout<<"Temp:"<<temp<<endl;
 	for (; (i < Num1.length());)
 	{
+
 		Div += DivideDigit(temp, Num2);
 		//cout<<" -"<<Div<<endl;
-		temp = Modulus(temp, Num2);
+				temp = Modulus(temp, Num2);
 
 		if (++i < Num1.length())
 			temp += Num1[i];
+
+
 	}
 
-	//cout<<Div<<" "<<temp<<endl;
-
-
+	cout<<"Temp:"<<temp<<endl;
 	Div += (Compare(temp, "0") == 1) ? "." : "";
 
 	for (; (i - Num1.length() < 11 && Compare(temp, "0") == 1); i++)
@@ -916,7 +914,7 @@ string Factorial(string n)
 	{
 		Fact = Multiply(Fact, i);
 		i = Add(i, "1");
-		cout << "#######" << i << endl;
+		// cout << "#######" << i << endl;
 	}
 	return Fact;
 }
@@ -1175,10 +1173,10 @@ int main()
 	// cout << Num1<<" + "<<Num2<<" = "<<Add(Num1, Num2)<<endl;
 	// cout << Num1<<" - "<<Num2<<" = "<<Substract(Num1, Num2)<<endl;
 	// cout << Num1<<" × "<<Num2<<" = "<<Multiply(Num1, Num2)<<endl;
-	// cout << Num1<<" ÷ "<<Num2<<" = "<<Divide(Num1, Num2)<<endl;
+	cout << Num1<<" ÷ "<<Num2<<" = "<<Divide(Num1, Num2)<<endl;
 	// // cout << Num1<<" ^ "<<Num2<<" = "<<Power(Num1, Num2)<<endl;
 	// cout << Num1<<" % "<<Num2<<" = "<<Modulus(Num1, Num2)<<endl;
-	cout << Num1<<"! = "<<Factorial(Num1)<<endl;
+	// cout << Num1<<"! = "<<Factorial(Num1)<<endl;
 	// // cout << Num1<<" + "<<Num2<<" = "<<Compare(Num1,Num2)<<endl;
 
 	// string Deg;

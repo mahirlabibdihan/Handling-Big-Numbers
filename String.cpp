@@ -9,7 +9,7 @@ ostream& operator<<(ostream& out,String str)
 	// for(int i=0;i<130;i++)	{
 	// 	cout<<str.charAt(i);
 	// }
-	out<<str.s<<endl;
+	out<<str.s;
 	return out;
 }
 

@@ -7,12 +7,15 @@ public:
 	unsigned long long toInt();
 	BigDecimal trim();
 	int compareTo(BigDecimal);
+	BigDecimal(string);
 	BigDecimal(String);
 	BigDecimal(const char*);
 	BigDecimal(const BigDecimal&);
 	bool operator>(BigDecimal);
 	bool operator<(BigDecimal);
 	bool operator==(BigDecimal);
+	bool operator>=(BigDecimal);
+	bool operator<=(BigDecimal);
 	// String Sin(String);
 	// String Cos(String);
 	// String Tan(String);
@@ -32,14 +35,14 @@ public:
 	BigDecimal factorial();
 	//BigDecimal operator+(BigDecimal);
 	BigDecimal add(BigDecimal);
-	// String Pow(String, String);
+	BigDecimal pow(BigDecimal);
 	// String NPR(String, String);
 	// String NCR(String , String);
 	// String GCD(String, String);
 	// String LCM(String, String);
-	// String Power(String, String);
+	BigDecimal power(BigDecimal);
 	// String Remainder(String);
-	// String Root(String, String);
+	BigDecimal root(BigDecimal);
 	// String Exponent(String);
 	BigDecimal div(BigDecimal);
 	BigDecimal mul(BigDecimal);
@@ -61,6 +64,6 @@ public:
 	unsigned long long BigDecimalToDecimal(BigDecimal Number);
 	BigDecimal DecimalToBigDecimal(unsigned long long);
 	// String Calculate(String);
-	// pair<String, String> Fraction(String);
+	pair<BigDecimal, BigDecimal> fraction();
 
 };

@@ -9,9 +9,7 @@ class String // :public String
 {
 protected:
 	string s;
-
 public:
-	
 	String()
 	{
 		s = "";
@@ -75,7 +73,9 @@ public:
 	}
 	String pop_front()
 	{
-		s.erase(0);
+		if(!s.empty()){
+			s.erase(s.begin());
+		}
 		return *this;
 	}
 	int compare(String str)

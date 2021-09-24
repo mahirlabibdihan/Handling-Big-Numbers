@@ -1,5 +1,29 @@
+/*
+12345678.433
+	2334.23432421
+
+1. Dividing into two parts
+12345678		433
+	2334		23432421
+		
+2.Reverse		2.Swap			
+87654321		23432421
+4332			433
+--------		--------
+12084321		66732421
+
+3.Reverse		3.Adding dot	
+12348021		.66732421
+
+4.Add
+12348021.66732421
+
+Addition of fractional part needs to be done first. 
+Because remaining carry of this part will be added to addition of int part.
+*/
 #include "BigDecimal.h"
 int addCarry;
+
 
 BigDecimal addInt(BigDecimal a, BigDecimal b)
 {
@@ -9,7 +33,7 @@ BigDecimal addInt(BigDecimal a, BigDecimal b)
 	a.reverse();
 	b.reverse();
 
-		int i, n = a.length(), m = b.length();
+	int i, n = a.length(), m = b.length();
 	// Taking larger number first
 	if (m > n) {
 		swap(a, b);
@@ -28,7 +52,7 @@ BigDecimal addInt(BigDecimal a, BigDecimal b)
 		}
 		else
 		{
-			temp1 = a[i] - 48;
+			temp1 = a[i] - '0';
 		}
 
 		if (i > m - 1)
@@ -37,17 +61,18 @@ BigDecimal addInt(BigDecimal a, BigDecimal b)
 		}
 		else
 		{
-			temp2 = b[i] - 48;
+			temp2 = b[i] - '0';
 		}
 
+		// Main calculation with carry
 		temp = temp1 + temp2 + addCarry;
 		addCarry = temp / 10;
-		addition += (temp % 10) + 48;
+		addition += (temp % 10) + '0';
 	}
 
 
 	while (addCarry>0) {
-		addition += addCarry%10 + 48;
+		addition += addCarry%10 + '0';
 		addCarry/=10;
 	}
 	addition.reverse();
@@ -78,7 +103,7 @@ BigDecimal addFrac(BigDecimal a, BigDecimal b)
 		}
 		else
 		{
-			temp1 = a[i] - 48;
+			temp1 = a[i] - '0';
 		}
 
 		if (i > m - 1)
@@ -87,12 +112,13 @@ BigDecimal addFrac(BigDecimal a, BigDecimal b)
 		}
 		else
 		{
-			temp2 = b[i] - 48;
+			temp2 = b[i] - '0';
 		}
 
+		// Main calculation with carry
 		temp = temp1 + temp2 + addCarry;
 		addCarry = temp / 10;
-		addition += (temp % 10) + 48;
+		addition += (temp % 10) + '0';
 	}
 
 	addition.reverse();

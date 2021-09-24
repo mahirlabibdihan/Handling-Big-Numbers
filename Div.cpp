@@ -1,57 +1,52 @@
 #include "BigDecimal.h"
-/*pair<BigDecimal,BigDecimal> Fraction(BigDecimal s)
+pair<BigDecimal,BigDecimal> BigDecimal::fraction()
 {
-	BigDecimal WholeNum = "",DecNum = "1";
-	s.trim();
-	// cout<<s<<endl;
-	BigDecimal i, n = DecimalToBigDecimal(s.length());
-	// cout<<" "<<s<<endl;
+	BigDecimal numerator = "",denominator = "1";
+	this->trim();
+
+	BigDecimal i, n = DecimalToBigDecimal(this->length());
+
 	for (i = "0"; n > i;)
 	{
 		if (s[BigDecimalToDecimal(i)] == '.')
 		{
-			for (BigDecimal i = "1"; i<sub(n, i);)
+			for (BigDecimal i = "1"; i<n.sub(i);)
 			{
-				DecNum += '0';
-				i = add(i, "1");
+				denominator += '0';
+				i = i.add("1");
 			}
-			// cout<<"#####"<<division<<endl;
 		}
 		else
 		{
-			WholeNum += s[BigDecimalToDecimal(i)];
+			numerator += s[BigDecimalToDecimal(i)];
 		}
 
-		i = add(i, "1");
+		i = i.add("1");
 	}
 
-	// cout<<Num<<" "<<division<<endl;
-	while (WholeNum[0] == '0') WholeNum.pop_front();
-	if (WholeNum.length() == 0) WholeNum = "0";
-	BigDecimal temp = WholeNum;
+	while (numerator[0] == '0') numerator.pop_front();
+	if (numerator.empty()) numerator = "0";
+	BigDecimal temp = numerator;
 
-	// cout<<endl<<Num<<" "<<Compare(Mul("2","2"), temp)<<endl;
-	for (i = "2"; i<=WholeNum;)
+	for (i = "2"; i<=numerator;)
 	{
-		// cout<<i<<endl;
-		if (Mod(WholeNum, i) == "0" && Mod(DecNum, i) == "0")
+		if (numerator.mod(i) == "0" && denominator.mod(i) == "0")
 		{
-			WholeNum = WholeNum.div(i);
-			DecNum = DecNum.division(i);
-			// cout<<Mod(division, i)<<endl;
+			numerator = numerator.div(i);
+			denominator = denominator.div(i);
 		}
-		i = add(i, "1");
-		// cout<<" -"<<division<<endl;
+		i = i.add("1");
 	}
-	return pair<BigDecimal,BigDecimal>(WholeNum,DecNum); 
-}*/
+	return pair<BigDecimal,BigDecimal>(numerator,denominator); 
+}
 BigDecimal divDigit(BigDecimal a, BigDecimal b)
-{
+{	
+	// cout<<a<<" "<<b<<endl;
 	a.trim();
 	b.trim();
 	if (b=="0") return "∞";
 	BigDecimal i, j = "0";
-	for (i = "0"; j.compareTo(a)<1;)
+	for (i = "0"; j<=a;)
 	{
 		j = j.add(b);
 		i = i.add("1");
@@ -77,11 +72,12 @@ BigDecimal divDigit(BigDecimal a, BigDecimal b)
 
 BigDecimal BigDecimal::mod(BigDecimal m)
 {
-	if (this->length() == 0) return (*this);
+
+	if (this->empty()) return (*this);
 	bool negative = false;
 	this->trim();
 	m.trim();
-	if (m.compareTo("0") < 1) return "∞";
+	if (m<="0") return "∞";
 
 
 	if (this->charAt(0) == '-')
@@ -89,25 +85,29 @@ BigDecimal BigDecimal::mod(BigDecimal m)
 		this->pop_front();
 		negative = true;
 	}
+
 	BigDecimal temp1 = divDigit(*this, m);
-	//cout<<temp1<<endl;
+
 	BigDecimal temp2 = m.mul(temp1);
+
 	BigDecimal temp4 = this->sub(temp2);
-	//cout<<Number<<" "<<Mod<<" "<<temp1<<" "<<temp2<<" "<<temp4<<endl;
+
 	return (negative ? "-" : "") + temp4;
 }
 
 BigDecimal BigDecimal::div(BigDecimal a)
 {
+
 	// cout<<a<<" "<<b<<endl;
 	a.trim();
 	this->trim();
 
+	// Base cases
 	if (a=="0") return "∞";
-	//cout<<a<<" "<<b<<endl;
+	else if(a=="1") return *this;
+
+	// Negative sign finding
 	bool negative = false;
-
-
 	if (a.charAt(0) == '-' && this->charAt(0) == '-')
 	{
 		a.pop_front();
@@ -129,6 +129,7 @@ BigDecimal BigDecimal::div(BigDecimal a)
 
 	int i, p = 0, q = 0;
 
+	// Removing floating point
 	for (i = 0; i < this->length(); i++)
 	{
 		if (this->charAt(i) == '.')
@@ -155,6 +156,7 @@ BigDecimal BigDecimal::div(BigDecimal a)
 
 	// cout<<num1<<" "<<num2<<endl;
 
+
 	if (p > q)
 	{
 		for (i = 0; i < p - q; i++)
@@ -177,12 +179,8 @@ BigDecimal BigDecimal::div(BigDecimal a)
 
 	if (num2>num1)
 	{
-		// cout<<"######"<<endl;
 		temp = num1 + "0";
 		division = ".";
-
-
-		// cout<<division<<" "<<temp<<endl;
 
 		for (i = 0; i < 15 && temp>"0"; i++)
 		{
@@ -195,30 +193,27 @@ BigDecimal BigDecimal::div(BigDecimal a)
 		return (negative ? "-" : "") + division;
 	}
 
-
 	for (i = -1; num2>temp;)
 	{
 		temp += num1[++i];
 	}
 
 
-
 	for (; (i < num1.length());)
 	{
 		division += divDigit(temp, num2);
-		//cout<<" -"<<division<<endl;
+
+
 		temp = temp.mod(num2);
 
 		if (++i < num1.length())
 			temp += num1[i];
 	}
 
-	//cout<<division<<" "<<temp<<endl;
-
 
 	division += (temp> "0") ? "." : "";
 
-	for (; (i - num1.length() < 11 && temp>"0"); i++)
+	for (;i - num1.length() < 11 && temp > "0"; i++)
 	{
 		temp += '0';
 		division += divDigit(temp, num2);

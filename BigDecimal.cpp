@@ -11,6 +11,18 @@ bool BigDecimal::operator==(BigDecimal a)
 {
 	return this->compareTo(a) == 0;
 }
+bool BigDecimal::operator<=(BigDecimal a)
+{
+	return this->compareTo(a) <= 0;
+}
+bool BigDecimal::operator>=(BigDecimal a)
+{
+	return this->compareTo(a) >= 0;
+}
+BigDecimal::BigDecimal(string str)
+{
+	s =  str;
+}
 BigDecimal::BigDecimal(const char *str)
 {
 	s =  str;

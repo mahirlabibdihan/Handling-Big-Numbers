@@ -1,17 +1,18 @@
 #include "BigDecimal.h"
 
-/*BigDecimal Scale(BigDecimal a, int n=15, int round=0)
+BigDecimal scale(BigDecimal a, int n=15,int round=0)
 {
 	int i, j, s = a.length();
 	for (i = 0; i < s; i++)
 	{
 		if (a[i] == '.') break;
 	}
-	//cout<<m.length()-i-4<<endl;
+
 	for (j = 0; j < s - i - n - 2; j++)
 	{
 		a.pop_back();
 	}
+
 	if (j == s - i - n - 2)
 	{
 		if (round == 1)
@@ -59,146 +60,118 @@
 
 	}
 
-
-	a = Trim(a);
-	return a;
+	return a.trim();
 }
-BigDecimal Ceil(BigDecimal a)
+BigDecimal ceil(BigDecimal a)
 {
-	return Scale(a, 0, 1);
+	return scale(a, 0, 1);
 }
-BigDecimal Floor(BigDecimal a)
+BigDecimal floor(BigDecimal a)
 {
-	return Scale(a, 0, -1);
+	return scale(a, 0, -1);
 }
-BigDecimal Round(BigDecimal a)
+BigDecimal round(BigDecimal a)
 {
-	return Scale(a, 0);
+	return scale(a, 0);
 }
 
-BigDecimal Exponent(BigDecimal a)
+/*BigDecimal exponent(BigDecimal a)
 {
-	a = Trim(a);
+	a.trim();
 
 	BigDecimal i, Result = "0", n = "40", P = "1", F = "1";
 	for (i = "0"; Compare(i, n) < 1;)
 	{
 		if (Compare(i, "0") > 0)
 		{
-			P = Mul(P, a);
-			F = Mul(F, i);
+			P = P.mul(a);
+			F = F.mul(i);
 		}
-		Result = Add(Result, Div(P, F));
-		i = Add(i, "1");
+		Result = Result.add(P.div(F));
+		i = i.add("1");
 	}
 	return Result;
-}
+}*/
 
-BigDecimal Root(BigDecimal n, BigDecimal x)
+BigDecimal BigDecimal::root(BigDecimal x)
 {
-	// cout<<n<<" "<<x<<endl;
-	n = Trim(n);
-	x = Trim(x);
-	if (x.length() == 0) return n;
-	BigDecimal l = "0", r = n, m = "0";
-	if (Compare(n, "1") < 1) r = "1";
-	while (Compare(Sub(r, l), ".000000000001") == 1)
+
+	this->trim();
+	x.trim();
+	if (x.empty()) return *this;
+	BigDecimal l = "0", r = *this, m = "0";
+	if (*this<="1") r = "1";
+
+
+	while (r.sub(l) > ".000000000001")
 	{
-		BigDecimal temp = Div(Add(l, r), "2");
-		if (Compare(m, temp) == 0)
+		BigDecimal temp = (l.add(r)).div("2");
+		if (m==temp)
 		{
 			break;
 		}
 		m = temp;
-		(Compare(Pow(m, x), n) == 1) ? r = m : l = m;
-		// cout<<l<<" "<<r<<" "<<m<<endl;
+		(m.power(x) > *this) ? r = m : l = m;
 	}
-	m = Trim(m);
-	return m;
+
+	return m.trim();
 }
-BigDecimal Pow(BigDecimal a, BigDecimal b)
+BigDecimal BigDecimal::power(BigDecimal a)
 {
-	// cout<<a<<" "<<b<<endl;
-	a = Trim(a);
-	b = Trim(b);
-	if (Compare(b, "0") == 0) return "1";
+	this->trim();
+	a.trim();
+	if (a == "0") return "1";
+	else if(a == "1") return *this;
 
 	BigDecimal c = "1";
-	bool Negative = false;
+	bool negative = false;
 
-	if (b[0] == '-')
+	if (a[0] == '-')
 	{
-		Negative = true;
-		b.erase(b.begin());
+		negative = true;
+		a.pop_front();
 	}
 
-	while (Compare(b, "0") == 1)
+	while (a > "0")
 	{
-		b = Sub(b, "1");
-		c = Mul(c, a);
+		a=a.sub("1");
+		c=c.mul(*this);
 	}
 
-	// cout<<c<<endl;
-	if (Negative)
+	if (negative)
 	{
-		c = Div("1", c);
+		c = BigDecimal("1").div(c);
 	}
 	return c;
 }
 
-BigDecimal GCD(BigDecimal a,BigDecimal b)
+/*BigDecimal GCD(BigDecimal a,BigDecimal b)
 {
-    while(Compare(a,"0")>0)
+    while(a>"0")
      {
         BigDecimal c=a;
-        a=Mod(b,a);
+        a=b.mod(a);
         b=c;
      }
-
      return b;
 }
 
 BigDecimal LCM(BigDecimal a,BigDecimal b)
 {
-	 return Div(Mul(a,b),GCD(a,b));
-}
-
-
-
-BigDecimal Mod(BigDecimal Number, BigDecimal Mod)
-{
-	if (Number.length() == 0) return Number;
-	bool Negative = false;
-	Number = Trim(Number);
-	Mod = Trim(Mod);
-	if (Compare(Mod, "0") < 1) return "∞";
-
-
-	if (Number[0] == '-')
-	{
-		Number.erase(Number.begin());
-		Negative = true;
-	}
-	BigDecimal temp1 = DivDigit(Number, Mod);
-	//cout<<temp1<<endl;
-	BigDecimal temp2 = Mul(Mod, temp1);
-	BigDecimal temp4 = Sub(Number, temp2);
-	//cout<<Number<<" "<<Mod<<" "<<temp1<<" "<<temp2<<" "<<temp4<<endl;
-	return (Negative ? "-" : "") + temp4;
-}
-
-BigDecimal Power(BigDecimal Number, BigDecimal Power)
-{
-	// cout<<Number<<" "<<Power<<endl;
-	Number = Trim(Number);
-	Power = Trim(Power);
-	pair<BigDecimal,BigDecimal> Num(Fraction(Power));
-	// cout<<"->"<<Power<<" "<<Num<<" "<<Div<<endl;
-	Number = Pow(Number, Num.first);
-	// cout<<endl<<Num<<" "<<Div<<" "<<Number<<endl;
-	if (Compare(Num.second, "1") > 0) return Root(Number,Num.second);
-	return Number;
+	 return (a.mul(b)).div(GCD(a,b));
 }*/
+
+
+BigDecimal BigDecimal::pow(BigDecimal p)
+{
+	this->trim();
+	p.trim();
+	pair<BigDecimal,BigDecimal> Num(p.fraction());
+	BigDecimal temp = this->power(Num.first);
+
+	if (Num.second > "1") return temp.root(Num.second);
+	return temp;
+}
 
 BigDecimal BigDecimal::factorial()
 {
@@ -208,7 +181,6 @@ BigDecimal BigDecimal::factorial()
 	{
 		fact = fact.mul(i);
 		i = i.add("1");
-		// cout<<".";
 	}
 	return fact;
 }

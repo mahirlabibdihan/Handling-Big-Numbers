@@ -1,4 +1,40 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(513,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Big-Calculation-C++.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  Add.cpp
+D:\Github\Handling-Big-Numbers\CString.h(6,22): warning C4273: 'strlwr': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(551,28): message : see previous definition of 'strlwr'
+D:\Github\Handling-Big-Numbers\CString.h(7,22): warning C4273: 'strupr': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(580,28): message : see previous definition of 'strupr'
+D:\Github\Handling-Big-Numbers\CString.h(8,22): warning C4273: 'strrev': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(570,28): message : see previous definition of 'strrev'
+D:\Github\Handling-Big-Numbers\CString.h(10,46): warning C4273: 'strncpy': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(334,1): message : see previous definition of 'strncpy'
+D:\Github\Handling-Big-Numbers\CString.h(12,46): warning C4273: 'strncat': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(262,1): message : see previous definition of 'strncat'
+D:\Github\Handling-Big-Numbers\Add.cpp(165,35): warning C4554: '&': check operator precedence for possible error; use parentheses to clarify precedence
+  BigDecimal.cpp
+D:\Github\Handling-Big-Numbers\CString.h(6,22): warning C4273: 'strlwr': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(551,28): message : see previous definition of 'strlwr'
+D:\Github\Handling-Big-Numbers\CString.h(7,22): warning C4273: 'strupr': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(580,28): message : see previous definition of 'strupr'
+D:\Github\Handling-Big-Numbers\CString.h(8,22): warning C4273: 'strrev': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(570,28): message : see previous definition of 'strrev'
+D:\Github\Handling-Big-Numbers\CString.h(10,46): warning C4273: 'strncpy': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(334,1): message : see previous definition of 'strncpy'
+D:\Github\Handling-Big-Numbers\CString.h(12,46): warning C4273: 'strncat': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(262,1): message : see previous definition of 'strncat'
+  Div.cpp
+D:\Github\Handling-Big-Numbers\CString.h(6,22): warning C4273: 'strlwr': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(551,28): message : see previous definition of 'strlwr'
+D:\Github\Handling-Big-Numbers\CString.h(7,22): warning C4273: 'strupr': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(580,28): message : see previous definition of 'strupr'
+D:\Github\Handling-Big-Numbers\CString.h(8,22): warning C4273: 'strrev': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(570,28): message : see previous definition of 'strrev'
+D:\Github\Handling-Big-Numbers\CString.h(10,46): warning C4273: 'strncpy': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(334,1): message : see previous definition of 'strncpy'
+D:\Github\Handling-Big-Numbers\CString.h(12,46): warning C4273: 'strncat': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(262,1): message : see previous definition of 'strncat'
+D:\Github\Handling-Big-Numbers\Div.cpp(11,28): warning C4244: 'argument': conversion from 'unsigned __int64' to 'const unsigned int', possible loss of data
+D:\Github\Handling-Big-Numbers\Div.cpp(21,38): warning C4244: 'argument': conversion from 'unsigned __int64' to 'const unsigned int', possible loss of data
   Main.cpp
 D:\Github\Handling-Big-Numbers\CString.h(6,22): warning C4273: 'strlwr': inconsistent dll linkage
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(551,28): message : see previous definition of 'strlwr'
@@ -10,6 +46,67 @@ D:\Github\Handling-Big-Numbers\CString.h(10,46): warning C4273: 'strncpy': incon
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(334,1): message : see previous definition of 'strncpy'
 D:\Github\Handling-Big-Numbers\CString.h(12,46): warning C4273: 'strncat': inconsistent dll linkage
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(262,1): message : see previous definition of 'strncat'
+D:\Github\Handling-Big-Numbers\Main.cpp(108,27): warning C4018: '<': signed/unsigned mismatch
+D:\Github\Handling-Big-Numbers\Main.cpp(121,26): warning C4018: '<': signed/unsigned mismatch
+D:\Github\Handling-Big-Numbers\Main.cpp(180,23): warning C4101: 'e': unreferenced local variable
+  Math.cpp
+D:\Github\Handling-Big-Numbers\CString.h(6,22): warning C4273: 'strlwr': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(551,28): message : see previous definition of 'strlwr'
+D:\Github\Handling-Big-Numbers\CString.h(7,22): warning C4273: 'strupr': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(580,28): message : see previous definition of 'strupr'
+D:\Github\Handling-Big-Numbers\CString.h(8,22): warning C4273: 'strrev': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(570,28): message : see previous definition of 'strrev'
+D:\Github\Handling-Big-Numbers\CString.h(10,46): warning C4273: 'strncpy': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(334,1): message : see previous definition of 'strncpy'
+D:\Github\Handling-Big-Numbers\CString.h(12,46): warning C4273: 'strncat': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(262,1): message : see previous definition of 'strncat'
+  Mul.cpp
+D:\Github\Handling-Big-Numbers\CString.h(6,22): warning C4273: 'strlwr': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(551,28): message : see previous definition of 'strlwr'
+D:\Github\Handling-Big-Numbers\CString.h(7,22): warning C4273: 'strupr': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(580,28): message : see previous definition of 'strupr'
+D:\Github\Handling-Big-Numbers\CString.h(8,22): warning C4273: 'strrev': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(570,28): message : see previous definition of 'strrev'
+D:\Github\Handling-Big-Numbers\CString.h(10,46): warning C4273: 'strncpy': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(334,1): message : see previous definition of 'strncpy'
+D:\Github\Handling-Big-Numbers\CString.h(12,46): warning C4273: 'strncat': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(262,1): message : see previous definition of 'strncat'
+  String.cpp
+D:\Github\Handling-Big-Numbers\CString.h(6,22): warning C4273: 'strlwr': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(551,28): message : see previous definition of 'strlwr'
+D:\Github\Handling-Big-Numbers\CString.h(7,22): warning C4273: 'strupr': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(580,28): message : see previous definition of 'strupr'
+D:\Github\Handling-Big-Numbers\CString.h(8,22): warning C4273: 'strrev': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(570,28): message : see previous definition of 'strrev'
+D:\Github\Handling-Big-Numbers\CString.h(10,46): warning C4273: 'strncpy': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(334,1): message : see previous definition of 'strncpy'
+D:\Github\Handling-Big-Numbers\CString.h(12,46): warning C4273: 'strncat': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(262,1): message : see previous definition of 'strncat'
+  Sub.cpp
+D:\Github\Handling-Big-Numbers\CString.h(6,22): warning C4273: 'strlwr': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(551,28): message : see previous definition of 'strlwr'
+D:\Github\Handling-Big-Numbers\CString.h(7,22): warning C4273: 'strupr': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(580,28): message : see previous definition of 'strupr'
+D:\Github\Handling-Big-Numbers\CString.h(8,22): warning C4273: 'strrev': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(570,28): message : see previous definition of 'strrev'
+D:\Github\Handling-Big-Numbers\CString.h(10,46): warning C4273: 'strncpy': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(334,1): message : see previous definition of 'strncpy'
+D:\Github\Handling-Big-Numbers\CString.h(12,46): warning C4273: 'strncat': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(262,1): message : see previous definition of 'strncat'
+D:\Github\Handling-Big-Numbers\Sub.cpp(115,44): warning C4554: '&': check operator precedence for possible error; use parentheses to clarify precedence
+D:\Github\Handling-Big-Numbers\Sub.cpp(125,42): warning C4554: '&': check operator precedence for possible error; use parentheses to clarify precedence
+  Util.cpp
+D:\Github\Handling-Big-Numbers\CString.h(6,22): warning C4273: 'strlwr': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(551,28): message : see previous definition of 'strlwr'
+D:\Github\Handling-Big-Numbers\CString.h(7,22): warning C4273: 'strupr': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(580,28): message : see previous definition of 'strupr'
+D:\Github\Handling-Big-Numbers\CString.h(8,22): warning C4273: 'strrev': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(570,28): message : see previous definition of 'strrev'
+D:\Github\Handling-Big-Numbers\CString.h(10,46): warning C4273: 'strncpy': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(334,1): message : see previous definition of 'strncpy'
+D:\Github\Handling-Big-Numbers\CString.h(12,46): warning C4273: 'strncat': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(262,1): message : see previous definition of 'strncat'
+  Generating Code...
      Creating library D:\Github\Handling-Big-Numbers\Debug\Handling-Big-Numbers.lib and object D:\Github\Handling-Big-Numbers\Debug\Handling-Big-Numbers.exp
 MSVCRTD.lib(exe_winmain.obj) : error LNK2019: unresolved external symbol _WinMain@16 referenced in function "int __cdecl invoke_main(void)" (?invoke_main@@YAHXZ)
 D:\Github\Handling-Big-Numbers\Debug\Handling-Big-Numbers.exe : fatal error LNK1120: 1 unresolved externals

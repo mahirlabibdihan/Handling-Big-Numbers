@@ -8,7 +8,6 @@ BigDecimal subInt(BigDecimal a, BigDecimal b)
 	a.reverse();
 	b.reverse();
 
-
 	int p = max(m, n);
 
 	for (i = 0; i < p; i++)
@@ -21,7 +20,7 @@ BigDecimal subInt(BigDecimal a, BigDecimal b)
 		}
 		else
 		{
-			temp1 = a[i] - 48;
+			temp1 = a[i] - '0';
 		}
 
 		if (i > m - 1)
@@ -30,13 +29,20 @@ BigDecimal subInt(BigDecimal a, BigDecimal b)
 		}
 		else
 		{
-			temp2 = b[i] - 48;
+			temp2 = b[i] - '0';
 		}
 
-		temp = temp1 - temp2 + 10 * (SubCarry + temp2 > temp1) - SubCarry;
-		SubCarry = (SubCarry + temp2 > temp1);
+		// Main Calculation with carry
+		if (SubCarry + temp2 > temp1) {
+			temp = (temp1 + 10) - (temp2 + SubCarry);
+			SubCarry = 1;
+		} 
+		else {
+			temp = temp1 - (temp2 + SubCarry);
+			SubCarry = 0;
+		}
 
-		substraction += temp + 48;
+		substraction += temp + '0';
 	}
 
 	substraction.reverse();
@@ -59,7 +65,7 @@ BigDecimal subFrac(BigDecimal a, BigDecimal b)
 		}
 		else
 		{
-			temp1 = a[i] - 48;
+			temp1 = a[i] - '0';
 		}
 
 		if (i > m - 1)
@@ -68,13 +74,20 @@ BigDecimal subFrac(BigDecimal a, BigDecimal b)
 		}
 		else
 		{
-			temp2 = b[i] - 48;
+			temp2 = b[i] - '0';
 		}
 
-		temp = temp1 - temp2 + 10 * (SubCarry + temp2 > temp1) - SubCarry;
-		SubCarry = (SubCarry + temp2 > temp1);
+		// Main Calculation with carry
+		if (SubCarry + temp2 > temp1) {
+			temp = (temp1 + 10) - (temp2 + SubCarry);
+			SubCarry = 1;
+		} 
+		else {
+			temp = temp1 - (temp2 + SubCarry);
+			SubCarry = 0;
+		}
 
-		substraction += temp + 48;
+		substraction += temp + '0';
 	}
 
 	substraction.reverse();
@@ -119,12 +132,12 @@ BigDecimal BigDecimal::sub(BigDecimal num)
 		Num2Frac += num.charAt(i);
 	}
 
-	if (Num1Int.length() == 0) Num1Int = "0";
-	if (Num2Int.length() == 0) Num2Int = "0";
+	if (Num1Int.empty()) Num1Int = "0";
+	if (Num2Int.empty()) Num2Int = "0";
 
 	BigDecimal SubFrac, SubInt;
 
-	if (*this<num)
+	if (*this < num)
 	{
 		SubFrac = subFrac(Num2Frac, Num1Frac);
 		SubInt = subInt(Num2Int, Num1Int);
@@ -136,11 +149,14 @@ BigDecimal BigDecimal::sub(BigDecimal num)
 		SubInt = subInt(Num1Int, Num2Int);
 	}
 
-	if (SubInt.length())
-		while (SubInt[0] == '0')
-		{
-			SubInt.pop_front();
-		}
+	// cout<<SubInt<<" "<<SubInt[0]<<endl;
+
+	while (!SubInt.empty()&& SubInt.front() == '0')
+	{
+		// cout<<SubInt<<" "<<SubInt[0]<<endl;
+		SubInt.pop_front();
+	}
+	// cout<<SubInt<<" "<<SubInt[0]<<endl;
 
 	if (SubFrac.length())
 	{
@@ -154,7 +170,9 @@ BigDecimal BigDecimal::sub(BigDecimal num)
 		}
 	}
 	SubCarry = 0;
-	BigDecimal Subion = (Negative ? "-" : "") + SubInt + SubFrac;
-	if (Subion.length()) return Subion;
+	BigDecimal substraction = (Negative ? "-" : "") + SubInt + SubFrac;
+
+	// cout<<*this<<"-"<<num<<"="<<substraction<<endl;
+	if (substraction.length()) return substraction;
 	return "0";
 }

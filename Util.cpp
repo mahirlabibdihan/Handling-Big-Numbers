@@ -3,7 +3,7 @@ int BigDecimal::compareTo(BigDecimal num)
 {
 	this->trim();
 	num.trim();
-	int i, n = length(), m = num.length();
+	int i, n = this->length(), m = num.length();
 	BigDecimal Num1Int, Num1Frac, Num2Int, Num2Frac;
 
 	for (i = 0; i < n; i++)
