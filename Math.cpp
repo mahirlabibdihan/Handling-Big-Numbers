@@ -141,7 +141,7 @@ BigDecimal BigDecimal::power(BigDecimal a)
 
 	if (negative)
 	{
-		c = BigDecimal("1").div(c);
+		c = "1" / c;
 	}
 	return c;
 }

@@ -23,25 +23,39 @@ M A H I R     L A B I B     D I H A N
 
 *	-> Multiply
 
-/	-> Divide
+/	      -> Divide
 	
-%	-> Modulas
+%	      -> Modulas
+    
+^	      -> Power
 
-^	-> Power
+!	      -> Factorial
 
-!	-> Factorial
-
-p	-> nPr
-
-c 	-> nCr
-
-l 	-> LCM
-
-g 	-> GCD
-
-&	-> And
+&	      -> And
 	
-|	-> Or
+|	      -> Or
+
+p         -> nPr
+
+c         -> nCr
+
+LCM()     -> LCM
+
+GCD()     -> GCD
+
+sin()
+csc()   
+cos()
+sec()
+tan()
+cot()
+aSin()
+aCsc()
+aCos()
+aSec()
+aTan()
+aCot()
+
 
 exit ->  Exit
 ###########################
@@ -89,24 +103,26 @@ void validateExpression(string &s){
             if(isdigit(s[i])&&s[i+1]=='('){
                 s.insert(s.begin()+i+1,'*');
             }
+            else if(s[i]=='('&&s[i+1]=='-'){
+                 s.insert(s.begin()+i+1,'0');
+            }
         }
     s = "(" + s + ")";
 }
 int main()
 {
-    // while(true){
-    //     cout<<"Equation ( Using 0-9,.,+,-,/,*,(,),^ ): ";
-    //     string s;
-    //     cin >> s;   // Taking expression as input
-    //     validateExpression(s);  // Validating expression
-    //     ExpressionTree* root = new ExpressionTree(s);   
-    //     root-> build(s);    // Building expression tree
-    //     cout << "Result: "<<evaluate(root) << endl;  // Calculating result
-    //     cout<<sin(BigDecimal("10"))<<endl;
-    // }
+    while(true){
+        cout<<"Equation ( Using 0-9,.,+,-,/,*,(,),^ ): ";
+        string s;
+        cin >> s;   // Taking expression as input
+        validateExpression(s);  // Validating expression
+        ExpressionTree* root = new ExpressionTree(s);   
+        root-> build(s);    // Building expression tree
+        cout << "Result: "<<evaluate(root) << endl;  // Calculating result
+    }
 
-    BigDecimal a("10"),b("16");
-    cout<<fromDecimal(a,b)<<endl;
+    // BigDecimal a("10"),b("16");
+    // cout<<fromDecimal(a,b)<<endl;
     return 0;
 	
 }
