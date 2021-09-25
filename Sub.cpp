@@ -5,8 +5,8 @@ BigDecimal subInt(BigDecimal a, BigDecimal b)
 	BigDecimal substraction;
 	int i, n = a.getString().length(), m = b.getString().length();
 
-	a.getString().reverse();
-	b.getString().reverse();
+	a.reverse();
+	b.reverse();
 
 	int p = max(m, n);
 
@@ -45,7 +45,7 @@ BigDecimal subInt(BigDecimal a, BigDecimal b)
 		substraction.getString().push_back(temp + '0');
 	}
 
-	substraction.getString().reverse();
+	substraction.reverse();
 	return substraction;
 }
 
@@ -90,7 +90,7 @@ BigDecimal subFrac(BigDecimal a, BigDecimal b)
 		substraction.getString().push_back(temp + '0');
 	}
 
-	substraction.getString().reverse();
+	substraction.reverse();
 
 	return (substraction.getString().length() > 0 ? "." : "") + substraction.getString();
 }
@@ -112,8 +112,9 @@ BigDecimal BigDecimal::sub(BigDecimal num)
 	int i, n = this->getString().length(), m = num.getString().length();
 	bool Negative = false;
 
-	for (i = 0; i < n & this->getString().charAt(i) != '.'; i++)
+	for (i = 0; i < n ; i++)
 	{
+		if (this->isFloatingPoint(i)) break;
 		Num1Int.getString().push_back(this->getString().charAt(i));
 	}
 
@@ -122,8 +123,9 @@ BigDecimal BigDecimal::sub(BigDecimal num)
 		Num1Frac.getString().push_back(this->getString().charAt(i));
 	}
 
-	for (i = 0; i < m & num.getString().charAt(i) != '.'; i++)
+	for (i = 0; i < m ; i++)
 	{
+		if (num.isFloatingPoint(i)) break;
 		Num2Int.getString().push_back(num.getString().charAt(i));
 	}
 

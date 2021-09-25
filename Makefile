@@ -1,7 +1,7 @@
 all: big
 
-big: BigDecimal.o Add.o Sub.o Util.o CString.o Mul.o Div.o Math.o String.o Tri.o Bit.o main.o 
-	g++  BigDecimal.o Add.o Sub.o Util.o CString.o Mul.o Div.o Math.o String.o Tri.o Bit.o main.o -o big
+big: BigDecimal.o Add.o Sub.o Util.o Mul.o Div.o Math.o String.o Tri.o Bit.o main.o 
+	g++  BigDecimal.o Add.o Sub.o Util.o Mul.o Div.o Math.o String.o Tri.o Bit.o main.o -o big -static-libgcc -static-libstdc++  -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic
 
 BigDecimal.o: BigDecimal.cpp
 	g++ -c BigDecimal.cpp

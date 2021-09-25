@@ -101,6 +101,7 @@ public:
 	}
 	char charAt(int index)
 	{
+		// if (index >= s.length()) throw "Index out of range";
 		return s[index];
 	}
 	bool empty()

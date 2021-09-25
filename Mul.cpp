@@ -62,8 +62,8 @@ BigDecimal BigDecimal::mul(BigDecimal a)
 		}
 	}
 
-	num1.getString().reverse();
-	num2.getString().reverse();
+	num1.reverse();
+	num2.reverse();
 
 	n = num1.getString().length();
 	m = num2.getString().length();
@@ -119,13 +119,13 @@ BigDecimal BigDecimal::mul(BigDecimal a)
 		}
 
 		multiplication.getString().insert(p + q, '.');
-		multiplication.getString().reverse();
+		multiplication.reverse();
 		multiplication.trim();
 	}
 
 	else
 	{
-		multiplication.getString().reverse();
+		multiplication.reverse();
 	}
 
 	if (multiplication.getString().length() > 0) {

@@ -36,7 +36,7 @@ BigDecimal BigDecimal::operator&(BigDecimal b)
 		Int.getString().push_back((((i>-1?aBinInt.digitAt(i):0))&((j>-1?bBinInt.digitAt(j):0)))+'0');
 	}
 
-	Int.getString().reverse();
+	Int.reverse();
 
 	n=aBinFrac.getString().length();
 	m=bBinFrac.getString().length();
@@ -84,7 +84,7 @@ BigDecimal BigDecimal::operator|(BigDecimal b)
 		Int.getString().push_back((((i>-1?aBinInt.digitAt(i):0))|((j>-1?bBinInt.digitAt(j):0)))+'0');
 	}
 
-	Int.getString().reverse();
+	Int.reverse();
 
 	n=aBinFrac.getString().length();
 	m=bBinFrac.getString().length();
@@ -167,7 +167,7 @@ BigDecimal fromDecimal(BigDecimal Decimal, BigDecimal Base)
 			// cout<<NumberInt<<endl;
 		}
 	}
-	NumberInt.getString().reverse();
+	NumberInt.reverse();
 
 	if (DecimalFrac.toString().length())
 	{

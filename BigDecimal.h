@@ -1,4 +1,7 @@
+#ifndef __BIG_DECIMAL__
+#define __BIG_DECIMAL__
 #include "String.h"
+struct Fraction;
 class BigDecimal{
 	String s;
 public:
@@ -45,11 +48,21 @@ public:
 	BigDecimal operator%(BigDecimal b){
 		return this->mod(b);
 	}
+	BigDecimal operator++(int unused) {
+		BigDecimal temp = *this;
+		*this = *this + "1";
+		return temp;
+	}
+	BigDecimal operator++() {
+		*this = *this + "1";
+		return *this;
+	}
 	void setDigit(int idx,int n){
 		s[idx] = n+'0';
 	}
 	int digitAt(int idx){
-		return s[idx]-'0';
+		if (idx < s.length()) return s[idx] - '0';
+		else return 0;
 	}
 	int front(){
 		return s.front() - '0';
@@ -57,7 +70,21 @@ public:
 	int back(){
 		return s.back() - '0';
 	}
-	
+	char getSign() {
+		if (s.front() == '-') return '-';
+		else return '+';
+	}
+	bool isFloatingPoint(int idx) {
+		if (idx >= s.length()) throw exception("Index out of range");
+		return s.charAt(idx) == '.';
+	}
+	bool isNegative() {
+		return s.front() == '-' ;
+	}
+
+	void reverse() {
+		s.reverse();
+	}
 
 	// String Prime(String);
 	BigDecimal factorial();
@@ -70,7 +97,7 @@ public:
 	BigDecimal power(BigDecimal);
 	// String Remainder(String);
 	BigDecimal root(BigDecimal);
-	BigDecimal Exponent();
+	BigDecimal exponent();
 	BigDecimal div(BigDecimal);
 	BigDecimal mul(BigDecimal);
 	BigDecimal sub(BigDecimal);
@@ -78,7 +105,7 @@ public:
 	friend BigDecimal fromDecimal(BigDecimal, BigDecimal);
 	BigDecimal mod(BigDecimal);
 	// String DivDigit(String, String);
-	// String Abs(String, String);
+	friend BigDecimal abs(BigDecimal);
 	// String Trigonometry(String, String);
 	BigDecimal operator&(BigDecimal);
 	// String Nand(String, String);
@@ -90,8 +117,9 @@ public:
 	// String Log(String, String);
 	unsigned long long BigDecimalToDecimal(BigDecimal Number);
 	BigDecimal DecimalToBigDecimal(unsigned long long);
+
 	// String Calculate(String);
-	pair<BigDecimal, BigDecimal> fraction();
+	Fraction fraction();
 	friend istream& operator>>(istream& in, BigDecimal &str);
 	friend ostream& operator<<(ostream& out, BigDecimal str);
 	friend BigDecimal sin(BigDecimal);
@@ -110,3 +138,7 @@ public:
 	friend BigDecimal round(BigDecimal);
 	friend BigDecimal floor(BigDecimal);
 };
+struct Fraction {
+	BigDecimal numerator, denominator;
+};
+#endif

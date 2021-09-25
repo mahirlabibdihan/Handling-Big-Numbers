@@ -81,15 +81,14 @@ BigDecimal exponent(BigDecimal a)
 	a.trim();
 
 	BigDecimal i, Result = "0", n = "40", P = "1", F = "1";
-	for (i = "0"; i<=n;)
+	for (i = "0"; i<=n; i++)
 	{
 		if (i > "0")
 		{
-			P = P.mul(a);
-			F = F.mul(i);
+			P = P * a;
+			F = F * i;
 		}
-		Result = Result.add(P.div(F));
-		i = i.add("1");
+		Result = Result + (P / F);
 	}
 	return Result;
 }
@@ -104,7 +103,7 @@ BigDecimal BigDecimal::root(BigDecimal x)
 	if (*this<="1") r = "1";
 
 
-	while (r.sub(l) > ".000000000001")
+	while (r.sub(l) > ".00000001")
 	{
 		BigDecimal temp = (l.add(r)).div("2");
 		if (m==temp)
@@ -113,6 +112,7 @@ BigDecimal BigDecimal::root(BigDecimal x)
 		}
 		m = temp;
 		(m.power(x) > *this) ? r = m : l = m;
+		// cout << m << endl;
 	}
 
 	return m.trim();
@@ -125,13 +125,6 @@ BigDecimal BigDecimal::power(BigDecimal a)
 	else if(a == "1") return *this;
 
 	BigDecimal c = "1";
-	bool negative = false;
-
-	if (a.getString().front() == '-')
-	{
-		negative = true;
-		a.getString().pop_front();
-	}
 
 	while (a > "0")
 	{
@@ -139,10 +132,6 @@ BigDecimal BigDecimal::power(BigDecimal a)
 		c=c.mul(*this);
 	}
 
-	if (negative)
-	{
-		c = "1" / c;
-	}
 	return c;
 }
 
@@ -162,21 +151,34 @@ BigDecimal LCM(BigDecimal a,BigDecimal b)
 	 return (a.mul(b)).div(GCD(a,b));
 }
 
-
 BigDecimal BigDecimal::pow(BigDecimal p)
 {
-	this->trim();
+	BigDecimal n = *this;
+
+	n.trim();
 	p.trim();
 
-	pair<BigDecimal,BigDecimal> Num(p.fraction());
+	bool inverse = false;
 
-	BigDecimal temp = this->power(Num.first);
-
-	if (Num.second > "1") {
-		// cout<<"FRAC"<<endl;
-		return temp.root(Num.second);
+	if (p.getString().front() == '-')
+	{
+		inverse = true;
+		p.getString().pop_front();
 	}
-	return temp;
+
+	Fraction Num = p.fraction();
+
+	BigDecimal result = this->power(Num.numerator);
+
+	if (Num.denominator > "1") {
+		result = result.root(Num.denominator);
+	}
+	
+	if (inverse)
+	{
+		result = "1" / result;
+	}
+	return result;
 }
 
 BigDecimal BigDecimal::factorial()
@@ -217,8 +219,8 @@ BigDecimal BigDecimal::NCR(BigDecimal r)
 	return s;
 }
 
-BigDecimal Abs(BigDecimal a, BigDecimal b)
+BigDecimal abs(BigDecimal a)
 {
-	if (a>=b) return (a - b);
-	return (b - a);
+	if (a.getSign() == '-') a.getString().pop_front();
+	return a;
 }

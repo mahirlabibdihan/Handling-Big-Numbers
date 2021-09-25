@@ -1,5 +1,5 @@
-#include "BigDecimal.h"
-pair<BigDecimal,BigDecimal> BigDecimal::fraction()
+ #include "BigDecimal.h"
+Fraction BigDecimal::fraction()
 {
 	BigDecimal numerator = "",denominator = "1";
 	this->trim();
@@ -37,7 +37,7 @@ pair<BigDecimal,BigDecimal> BigDecimal::fraction()
 		}
 		i = i.add("1");
 	}
-	return pair<BigDecimal,BigDecimal>(numerator,denominator); 
+	return { numerator,denominator };
 }
 BigDecimal divDigit(BigDecimal a, BigDecimal b)
 {	

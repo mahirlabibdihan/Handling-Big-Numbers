@@ -93,7 +93,7 @@ BigDecimal BigDecimal::trim()
 	}
 
 
-	if (Int.getString().charAt(i) == '-')
+	if (Int.getString().front() == '-')
 	{
 		while (Int.getString().length() > 1 && Int.digitAt(1) == 0)
 		{
@@ -154,7 +154,7 @@ BigDecimal BigDecimal::DecimalToBigDecimal(unsigned long long Decimal)
 		Number.getString().push_back('0' + Decimal % 10);
 		Decimal /= 10;
 	}
-	Number.getString().reverse();
+	Number.reverse();
 
 	return Number.trim();
 }
