@@ -10,7 +10,7 @@ int BigDecimal::compareTo(BigDecimal b)
 
 	for (i = 0; i < n; i++)
 	{
-		if (a.isFloatingPoint(i)) break;
+		if (a.isDecimalPoint(i)) break;
 		Num1Int.getString().push_back(a.getString().charAt(i));
 	}
 	for (i++; i < n; i++)
@@ -19,7 +19,7 @@ int BigDecimal::compareTo(BigDecimal b)
 	}
 	for (i = 0; i < m; i++)
 	{
-		if (b.isFloatingPoint(i)) break;
+		if (b.isDecimalPoint(i)) break;
 		Num2Int.getString().push_back(b.getString().charAt(i));
 	}
 	for (i++; i < m; i++)
@@ -69,7 +69,6 @@ int BigDecimal::compareTo(BigDecimal b)
 
 BigDecimal BigDecimal::trim()
 {
-	// cout<<<<endl;
 
 	if (this->getString() == "∞") {
 		return *this;
@@ -83,7 +82,7 @@ BigDecimal BigDecimal::trim()
 	
 	for (i = 0; i < n; i++)
 	{
-		if (s[i] == '.') break;
+		if (this->isDecimalPoint(i)) break;
 		Int.getString().push_back(s[i]);
 	}
 	for (; i < n; i++)
@@ -102,28 +101,28 @@ BigDecimal BigDecimal::trim()
 
 	else
 	{
-		while (Int.getString().length() > 0 && Int.front() == 0)
+		while (!Int.getString().empty() && Int.front() == 0)
 		{
 			Int.getString().pop_front();
 		}
 	}
 
 
-	while (Frac.getString().length() > 0 && Frac.back() == 0)
+	while (!Frac.getString().empty() && Frac.back() == 0)
 	{
 		Frac.getString().pop_back();
 	}
 
-	if (Frac.getString().length() > 0 && Frac.getString().back() == '.')
+	if (!Frac.getString().empty() && Frac.getString().back() == '.')
 	{
 		Frac.getString().pop_back();
 	}
 
 	getString().set(Int.getString()+Frac.getString());
 
-	if (this->getString().length() == 0)
+	if (this->getString().empty())
 	{
-		this->getString().set("0");
+		*this = "0";
 	}
 
 	return *this;

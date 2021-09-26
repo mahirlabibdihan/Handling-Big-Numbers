@@ -57,6 +57,32 @@ public:
 		*this = *this + "1";
 		return *this;
 	}
+
+	BigDecimal& operator+=(BigDecimal b) {
+		*this = this->add(b);
+		return *this;
+	}
+	BigDecimal& operator-=(BigDecimal b) {
+		*this = this->sub(b);
+		return *this;
+	}
+	BigDecimal& operator*=(BigDecimal b) {
+		*this = this->mul(b);
+		return *this;
+	}
+	BigDecimal& operator/=(BigDecimal b) {
+		*this = this->div(b);
+		return *this;
+	}
+	BigDecimal& operator^=(BigDecimal b) {
+		*this = this->pow(b);
+		return *this;
+	}
+	BigDecimal& operator%=(BigDecimal b) {
+		*this = this->mod(b);
+		return *this;
+	}
+
 	void setDigit(int idx,int n){
 		s[idx] = n+'0';
 	}
@@ -74,7 +100,7 @@ public:
 		if (s.front() == '-') return '-';
 		else return '+';
 	}
-	bool isFloatingPoint(int idx) {
+	bool isDecimalPoint(int idx) {
 		if (idx >= s.length()) throw exception("Index out of range");
 		return s.charAt(idx) == '.';
 	}

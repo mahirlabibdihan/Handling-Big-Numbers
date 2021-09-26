@@ -121,7 +121,7 @@ BigDecimal BigDecimal::add(BigDecimal b)
 	// Dividing num1 to Int and Frac part
 	for (i = 0; i < n; i++)
 	{
-		if (a.isFloatingPoint(i)) break;
+		if (a.isDecimalPoint(i)) break;
 		num1Int.getString().push_back(a.getString().charAt(i));
 	}
 
@@ -133,7 +133,7 @@ BigDecimal BigDecimal::add(BigDecimal b)
 	// Dividing num2 to Int and Frac part
 	for (i = 0; i < m; i++)
 	{
-		if (b.isFloatingPoint(i)) break;
+		if (b.isDecimalPoint(i)) break;
 		num2Int.getString().push_back(b.getString().charAt(i));
 	}
 

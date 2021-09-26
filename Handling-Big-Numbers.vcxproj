@@ -142,14 +142,14 @@
     <ClCompile Include="Add.cpp" />
     <ClCompile Include="BigDecimal.cpp" />
     <ClCompile Include="Bit.cpp" />
-    <ClCompile Include="Div.cpp" />
+    <ClCompile Include="Divide.cpp" />
     <ClCompile Include="Expression.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Math.cpp" />
-    <ClCompile Include="Mul.cpp" />
+    <ClCompile Include="Multiply.cpp" />
     <ClCompile Include="String.cpp" />
-    <ClCompile Include="Sub.cpp" />
-    <ClCompile Include="Tri.cpp" />
+    <ClCompile Include="Substract.cpp" />
+    <ClCompile Include="Trigonometry.cpp" />
     <ClCompile Include="Util.cpp" />
   </ItemGroup>
   <ItemGroup>

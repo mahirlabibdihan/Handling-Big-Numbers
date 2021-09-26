@@ -3,11 +3,11 @@
 
 BigDecimal BigDecimal::operator&(BigDecimal b)
 {
-	BigDecimal aBin=fromDecimal(*this,"2"),bBin=fromDecimal(b,"2");
+	BigDecimal aBin = fromDecimal(*this, "2"), bBin = fromDecimal(b, "2");
 
-	BigDecimal aBinInt="",aBinFrac="",bBinInt="",bBinFrac="",Int="",Frac="";
+	BigDecimal aBinInt = "", aBinFrac = "", bBinInt = "", bBinFrac = "", Int = "", Frac = "";
 
-	int i,n=aBin.getString().length(),m=bBin.getString().length(),j;
+	int i, n = aBin.getString().length(), m = bBin.getString().length(), j;
 	for (i = 0; i < n && aBin.getString().charAt(i) != '.'; i++)
 	{
 		aBinInt.getString().push_back(aBin.getString().charAt(i));
@@ -17,45 +17,45 @@ BigDecimal BigDecimal::operator&(BigDecimal b)
 	{
 		aBinFrac.getString().push_back(aBin.getString().charAt(i));
 	}
-	
+
 	for (i = 0; i < m && bBin.getString().charAt(i) != '.'; i++)
 	{
 		bBinInt.getString().push_back(bBin.getString().charAt(i));
 	}
 
-	for (i++; i < m ; i++)
+	for (i++; i < m; i++)
 	{
 		bBinFrac.getString().push_back(bBin.getString().charAt(i));
 	}
 
-	n=aBinInt.getString().length();
-	m=bBinInt.getString().length();
+	n = aBinInt.getString().length();
+	m = bBinInt.getString().length();
 
-	for(i=n-1,j=m-1;i>-1||j>-1;i--,j--)
+	for (i = n - 1, j = m - 1; i > -1 || j > -1; i--, j--)
 	{
-		Int.getString().push_back((((i>-1?aBinInt.digitAt(i):0))&((j>-1?bBinInt.digitAt(j):0)))+'0');
+		Int.getString().push_back((((i > -1 ? aBinInt.digitAt(i) : 0)) & ((j > -1 ? bBinInt.digitAt(j) : 0))) + '0');
 	}
 
 	Int.reverse();
 
-	n=aBinFrac.getString().length();
-	m=bBinFrac.getString().length();
+	n = aBinFrac.getString().length();
+	m = bBinFrac.getString().length();
 
-	for(i=0,j=0;i<n||j<m;i++,j++)
+	for (i = 0, j = 0; i < n || j < m; i++, j++)
 	{
-		Int.getString().push_back((((i<n?aBinFrac.digitAt(i):0))&((j<m?bBinFrac.digitAt(j):0)))+'0');
+		Int.getString().push_back((((i < n ? aBinFrac.digitAt(i) : 0)) & ((j < m ? bBinFrac.digitAt(j) : 0))) + '0');
 	}
 
-	return toDecimal(BigDecimal(Int.toString()+"."+Frac.toString()),BigDecimal("2"));
+	return toDecimal(BigDecimal(Int.toString() + "." + Frac.toString()), BigDecimal("2"));
 }
 
 BigDecimal BigDecimal::operator|(BigDecimal b)
 {
-	BigDecimal aBin=fromDecimal(*this,"2"),bBin=fromDecimal(b,"2");
+	BigDecimal aBin = fromDecimal(*this, "2"), bBin = fromDecimal(b, "2");
 
-	BigDecimal aBinInt="",aBinFrac="",bBinInt="",bBinFrac="",Int="",Frac="";
+	BigDecimal aBinInt = "", aBinFrac = "", bBinInt = "", bBinFrac = "", Int = "", Frac = "";
 
-	int i,n=aBin.getString().length(),m=bBin.getString().length(),j;
+	int i, n = aBin.getString().length(), m = bBin.getString().length(), j;
 	for (i = 0; i < n && aBin.getString().charAt(i) != '.'; i++)
 	{
 		aBinInt.getString().push_back(aBin.getString().charAt(i));
@@ -65,44 +65,44 @@ BigDecimal BigDecimal::operator|(BigDecimal b)
 	{
 		aBinFrac.getString().push_back(aBin.getString().charAt(i));
 	}
-	
+
 	for (i = 0; i < m && bBin.getString().charAt(i) != '.'; i++)
 	{
 		bBinInt.getString().push_back(bBin.getString().charAt(i));
 	}
 
-	for (i++; i < m ; i++)
+	for (i++; i < m; i++)
 	{
 		bBinFrac.getString().push_back(bBin.getString().charAt(i));
 	}
 
-	n=aBinInt.getString().length();
-	m=bBinInt.getString().length();
+	n = aBinInt.getString().length();
+	m = bBinInt.getString().length();
 
-	for(i=n-1,j=m-1;i>-1||j>-1;i--,j--)
+	for (i = n - 1, j = m - 1; i > -1 || j > -1; i--, j--)
 	{
-		Int.getString().push_back((((i>-1?aBinInt.digitAt(i):0))|((j>-1?bBinInt.digitAt(j):0)))+'0');
+		Int.getString().push_back((((i > -1 ? aBinInt.digitAt(i) : 0)) | ((j > -1 ? bBinInt.digitAt(j) : 0))) + '0');
 	}
 
 	Int.reverse();
 
-	n=aBinFrac.getString().length();
-	m=bBinFrac.getString().length();
+	n = aBinFrac.getString().length();
+	m = bBinFrac.getString().length();
 
-	for(i=0,j=0;i<n||j<m;i++,j++)
+	for (i = 0, j = 0; i < n || j < m; i++, j++)
 	{
-		Int.getString().push_back((((i<n?aBinFrac.digitAt(i):0))|((j<m?bBinFrac.digitAt(j):0)))+'0');
+		Int.getString().push_back((((i < n ? aBinFrac.digitAt(i) : 0)) | ((j < m ? bBinFrac.digitAt(j) : 0))) + '0');
 	}
 
-	return toDecimal(BigDecimal(Int.toString()+"."+Frac.toString()),BigDecimal("2"));
+	return toDecimal(BigDecimal(Int.toString() + "." + Frac.toString()), BigDecimal("2"));
 }
 
-BigDecimal toDecimal(BigDecimal Number,BigDecimal Base)
+BigDecimal toDecimal(BigDecimal Number, BigDecimal Base)
 {
 	// cout << Number << " " << Base << endl;
 	Number.trim();
-	bool negative;
-	if(Number.toString().front() == '-'){
+	bool negative = false;
+	if (Number.toString().front() == '-') {
 		negative = true;
 		Number.getString().pop_front();
 	}
@@ -134,8 +134,8 @@ BigDecimal fromDecimal(BigDecimal Decimal, BigDecimal Base)
 {
 	BigDecimal NumberInt, NumberFrac, DecimalInt, DecimalFrac;
 	int i, n = Decimal.toString().length();
-	bool negative;
-	if(Decimal.toString().front() == '-'){
+	bool negative = false;
+	if (Decimal.toString().front() == '-') {
 		negative = true;
 		Decimal.getString().pop_front();
 	}
@@ -163,7 +163,7 @@ BigDecimal fromDecimal(BigDecimal Decimal, BigDecimal Base)
 				mod.getString().push_back(temp + 'A' - '0');
 			}
 			NumberInt.getString().push_back(mod.toString());
-			DecimalInt = floor(DecimalInt/Base);
+			DecimalInt = floor(DecimalInt / Base);
 			// cout<<NumberInt<<endl;
 		}
 	}
@@ -178,7 +178,7 @@ BigDecimal fromDecimal(BigDecimal Decimal, BigDecimal Base)
 			BigDecimal temp2 = floor(temp1);
 			//cout<<temp1<<" "<<temp2<<endl;
 			DecimalFrac = temp1 - temp2;
-			if (temp2>"9")
+			if (temp2 > "9")
 			{
 				char temp = temp2.toString().charAt(1);
 				temp2 = "";

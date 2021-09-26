@@ -1,12 +1,12 @@
 #include "BigDecimal.h"
 
 
-BigDecimal scale(BigDecimal a, int n=15,int round=0)
+BigDecimal scale(BigDecimal a, int n = 15, int round = 0)
 {
 	int i, j, s = a.getString().length();
 	for (i = 0; i < s; i++)
 	{
-		if (a.getString().charAt(i) == '.') break;
+		if (a.isDecimalPoint(i)) break;
 	}
 
 	for (j = 0; j < s - i - n - 2; j++)
@@ -81,74 +81,75 @@ BigDecimal exponent(BigDecimal a)
 	a.trim();
 
 	BigDecimal i, Result = "0", n = "40", P = "1", F = "1";
-	for (i = "0"; i<=n; i++)
+	for (i = "0"; i <= n; i++)
 	{
 		if (i > "0")
 		{
-			P = P * a;
-			F = F * i;
+			P *= a;
+			F *= i;
 		}
 		Result = Result + (P / F);
 	}
 	return Result;
 }
 
-BigDecimal BigDecimal::root(BigDecimal x)
+BigDecimal BigDecimal::root(BigDecimal b)
 {
+	BigDecimal a = *this;
+	a.trim();
+	b.trim();
+	if (b.getString().empty()) return a;
+	BigDecimal l = "0", r = a, m = "0";
+	if (a <= "1") r = "1";
 
-	this->trim();
-	x.trim();
-	if (x.getString().empty()) return *this;
-	BigDecimal l = "0", r = *this, m = "0";
-	if (*this<="1") r = "1";
 
-
-	while (r.sub(l) > ".00000001")
+	while (r - l > ".00000001")
 	{
-		BigDecimal temp = (l.add(r)).div("2");
-		if (m==temp)
+		BigDecimal temp = (l + r) / "2";
+		if (m == temp)
 		{
 			break;
 		}
 		m = temp;
-		(m.power(x) > *this) ? r = m : l = m;
+		(m.power(b) > a) ? r = m : l = m;
 		// cout << m << endl;
 	}
 
 	return m.trim();
 }
-BigDecimal BigDecimal::power(BigDecimal a)
+BigDecimal BigDecimal::power(BigDecimal p)
 {
-	this->trim();
-	a.trim();
-	if (a == "0") return "1";
-	else if(a == "1") return *this;
+	BigDecimal n = *this;
+	n.trim();
+	p.trim();
+	if (p == "0") return "1";
+	else if (p == "1") return n;
 
 	BigDecimal c = "1";
 
-	while (a > "0")
+	while (p > "0")
 	{
-		a=a.sub("1");
-		c=c.mul(*this);
+		p -= "1";
+		c *= n;
 	}
 
 	return c;
 }
 
-BigDecimal GCD(BigDecimal a,BigDecimal b)
+BigDecimal GCD(BigDecimal a, BigDecimal b)
 {
-    while(a>"0")
-     {
-        BigDecimal c=a;
-        a=b.mod(a);
-        b=c;
-     }
-     return b;
+	while (a > "0")
+	{
+		BigDecimal c = a;
+		a = b % a;
+		b = c;
+	}
+	return b;
 }
 
-BigDecimal LCM(BigDecimal a,BigDecimal b)
+BigDecimal LCM(BigDecimal a, BigDecimal b)
 {
-	 return (a.mul(b)).div(GCD(a,b));
+	return (a * b) / GCD(a, b);
 }
 
 BigDecimal BigDecimal::pow(BigDecimal p)
@@ -160,20 +161,20 @@ BigDecimal BigDecimal::pow(BigDecimal p)
 
 	bool inverse = false;
 
-	if (p.getString().front() == '-')
+	if (p.isNegative())
 	{
 		inverse = true;
-		p.getString().pop_front();
+		p = abs(p);
 	}
 
 	Fraction Num = p.fraction();
 
-	BigDecimal result = this->power(Num.numerator);
+	BigDecimal result = n.power(Num.numerator);
 
 	if (Num.denominator > "1") {
 		result = result.root(Num.denominator);
 	}
-	
+
 	if (inverse)
 	{
 		result = "1" / result;
@@ -183,37 +184,41 @@ BigDecimal BigDecimal::pow(BigDecimal p)
 
 BigDecimal BigDecimal::factorial()
 {
-	this->trim();
+	BigDecimal n = *this;
+	n.trim();
 	BigDecimal i, fact = "1";
-	for (i = "2"; i<=*this;)
+	for (i = "2"; i <= n; i++)
 	{
-		fact = fact.mul(i);
-		i = i.add("1");
+		fact *= i;
 	}
 	return fact;
 }
 
 BigDecimal BigDecimal::NPR(BigDecimal r)
 {
-	BigDecimal s="1",i=((*this-r)+"1");
-	while(i<=*this)
+	BigDecimal n = *this;
+	n.trim();
+	r.trim();
+	BigDecimal s = "1", i;
+	for (i = (n - r) + "1"; i <= n; i++)
 	{
-		s=(s*i);
-		i=(i+"1");
+		s *= i;
 	}
 	return s;
 }
 
 BigDecimal BigDecimal::NCR(BigDecimal r)
 {
-	BigDecimal s="1",i="1"; 
-	if((r>*this-r)) r=(*this-r);
+	BigDecimal n = *this;
+	n.trim();
+	r.trim();
+	BigDecimal s = "1", i;
+	if (r > n - r) r = n - r;
 
-	while((i<=r))
-	{	
-		s=(s*((*this-r)+i));
-		s=(s/i); 
-		i=(i+"1");
+	for (i = "1"; i <= r; i++)
+	{
+		s *= ((n - r) + i);
+		s /= i;
 	}
 
 	return s;

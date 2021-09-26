@@ -1,4 +1,7 @@
-﻿  Div.cpp
-D:\Github\Handling-Big-Numbers\Div.cpp(11,28): warning C4244: 'argument': conversion from 'unsigned __int64' to 'int', possible loss of data
-D:\Github\Handling-Big-Numbers\Div.cpp(20,57): warning C4244: 'argument': conversion from 'unsigned __int64' to 'int', possible loss of data
+﻿  Bit.cpp
+  Math.cpp
+  Substract.cpp
+  Trigonometry.cpp
+  Util.cpp
+  Generating Code...
   Handling-Big-Numbers.vcxproj -> D:\Github\Handling-Big-Numbers\Debug\Handling-Big-Numbers.exe
