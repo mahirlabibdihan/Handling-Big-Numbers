@@ -1,48 +1,49 @@
 #include "BigDecimal.h"
-BigDecimal BigDecimal::mul(BigDecimal a)
+BigDecimal BigDecimal::mul(BigDecimal b)
 {
-	this->trim();
+	BigDecimal a = *this;
 	a.trim();
+	b.trim();
 
 	// Base cases
-	if (a == "0" || (*this) == "0") return "0";
-	else if (a == "1") return *this;
-	else if (*this == "1") return a;
+	if (b == "0" || a == "0") return "0";
+	else if (b == "1") return *this;
+	else if (a == "1") return b;
 
 	// Negative sign finding
 	bool negative = false;
-	if ( this->getString().front() == '-'  && a.getString().front() == '-')
+	if (a.isNegative() && b.isNegative())
 	{
-		this->getString().pop_front();
-		a.getString().pop_front();
+		a = abs(a); 
+		b = abs(b);
 	}
 
-	else if (a.getString().front() == '-')
+	else if (b.isNegative())
 	{
 		negative = true;
-		a.getString().pop_front();
+		b = abs(b);
 	}
 
-	else if (this->getString().front() == '-')
+	else if (a.isNegative())
 	{
 		negative = true;
-		this->getString().pop_front();
+		a = abs(a);
 	}
 
 
 
 	BigDecimal num1, num2, multiplication;
-	if (a.getString().length() == 0) a.getString().set("0");
-	if (this->getString().length() == 0) this->getString().set("0");
-	int i, j, n = a.getString().length(), m = this->getString().length(), p = 0, q = 0;
+	if (b.getString().empty()) b = "0";
+	if (a.getString().empty()) a = "0";
+	int n = b.getString().length(), m = a.getString().length(), p = 0, q = 0;
 
 
 	// Removing the floating point
-	for (i = 0; i < n; i++)
+	for (int i = 0; i < n; i++)
 	{
-		if (a.getString().charAt(i) != '.')
+		if (!b.isFloatingPoint(i))
 		{
-			num1.getString().push_back(a.getString().charAt(i));
+			num1.getString().push_back(b.getString().charAt(i));
 		}
 		else
 		{
@@ -50,11 +51,11 @@ BigDecimal BigDecimal::mul(BigDecimal a)
 		}
 	}
 
-	for (i = 0; i < m; i++)
+	for (int i = 0; i < m; i++)
 	{
-		if (this->getString().charAt(i) != '.')
+		if (!a.isFloatingPoint(i))
 		{
-			num2.getString().push_back(this->getString().charAt(i));
+			num2.getString().push_back(a.getString().charAt(i));
 		}
 		else
 		{
@@ -69,33 +70,33 @@ BigDecimal BigDecimal::mul(BigDecimal a)
 	m = num2.getString().length();
 
 	// Filling the result with '0'
-	for (i = 0; i < m + n ; i++)
+	for (int i = 0; i < m + n; i++)
 	{
 		multiplication.getString().push_back('0');
 	}
 
 
 	// Main calculation
-	int Carry;
-	for (i = 0; i < n; i++)
+	int carry;
+	for (int i = 0; i < n; i++)
 	{
-		Carry = 0;
+		carry = 0;
 		int temp1 = num1.digitAt(i);
-
+		int j;
 		for (j = 0; j < m; j++)
 		{
 			// cout<<".";
 			int temp2 = num2.digitAt(j);
 
-			int temp = temp1 * temp2 + multiplication.digitAt(i + j) + Carry;
+			int temp = temp1 * temp2 + multiplication.digitAt(i + j) + carry;
 
-			multiplication.setDigit(i + j , temp % 10);
+			multiplication.setDigit(i + j, temp % 10);
 
-			Carry = temp / 10;
+			carry = temp / 10;
 		}
 
-		if (Carry) {
-			multiplication.setDigit(i + j , multiplication.digitAt(i+j)+Carry);
+		if (carry) {
+			multiplication.setDigit(i + j, multiplication.digitAt(i + j) + carry);
 		}
 
 	}
@@ -112,7 +113,7 @@ BigDecimal BigDecimal::mul(BigDecimal a)
 	{
 		if (p + q > n)
 		{
-			for (i = n; i < p + q; i++)
+			for (int i = n; i < p + q; i++)
 			{
 				multiplication.getString().push_back('0');
 			}
@@ -128,7 +129,7 @@ BigDecimal BigDecimal::mul(BigDecimal a)
 		multiplication.reverse();
 	}
 
-	if (multiplication.getString().length() > 0) {
+	if (!multiplication.getString().empty()) {
 		return (negative ? "-" : "") + multiplication.getString();
 	}
 	else {

@@ -10,17 +10,16 @@ int BigDecimal::compareTo(BigDecimal b)
 
 	for (i = 0; i < n; i++)
 	{
-		if (a.getString().charAt(i) == '.') break;
+		if (a.isFloatingPoint(i)) break;
 		Num1Int.getString().push_back(a.getString().charAt(i));
 	}
 	for (i++; i < n; i++)
 	{
 		Num1Frac.getString().push_back(a.getString().charAt(i));
 	}
-
 	for (i = 0; i < m; i++)
 	{
-		if (b.getString().charAt(i) == '.') break;
+		if (b.isFloatingPoint(i)) break;
 		Num2Int.getString().push_back(b.getString().charAt(i));
 	}
 	for (i++; i < m; i++)
@@ -36,10 +35,10 @@ int BigDecimal::compareTo(BigDecimal b)
 	// cout<<endl<<"->1."<<Num1Int<<" 2."<<Num1Frac<<" 3."<<Num2Int<<" 4."<<Num2Frac<<endl;
 
 	// cout<<Num1Int<<"C"<<int(Num2Int.getString().charAt(0))<<endl;
-	if (Num1Int.getString().front() == '-' && Num2Int.getString().front() != '-') {
+	if (Num1Int.isNegative() && !Num2Int.isNegative()) {
 		return -1;
 	}
-	else if (Num1Int.getString().front() != '-' && Num2Int.getString().front() == '-') {
+	else if (!Num1Int.isNegative() && Num2Int.isNegative()) {
 		return 1;
 	}
 
@@ -93,7 +92,7 @@ BigDecimal BigDecimal::trim()
 	}
 
 
-	if (Int.getString().front() == '-')
+	if (Int.isNegative())
 	{
 		while (Int.getString().length() > 1 && Int.digitAt(1) == 0)
 		{

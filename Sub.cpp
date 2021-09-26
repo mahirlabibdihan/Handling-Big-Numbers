@@ -1,6 +1,6 @@
 #include "BigDecimal.h"
-int SubCarry;
-BigDecimal subInt(BigDecimal a, BigDecimal b)
+
+BigDecimal subInt(BigDecimal a, BigDecimal b,int &carry)
 {
 	BigDecimal substraction;
 	int i, n = a.getString().length(), m = b.getString().length();
@@ -14,42 +14,28 @@ BigDecimal subInt(BigDecimal a, BigDecimal b)
 	{
 		int temp, temp1, temp2;
 
-		if (i > n - 1)
-		{
-			temp1 = 0;
-		}
-		else
-		{
-			temp1 = a.digitAt(i);
-		}
+		temp1 = a.digitAt(i);
 
-		if (i > m - 1)
-		{
-			temp2 = 0;
-		}
-		else
-		{
-			temp2 = b.digitAt(i);
-		}
+		temp2 = b.digitAt(i);
 
 		// Main Calculation with carry
-		if (SubCarry + temp2 > temp1) {
-			temp = (temp1 + 10) - (temp2 + SubCarry);
-			SubCarry = 1;
+		if (carry + temp2 > temp1) {
+			temp = (temp1 + 10) - (temp2 + carry);
+			carry = 1;
 		} 
 		else {
-			temp = temp1 - (temp2 + SubCarry);
-			SubCarry = 0;
+			temp = temp1 - (temp2 + carry);
+			carry = 0;
 		}
 
 		substraction.getString().push_back(temp + '0');
 	}
 
 	substraction.reverse();
-	return substraction;
+	return substraction.trim();
 }
 
-BigDecimal subFrac(BigDecimal a, BigDecimal b)
+BigDecimal subFrac(BigDecimal a, BigDecimal b,int &carry)
 {
 	BigDecimal substraction;
 	int i, n = a.getString().length(), m = b.getString().length();
@@ -59,32 +45,19 @@ BigDecimal subFrac(BigDecimal a, BigDecimal b)
 	for (i = p - 1; i > -1; i--)
 	{
 		int temp, temp1, temp2;
-		if (i > n - 1)
-		{
-			temp1 = 0;
-		}
-		else
-		{
-			temp1 = a.digitAt(i);
-		}
+		
+		temp1 = a.digitAt(i);
 
-		if (i > m - 1)
-		{
-			temp2 = 0;
-		}
-		else
-		{
-			temp2 = b.digitAt(i);
-		}
+		temp2 = b.digitAt(i);
 
 		// Main Calculation with carry
-		if (SubCarry + temp2 > temp1) {
-			temp = (temp1 + 10) - (temp2 + SubCarry);
-			SubCarry = 1;
+		if (carry + temp2 > temp1) {
+			temp = (temp1 + 10) - (temp2 + carry);
+			carry = 1;
 		} 
 		else {
-			temp = temp1 - (temp2 + SubCarry);
-			SubCarry = 0;
+			temp = temp1 - (temp2 + carry);
+			carry = 0;
 		}
 
 		substraction.getString().push_back(temp + '0');
@@ -92,46 +65,51 @@ BigDecimal subFrac(BigDecimal a, BigDecimal b)
 
 	substraction.reverse();
 
-	return (substraction.getString().length() > 0 ? "." : "") + substraction.getString();
+	substraction.getString().push_front('.');
+
+	return substraction.trim();
 }
 
-BigDecimal BigDecimal::sub(BigDecimal num)
+BigDecimal BigDecimal::sub(BigDecimal b)
 {
-	this->trim();
-	num.trim();
-	if (this->getString().charAt(0) == '-' && num.getString().charAt(0) == '-')
+	BigDecimal a = *this;
+	a.trim();
+	b.trim();
+	if (a.isNegative() && b.isNegative())
 	{
-		swap(*this, num);
+		swap(a, b);
 	}
-	else if (this->getString().charAt(0) == '-')
+	else if (a.isNegative())
 	{
-		return this->add("-" + num.getString());
+		return a.add("-" + b.getString());
 	}
-	else if (num.getString().charAt(0) == '-') return this->add(num.getString().pop_front());
+	else if (b.isNegative()) {
+		return a.add(abs(b));
+	}
 	BigDecimal Num1Int, Num1Frac, Num2Int, Num2Frac;
-	int i, n = this->getString().length(), m = num.getString().length();
-	bool Negative = false;
+	int i, n = a.getString().length(), m = b.getString().length();
+	bool negative = false;
 
 	for (i = 0; i < n ; i++)
 	{
-		if (this->isFloatingPoint(i)) break;
-		Num1Int.getString().push_back(this->getString().charAt(i));
+		if (a.isFloatingPoint(i)) break;
+		Num1Int.getString().push_back(a.getString().charAt(i));
 	}
 
 	for (i++; i < n; i++)
 	{
-		Num1Frac.getString().push_back(this->getString().charAt(i));
+		Num1Frac.getString().push_back(a.getString().charAt(i));
 	}
 
 	for (i = 0; i < m ; i++)
 	{
-		if (num.isFloatingPoint(i)) break;
-		Num2Int.getString().push_back(num.getString().charAt(i));
+		if (b.isFloatingPoint(i)) break;
+		Num2Int.getString().push_back(b.getString().charAt(i));
 	}
 
 	for (i++; i < m; i++)
 	{
-		Num2Frac.getString().push_back(num.getString().charAt(i));
+		Num2Frac.getString().push_back(b.getString().charAt(i));
 	}
 
 	if (Num1Int.getString().empty()) Num1Int = "0";
@@ -139,42 +117,18 @@ BigDecimal BigDecimal::sub(BigDecimal num)
 
 	BigDecimal SubFrac, SubInt;
 
-	if (*this < num)
+	int carry=0;
+	if (a < b)
 	{
-		SubFrac = subFrac(Num2Frac, Num1Frac);
-		SubInt = subInt(Num2Int, Num1Int);
-		Negative = true;
+		SubFrac = subFrac(Num2Frac, Num1Frac,carry);
+		SubInt = subInt(Num2Int, Num1Int,carry);
+		negative = true;
 	}
 	else
 	{
-		SubFrac = subFrac(Num1Frac, Num2Frac);
-		SubInt = subInt(Num1Int, Num2Int);
+		SubFrac = subFrac(Num1Frac, Num2Frac,carry);
+		SubInt = subInt(Num1Int, Num2Int,carry);
 	}
 
-	// cout<<SubInt<<" "<<SubInt[0]<<endl;
-
-	while (!SubInt.getString().empty()&& SubInt.front() == 0)
-	{
-		// cout<<SubInt<<" "<<SubInt[0]<<endl;
-		SubInt.getString().pop_front();
-	}
-	// cout<<SubInt<<" "<<SubInt[0]<<endl;
-
-	if (SubFrac.getString().length())
-	{
-		while (SubFrac.back() == 0)
-		{
-			SubFrac.getString().pop_back();
-		}
-		if (SubFrac.getString().back() == '.')
-		{
-			SubFrac.getString().pop_back();
-		}
-	}
-	SubCarry = 0;
-	BigDecimal substraction = (Negative ? "-" : "") + SubInt.getString() + SubFrac.getString();
-
-	// cout<<*this<<"-"<<num<<"="<<substraction<<endl;
-	if (substraction.getString().length()) return substraction;
-	return "0";
+	return (negative ? "-" : "") + (SubInt > "" ? SubInt.getString() : "0") + (SubFrac > "" ? SubFrac.getString() : "");
 }
